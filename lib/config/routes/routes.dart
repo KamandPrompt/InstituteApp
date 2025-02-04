@@ -6,22 +6,24 @@ import 'package:uhl_link/config/routes/routes_consts.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/choose_auth.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/login.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/update_password.dart';
+import 'package:uhl_link/features/home/presentation/pages/job_portal_page.dart';
 import 'package:uhl_link/features/home/presentation/pages/home.dart';
 import 'package:uhl_link/features/home/presentation/widgets/PORs_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/academic_calender_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/achievements_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/campus_map_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/job_details_page.dart';
-import 'package:uhl_link/features/home/presentation/widgets/job_portal_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_add_item_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/mess_menu_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/quick_links_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/settings_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/notifications.dart';
 import 'package:uhl_link/widgets/splash_screen.dart';
 import 'package:uhl_link/widgets/test.dart';
 
 class UhlLinkRouter {
+  static bool isGuest = false;
   GoRouter router = GoRouter(
     initialLocation: '/',
     routes: [
@@ -147,6 +149,13 @@ class UhlLinkRouter {
                 key: state.pageKey,
                 child: JobDetailsPage(
                     job: jsonDecode(state.pathParameters["job"]!)));
+          }),
+      GoRoute(
+          name: UhlLinkRoutesNames.notifications,
+          path: '/notifications',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey, child: Notifications(isGuest: isGuest));
           }),
 
       GoRoute(

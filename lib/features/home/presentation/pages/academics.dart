@@ -21,12 +21,12 @@ class _AcademicsState extends State<Academics> {
       "route": UhlLinkRoutesNames.academicCalenderPage,
       "guest": true
     },
-    {
-      "text": "Job Portal",
-      "icon": Icons.work_outline_rounded,
-      "route": UhlLinkRoutesNames.jobPortalPage,
-      "guest": false
-    },
+    // {
+    //   "text": "Job Portal",
+    //   "icon": Icons.work_outline_rounded,
+    //   "route": UhlLinkRoutesNames.jobPortalPage,
+    //   "guest": false
+    // },
     {
       "text": "Achievements",
       "icon": Icons.verified_rounded,

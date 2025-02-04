@@ -9,6 +9,8 @@ class UhlLinkRoutesNames {
 
   static const String home = 'home';
 
+  static const String notifications = 'notifications';
+
   // Explore
   static const String messMenuPage = 'mess_menu_page';
   static const String campusMapPage = 'campus_map_page';

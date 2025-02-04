@@ -11,9 +11,15 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Scaffold(
+        appBar: AppBar(
+        backgroundColor: Theme.of(context).cardColor,
+    title: Text("Notifications",
+    style: Theme.of(context).textTheme.bodyMedium),),
+      body: Center(
       child: Text("This page is not yet created",
           style: Theme.of(context).textTheme.labelSmall),
+      )
     );
   }
 }

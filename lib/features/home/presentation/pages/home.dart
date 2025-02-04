@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:uhl_link/features/home/presentation/pages/academics.dart';
 import 'package:uhl_link/features/home/presentation/pages/dashboard.dart';
 import 'package:uhl_link/features/home/presentation/pages/explore.dart';
-import 'package:uhl_link/features/home/presentation/pages/notifications.dart';
+import 'package:uhl_link/features/home/presentation/widgets/notifications.dart';
 import 'package:uhl_link/features/home/presentation/pages/profile.dart';
+import 'package:uhl_link/features/home/presentation/pages/job_portal_page.dart';
 
 class HomePage extends StatefulWidget {
   final bool isGuest;
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     "Dashboard",
     "Explore",
     "Academics",
-    "Notifications",
+    "Job Portal",
     "Profile",
   ];
 
@@ -31,7 +32,8 @@ class _HomePageState extends State<HomePage> {
       Dashboard(isGuest: widget.isGuest),
       Explore(isGuest: widget.isGuest),
       Academics(isGuest: widget.isGuest, user: widget.user),
-      Notifications(isGuest: widget.isGuest),
+      // Notifications(isGuest: widget.isGuest),
+      JobPortalPage(),
       Profile(isGuest: widget.isGuest, user: widget.user),
     ];
     return Scaffold(
@@ -39,6 +41,21 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).cardColor,
         title: Text(homePageTitles[currentBottomBarIndex],
             style: Theme.of(context).textTheme.bodyMedium),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              // Navigate to the Notification Page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Notifications(isGuest: widget.isGuest,)),
+              );
+              // onPressed: () {
+              //   context.go('/notifications'); // Navigate to the notifications page
+              // };
+            },
+          ),
+        ],
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: false,
@@ -62,7 +79,7 @@ class _HomePageState extends State<HomePage> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           selectedIconTheme:
-              IconThemeData(size: 30, color: Theme.of(context).primaryColor),
+          IconThemeData(size: 30, color: Theme.of(context).primaryColor),
           unselectedIconTheme: IconThemeData(
               size: 25, color: Theme.of(context).colorScheme.onSurface),
           items: const [
@@ -73,10 +90,9 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.school_rounded), label: "Academics"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.notifications_none_rounded),
-                label: "Notifications"),
+                icon: Icon(Icons.work_outline_rounded), label: "Job Portal"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.terminal_rounded), label: "Profile"),
+                icon: Icon(Icons.person), label: "Profile"),
           ]),
     );
   }
