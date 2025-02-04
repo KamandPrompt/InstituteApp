@@ -23,7 +23,6 @@ import 'package:uhl_link/widgets/splash_screen.dart';
 import 'package:uhl_link/widgets/test.dart';
 
 class UhlLinkRouter {
-  static bool isGuest = false;
   GoRouter router = GoRouter(
     initialLocation: '/',
     routes: [
@@ -152,10 +151,10 @@ class UhlLinkRouter {
           }),
       GoRoute(
           name: UhlLinkRoutesNames.notifications,
-          path: '/notifications',
+          path: '/notifications/:isGuest',
           pageBuilder: (context, state) {
             return MaterialPage(
-                key: state.pageKey, child: Notifications(isGuest: isGuest));
+                key: state.pageKey, child: Notifications(isGuest: jsonDecode(state.pathParameters["isGuest"]!)));
           }),
 
       GoRoute(

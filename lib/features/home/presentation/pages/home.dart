@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:uhl_link/features/home/presentation/pages/academics.dart';
 import 'package:uhl_link/features/home/presentation/pages/dashboard.dart';
 import 'package:uhl_link/features/home/presentation/pages/explore.dart';
-import 'package:uhl_link/features/home/presentation/widgets/notifications.dart';
 import 'package:uhl_link/features/home/presentation/pages/profile.dart';
 import 'package:uhl_link/features/home/presentation/pages/job_portal_page.dart';
+
+import '../../../../config/routes/routes_consts.dart';
 
 class HomePage extends StatefulWidget {
   final bool isGuest;
@@ -46,10 +50,7 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.notifications),
             onPressed: () {
               // Navigate to the Notification Page
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Notifications(isGuest: widget.isGuest,)),
-              );
+              GoRouter.of(context).pushNamed(UhlLinkRoutesNames.notifications, pathParameters: {'isGuest' : jsonEncode(widget.isGuest)});
               // onPressed: () {
               //   context.go('/notifications'); // Navigate to the notifications page
               // };

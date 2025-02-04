@@ -26,9 +26,7 @@ class _JobPortalPageState extends State<JobPortalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Padding(
+    return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: BlocBuilder<JobPortalBloc, JobPortalState>(
             builder: (context, state) {
@@ -66,7 +64,6 @@ class _JobPortalPageState extends State<JobPortalPage> {
             return const Center(child: CircularProgressIndicator());
           }
         }),
-      ),
     );
   }
 }
