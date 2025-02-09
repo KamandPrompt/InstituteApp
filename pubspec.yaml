@@ -64,8 +64,7 @@ dependencies:
   pin_code_fields: ^8.0.1
   cached_network_image:
 
-  # Rename app
-  rename_app: ^1.6.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
