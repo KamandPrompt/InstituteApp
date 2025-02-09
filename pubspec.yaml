@@ -65,7 +65,7 @@ dependencies:
   cached_network_image:
 
   # Rename app
-  rename_app: ^latest_version
+  rename_app: ^1.6.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
