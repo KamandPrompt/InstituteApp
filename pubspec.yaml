@@ -57,6 +57,7 @@ dependencies:
   fluttertoast: ^8.2.10
   image_picker: ^1.1.2
   flutter_dotenv: ^5.1.0
+  syncfusion_flutter_calendar: ^28.2.4
 
 dev_dependencies:
   flutter_test:

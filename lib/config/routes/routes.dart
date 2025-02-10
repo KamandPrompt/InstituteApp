@@ -99,7 +99,7 @@ class UhlLinkRouter {
           path: '/academic_calender',
           pageBuilder: (context, state) {
             return MaterialPage(
-                key: state.pageKey, child: const AcademicCalenderPage());
+                key: state.pageKey, child:  CalendarScreen());
           }),
       GoRoute(
           name: UhlLinkRoutesNames.jobPortalPage,
