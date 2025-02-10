@@ -1,13 +1,18 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uhl_link/features/authentication/domain/entities/user_entity.dart';
 
 import '../../../../widgets/form_field_widget.dart';
 import '../../../../widgets/screen_width_button.dart';
+import '../bloc/lost_found_bloc/lnf_bloc.dart';
 
 class LostFoundAddItemPage extends StatefulWidget {
-  const LostFoundAddItemPage({super.key});
+  final Map<String, dynamic> user;
+  const LostFoundAddItemPage({super.key, required this.user});
 
   @override
   State<LostFoundAddItemPage> createState() => _LostFoundAddItemPageState();
@@ -40,34 +45,33 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
   String? errorDescriptionValue;
   final GlobalKey<FormState> descriptionKey = GlobalKey();
 
-  File? image;
+  List<String> images = [];
   final ImagePicker picker = ImagePicker();
 
   Future<void> pickImage() async {
     try {
-      final XFile? pickedFile = await picker.pickImage(
-        source: ImageSource.gallery,
-        // maxWidth: 1000,
-        // maxHeight: 1000,
-        // imageQuality: 85,
-      );
+      final List<XFile> pickedImages = await picker.pickMultiImage(limit: 3);
 
-      if (pickedFile != null) {
-        setState(() {
-          image = File(pickedFile.path);
-        });
-      }
-    } catch (e) {
+      setState(() {
+        for (XFile image in pickedImages) {
+          images.add(image.path);
+        }
+      });
+        } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Error uploading image.")));
     }
   }
+
+  String? itemStatus;
+  List<String> lostOrFound = ["Lost", "Found"];
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
+    UserEntity user = UserEntity.fromJson(widget.user);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
@@ -90,16 +94,6 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // SizedBox(
-                      //   width: width * 0.85,
-                      //   child: Text("Lost Item Image",
-                      //       // textAlign: TextAlign.left,
-                      //       style: Theme.of(context)
-                      //           .textTheme
-                      //           .bodyMedium!
-                      //           .copyWith(fontSize: 18)),
-                      // ),
-                      // SizedBox(height: height * 0.01),
                       GestureDetector(
                         onTap: () async {
                           await pickImage();
@@ -119,13 +113,23 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                             child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(12)),
-                              child: image != null
-                                  ? Image.file(
-                                      image!,
-                                      fit: BoxFit.cover,
-                                      alignment: Alignment.center,
+                              child: images != []
+                                  ? SizedBox(
                                       width: width - 40,
                                       height: height * 0.3,
+                                      child: GridView.builder(
+                                          itemCount: images.length,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return Image.file(
+                                              File(images[index]),
+                                              fit: BoxFit.cover,
+                                              alignment: Alignment.center,
+                                            );
+                                          }),
                                     )
                                   : Icon(
                                       Icons.image_rounded,
@@ -163,8 +167,11 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         controller: contactController,
                         obscureText: false,
                         validator: (value) {
-                          if (value!.length != 10) {
-                            return "Enter a valid Contact Number.";
+                          if (value == null || value.trim().isEmpty) {
+                            return "Contact number is required.";
+                          }
+                          if (!RegExp(r'^\d{10}$').hasMatch(value)) {
+                            return "Enter a valid 10-digit Contact Number.";
                           }
                           return null;
                         },
@@ -213,7 +220,8 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                           date = (await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
-                            firstDate: DateTime(1950, 1, 1),
+                            firstDate: DateTime.now()
+                                .subtract(const Duration(days: 7)),
                             lastDate: DateTime.now(),
                           ))!;
 
@@ -224,9 +232,67 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         errorText: errorDateValue,
                         prefixIcon: Icons.date_range_rounded,
                         showSuffixIcon: false,
-                        hintText: "Enter Date of Lost",
+                        hintText: "Enter Date of Lost/Found",
                         textInputAction: TextInputAction.done,
                       ),
+                      SizedBox(height: height * 0.03),
+                      FormField<String>(
+                          builder: (FormFieldState<String> state) {
+                        return InputDecorator(
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 15),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.scrim,
+                                    width: 1),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(12)),
+                                gapPadding: 24),
+                            fillColor: Theme.of(context).cardColor,
+                            filled: true,
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).primaryColor,
+                                    width: 2),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(12)),
+                                gapPadding: 24),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: itemStatus,
+                              isDense: true,
+                              hint: Text(
+                                "Lost/Found",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .scrim),
+                              ),
+                              dropdownColor: Theme.of(context).cardColor,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  itemStatus = newValue;
+                                });
+                              },
+                              items: lostOrFound.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        );
+                      }),
                       SizedBox(height: height * 0.1),
                     ],
                   ),
@@ -245,14 +311,44 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         final bool isDateValid =
                             dateKey.currentState!.validate();
 
+                        if (itemStatus == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Please Select Lost or Found",
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall),
+                              backgroundColor: Theme.of(context).cardColor));
+                        }
+
+                        if (images.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Please Upload Images",
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall),
+                              backgroundColor: Theme.of(context).cardColor));
+                        }
+
                         if (isNameValid &&
                             isDateValid &&
                             isContactValid &&
-                            isDescriptionValid) {
-                          // BlocProvider.of<AuthenticationBloc>(context).add(
-                          //     SignInEvent(
-                          //         email: emailTextEditingController.text,
-                          //         password: passwordTextEditingController.text));
+                            isDescriptionValid &&
+                            itemStatus != null) {
+                          BlocProvider.of<LnfBloc>(context)
+                              .add(AddLostFoundItemEvent(
+                            name: nameController.text,
+                            phoneNo: contactController.text,
+                            description: descriptionController.text,
+                            date: DateTime.parse(dateController.text),
+                            lostOrFound: itemStatus!,
+                            from: user.email,
+                            images: images,
+                          ));
+
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Please Upload Images",
+                                  style:
+                                  Theme.of(context).textTheme.labelSmall),
+                              backgroundColor: Theme.of(context).cardColor));
+                          GoRouter.of(context).pop();
                         }
                       },
                       // isLoading: userLoading,

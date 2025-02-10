@@ -13,13 +13,14 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-        backgroundColor: Theme.of(context).cardColor,
-    title: Text("Notifications",
-    style: Theme.of(context).textTheme.bodyMedium),),
-      body: Center(
-      child: Text("This page is not yet created",
-          style: Theme.of(context).textTheme.labelSmall),
-      )
-    );
+          backgroundColor: Theme.of(context).cardColor,
+          title: Text("Notifications",
+              style: Theme.of(context).textTheme.bodyMedium),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Text("This page is not yet created",
+              style: Theme.of(context).textTheme.labelSmall),
+        ));
   }
 }

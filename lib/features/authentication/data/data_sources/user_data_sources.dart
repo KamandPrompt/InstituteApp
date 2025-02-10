@@ -23,7 +23,7 @@ class UhlUsersDB {
       final users = await collection?.find().toList();
       return users;
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
       return [];
     }
   }
@@ -34,7 +34,31 @@ class UhlUsersDB {
       final users = await collection?.find().toList();
       return users?.map((user) => User.fromJson(user)).toList();
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
+      return null;
+    }
+  }
+
+  // create
+  Future<User?> createUser(
+      String name, String email, String password, String? image) async {
+    final userValues = {
+      '_id': ObjectId(),
+      'name': name,
+      'email': email,
+      'password': password,
+      'image': image ?? ""
+    };
+    try {
+      final id = await collection?.insertOne(userValues);
+      if (id != null && id.document != null) {
+        // log(id.document.toString());
+        return User.fromJson(id.document!);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
       return null;
     }
   }
@@ -42,26 +66,26 @@ class UhlUsersDB {
   // Update
   Future<bool?> updatePassword(String id, String password) async {
     try {
-      // print(id);
+      // log(id);
       ObjectId objId = ObjectId.fromHexString(id);
       final success = await collection?.updateOne(
           where.eq('_id', objId), ModifierBuilder()..set('password', password));
       return success?.isSuccess;
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
       return false;
     }
   }
 
   Future<bool?> updateImage(String id, String image) async {
     try {
-      // print(id);
+      // log(id);
       ObjectId objId = ObjectId.fromHexString(id);
       final success = await collection?.updateOne(
           where.eq('_id', objId), ModifierBuilder()..set('image', image));
       return success?.isSuccess;
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
       return false;
     }
   }
@@ -78,7 +102,7 @@ class UhlUsersDB {
         return User.fromJson(users!.first);
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
       return null;
     }
   }
@@ -92,7 +116,7 @@ class UhlUsersDB {
         return [];
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
       return [];
     }
   }
@@ -107,7 +131,7 @@ class UhlUsersDB {
         return [];
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
       return [];
     }
   }
@@ -115,6 +139,6 @@ class UhlUsersDB {
   // Close Connection
   Future<void> close() async {
     await db?.close();
-    print('Connection to MongoDB closed');
+    log('Connection to MongoDB closed');
   }
 }

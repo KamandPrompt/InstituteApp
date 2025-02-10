@@ -14,6 +14,7 @@ class FormFieldWidget extends StatefulWidget {
   final String hintText;
   final TextInputAction textInputAction;
   final void Function()? onTap;
+  bool? readOnly;
 
   FormFieldWidget({
     super.key,
@@ -28,6 +29,7 @@ class FormFieldWidget extends StatefulWidget {
     required this.showSuffixIcon,
     required this.hintText,
     this.onTap,
+    this.readOnly,
     required this.focusNode,
     required this.textInputAction,
   });
@@ -61,6 +63,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
           onTapOutside: (event) {
             widget.focusNode.unfocus();
           },
+          readOnly: widget.readOnly ?? false,
           onTap: widget.onTap,
           controller: widget.controller,
           obscureText: widget.obscureText,

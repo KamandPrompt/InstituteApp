@@ -50,8 +50,12 @@ class _ScreenWidthButtonState extends State<ScreenWidthButton> {
                     ?.copyWith(color: Colors.white)),
             widget.isLoading ? const SizedBox(width: 20) : const SizedBox(),
             widget.isLoading
-                ? const SizedBox(
-                    height: 30, width: 30, child: CircularProgressIndicator())
+                ? SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        strokeWidth: 3))
                 : const SizedBox()
           ],
         ),

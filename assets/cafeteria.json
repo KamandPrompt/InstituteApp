@@ -1,0 +1,248 @@
+{
+  "cafeterias": [
+    {
+      "name": "One Bite",
+      "location": "North Campus",
+      "contact": "+91 9528550758",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Bake-o-Mocha",
+      "location": "North Campus",
+      "contact": "Not Available",
+      "openingTime": "9:00 AM - 11:00 PM",
+      "deliveryTime": "9:00 AM - 11:00 PM",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Himalayan Soldier Cafe",
+      "location": "North Campus",
+      "contact": "+91 80915 94095",
+      "openingTime": "10:00 AM - 11:00 PM",
+      "deliveryTime": "10:00 AM - 11:00 PM",
+      "menuImages": [
+        "https://i.postimg.cc/fWY4bt1M/Himalayan-cafe-menu-1-page-0002.jpg",
+        "https://i.postimg.cc/MKwCfZ8V/Himalayan-cafe-menu-1-page-0003.jpg"
+      ]
+    },
+    {
+      "name": "The Higher Taste",
+      "location": "North Campus",
+      "contact": "Not Available",
+      "openingTime": "9:00 AM - 12:00 AM",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://i.postimg.cc/0jZ8MwV9/Whats-App-Image-2025-01-30-at-23-44-27.jpg",
+        "https://i.postimg.cc/dttQM503/Whats-App-Image-2025-01-30-at-23-44-25-1.jpg",
+        "https://i.postimg.cc/9MhVLpSW/Whats-App-Image-2025-01-30-at-23-44-25.jpg"
+      ]
+    },
+    {
+      "name": "Drongo",
+      "location": "North Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Monal",
+      "location": "North Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Mega Star",
+      "location": "North Campus",
+      "contact": "+91 1905267279",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Red Start",
+      "location": "North Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Fruit Shop",
+      "location": "North Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Juice Shop",
+      "location": "North Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Griffon",
+      "location": "South Campus",
+      "contact": "+91 9816154265",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Bulbul",
+      "location": "South Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "4Teen’s",
+      "location": "South Campus",
+      "contact": "+91 9149787151",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Fruit Salad/Juice Kiosk",
+      "location": "South Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Pizza Bites",
+      "location": "Near North Campus, Salgi",
+      "contact": "+91 9625970000",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://i.postimg.cc/QxqRQLXP/Whats-App-Image-2025-01-30-at-22-55-26.jpg",
+        "https://i.postimg.cc/3xSVqg0F/Whats-App-Image-2025-01-30-at-22-55-27.jpg"
+      ]
+    },
+    {
+      "name": "Sonu Fast Food",
+      "location": "Main Road, Near North Campus, Salgi",
+      "contact": "+91 7018903256",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "New Jeeva",
+      "location": "Near North Campus, Salgi",
+      "contact": "+91 7018596320",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Mehfil",
+      "location": "Near North Campus, Opposite Pizza Bites",
+      "contact": "+91 9455891129",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Baba Ji Dhaba",
+      "location": "Near North Campus",
+      "contact": "+91 9373290270",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Jassi Canteen",
+      "location": "Near North Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "New Parashar Food Corner",
+      "location": "Near North Campus, Salgi",
+      "contact": "+91 7876320033",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "The Treat",
+      "location": "Near Main Gate, South Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Moh Maya Cafe",
+      "location": "South Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    },
+    {
+      "name": "Kemps Corner Food Point",
+      "location": "South Campus",
+      "contact": "Not Available",
+      "openingTime": "Not Available",
+      "deliveryTime": "Not Available",
+      "menuImages": [
+        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      ]
+    }
+  ]
+}

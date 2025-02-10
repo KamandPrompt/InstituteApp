@@ -29,6 +29,35 @@ class UserError extends AuthenticationState {
   const UserError({required this.message});
 }
 
+class UserCreating extends AuthenticationState {}
+
+class UserCreated extends AuthenticationState {
+  final UserEntity user;
+
+  const UserCreated({required this.user});
+}
+
+class UserCreatingError extends AuthenticationState {
+  final String message;
+
+  const UserCreatingError({required this.message});
+}
+
+class OTPSending extends AuthenticationState {}
+
+class OTPSent extends AuthenticationState {
+  final UserEntity user;
+  final int otp;
+
+  const OTPSent({required this.user, required this.otp});
+}
+
+class OTPSendingError extends AuthenticationState {
+  final String message;
+
+  const OTPSendingError({required this.message});
+}
+
 class PasswordUpdating extends AuthenticationState {}
 
 class PasswordUpdatedSuccessfully extends AuthenticationState {

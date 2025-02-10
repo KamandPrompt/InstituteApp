@@ -1,6 +1,4 @@
-import 'package:mongo_dart/mongo_dart.dart';
-
-class LostFoundItem {
+class LostFoundItemEntity {
   final String id;
   final String from;
   final String lostOrFound;
@@ -10,7 +8,7 @@ class LostFoundItem {
   final DateTime date;
   final String phoneNo;
 
-  LostFoundItem({
+  LostFoundItemEntity({
     required this.id,
     required this.from,
     required this.lostOrFound,
@@ -21,9 +19,9 @@ class LostFoundItem {
     required this.phoneNo,
   });
 
-  factory LostFoundItem.fromJson(Map<String, dynamic> json) {
-    return LostFoundItem(
-      id: (json['_id'] as ObjectId).oid,
+  factory LostFoundItemEntity.fromJson(Map<String, dynamic> json) {
+    return LostFoundItemEntity(
+      id: json['id'],
       from: json['from'],
       lostOrFound: json['lostOrFound'],
       name: json['name'],
