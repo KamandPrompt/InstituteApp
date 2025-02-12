@@ -14,7 +14,7 @@ import 'package:uhl_link/features/authentication/presentation/pages/update_passw
 import 'package:uhl_link/features/home/presentation/pages/job_portal.dart';
 import 'package:uhl_link/features/home/presentation/pages/home.dart';
 import 'package:uhl_link/features/home/presentation/widgets/PORs_page.dart';
-import 'package:uhl_link/features/home/presentation/widgets/academic_calender_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/AcademicCalendarPage.dart';
 import 'package:uhl_link/features/home/presentation/widgets/achievements_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/campus_map_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/job_details_page.dart';
