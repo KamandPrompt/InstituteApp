@@ -30,6 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^9.0.0   # Secure encrypted storage
+  crypt: ^4.0.1                     # Hashing passwords
+  local_auth: ^2.1.6                 # Optional: Biometric authentication
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -90,7 +94,7 @@ flutter:
   assets:
     - assets/images/
     - assets/pdf/
-    - institute.env
+    - assets/institute.env
     - assets/cafeteria.json
   #   - images/a_dot_ham.jpeg
 

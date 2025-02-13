@@ -105,3 +105,78 @@ class UhlLink extends StatelessWidget {
     );
   }
 }
+import 'package:flutter/material.dart';
+import 'secure_storage.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Secure Password Store',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: PasswordScreen(),
+    );
+  }
+}
+
+class PasswordScreen extends StatefulWidget {
+  @override
+  _PasswordScreenState createState() => _PasswordScreenState();
+}
+
+class _PasswordScreenState extends State<PasswordScreen> {
+  final TextEditingController _controller = TextEditingController();
+  final SecureStorage _secureStorage = SecureStorage();
+  String _retrievedPassword = "No password stored";
+
+  void _savePassword() async {
+    await _secureStorage.savePassword(_controller.text);
+    _controller.clear();
+    setState(() {
+      _retrievedPassword = "Password Saved!";
+    });
+  }
+
+  void _getPassword() async {
+    String? password = await _secureStorage.getPassword();
+    setState(() {
+      _retrievedPassword = password ?? "No password found";
+    });
+  }
+
+  void _deletePassword() async {
+    await _secureStorage.deletePassword();
+    setState(() {
+      _retrievedPassword = "Password deleted!";
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Secure Password Store")),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _controller,
+              decoration: InputDecoration(labelText: "Enter Password"),
+              obscureText: true,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(onPressed: _savePassword, child: Text("Save Password")),
+            ElevatedButton(onPressed: _getPassword, child: Text("Retrieve Password")),
+            ElevatedButton(onPressed: _deletePassword, child: Text("Delete Password")),
+            SizedBox(height: 20),
+            Text(_retrievedPassword, style: TextStyle(fontSize: 18)),
+          ],
+        ),
+      ),
+    );
+  }
+}
