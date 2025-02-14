@@ -376,13 +376,7 @@ class Constants {
     isAllDay: true,
     color: Colors.purple,
   ),
-  Appointment(
-    subject: "EXODIA",
-    startTime: DateTime(2025, 3, 31),
-    endTime: DateTime(2025, 3, 31),
-    isAllDay: true,
-    color: Colors.red,
-  ),
+
   Appointment(
     subject: "XPECTO",
     startTime: DateTime(2025, 3, 29),
@@ -437,7 +431,7 @@ class Constants {
   color: Colors.redAccent,
   ),
   Appointment(
-  subject: "Vacation Begins for Students",
+  subject: "Annual Vacation",
   startTime: DateTime(2025, 5, 25),
   endTime: DateTime(2025, 7, 31),
   isAllDay: true,
@@ -507,7 +501,7 @@ class Constants {
   Appointment(
     startTime: DateTime(2025, 8, 1, 9, 0),
     endTime: DateTime(2025, 8, 1, 10, 0),
-    subject: 'Classes Begin - Students report to FA (Add/Drop starts)',
+    subject: 'Classes Begin-Students report to FA',
     isAllDay: true,
   ),
   Appointment(
@@ -587,9 +581,9 @@ class Constants {
   color: Colors.yellow,
   ),
   Appointment(
-  subject: "Final TCF Submission",
+  subject: "Final TCF Submission till 28th",
   startTime: DateTime(2025, 11, 17),
-  endTime: DateTime(2025, 11, 28),
+  endTime: DateTime(2025, 11, 17),
   isAllDay: true,
   color: Colors.brown,
   ),
@@ -603,7 +597,7 @@ class Constants {
 
   // December 2025
   Appointment(
-  subject: "Vacation Begins for Students",
+  subject: "Winter Vacations",
   startTime: DateTime(2025, 12, 8),
   endTime: DateTime(2025, 12, 31),
   isAllDay: true,
