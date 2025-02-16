@@ -76,148 +76,144 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Montserrat'),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Center(
-              child: Text(
-            "About",
-            style: TextStyle(
-                fontSize: 22,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.bold),
-          )),
-        ),
-        body: SingleChildScrollView(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).cardColor,
+        title: Text("About", style: Theme.of(context).textTheme.bodyMedium),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                        "This app is your one-stop solution for everything related to IIT Mandi. Designed for students, faculty, and visitors, it offers features to simplify campus life, including:",
-                        style:
-                            TextStyle(fontSize: 14, color: Color(0xFF212121))),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w300,
-                            color: Color(0xFF212121)), // Base style
-                        children: [
-                          TextSpan(
-                            text: "- ",
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "This app is your one-stop solution for everything related to IIT Mandi. Designed for students, faculty, and visitors, it offers features to simplify campus life, including:",
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onError),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onError),
+                      // Base style
+                      children: const [
+                        TextSpan(
+                          text: "- ",
+                        ),
+                        TextSpan(
+                          text: "Event Updates",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
                           ),
-                          TextSpan(
-                            text: "Event Updates",
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                            ),
+                        ),
+                        TextSpan(
+                          text:
+                              ": Stay informed about upcoming academic and cultural events.",
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onError),
+                      // Base style
+                      children: const [
+                        TextSpan(
+                          text: "- ",
+                        ),
+                        TextSpan(
+                          text: "Navigation",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
                           ),
-                          TextSpan(
+                        ),
+                        TextSpan(
+                          text:
+                              ": Explore the campus with interactive maps and directions.",
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onError),
+                      // Base style
+                      children: const [
+                        TextSpan(
+                          text: "- ",
+                        ),
+                        TextSpan(
+                          text: "Others",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        TextSpan(
                             text:
-                                ": Stay informed about upcoming academic and cultural events.",
-                          ),
-                        ],
-                      ),
+                                ": Quick access to features like lost/found, buy/sell and other achievements updates."),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w300,
-                            color: Color(0xFF212121)), // Base style
-                        children: [
-                          TextSpan(
-                            text: "- ",
-                          ),
-                          TextSpan(
-                            text: "Navigation",
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                          TextSpan(
-                            text:
-                                ": Explore the campus with interactive maps and directions.",
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w300,
-                            color: Color(0xFF212121)), // Base style
-                        children: [
-                          TextSpan(
-                            text: "- ",
-                          ),
-                          TextSpan(
-                            text: "Others",
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                          TextSpan(
-                              text:
-                                  ": Quick access to features like lost/found, buy/sell and other achievements updates."),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const Text(
-                  "Project Leads:",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Contributors(leads),
-                const Text(
-                  "Developers: ",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Contributors(developers),
-                const SizedBox(
-                  height: 15,
-                ),
-                const Text(
-                  "Design: ",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Contributors(designTeam),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Text(
+                "Project Leads:",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 18, color: Theme.of(context).colorScheme.onError),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Contributors(leads),
+              Text(
+                "Developers: ",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 18, color: Theme.of(context).colorScheme.onError),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Contributors(developers),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                "Design: ",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 18, color: Theme.of(context).colorScheme.onError),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Contributors(designTeam),
+            ],
           ),
         ),
       ),
@@ -251,7 +247,12 @@ class AboutPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(name)
+                Text(
+                  name,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontSize: 15,
+                      color: Theme.of(context).colorScheme.onError),
+                )
               ],
             );
           }),
