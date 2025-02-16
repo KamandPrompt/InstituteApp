@@ -168,7 +168,24 @@ class UhlLinkRouter {
             return MaterialPage(
                 key: state.pageKey, child: const SettingsPage());
           }),
+<<<<<<< HEAD
 
+=======
+      GoRoute(
+          name: UhlLinkRoutesNames.settingsPage,
+          path: '/settings',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey, child: const SettingsPage());
+          }), 
+      GoRoute(
+          name: UhlLinkRoutesNames.aboutPage,
+          path: '/about',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey, child: AboutPage());
+          }),
+>>>>>>> 4ffb060 (AboutPageUpdated)
       GoRoute(
           name: UhlLinkRoutesNames.jobDetailsPage,
           path: '/job_details/:job',
