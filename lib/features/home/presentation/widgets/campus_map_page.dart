@@ -28,7 +28,7 @@ class _CampusMapPageState extends State<CampusMapPage> {
       resizeToAvoidBottomInset: false,
       body: Padding(
         padding:
-            const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+        const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -48,10 +48,10 @@ class _CampusMapPageState extends State<CampusMapPage> {
                   child: SfPdfViewerTheme(
                     data: SfPdfViewerThemeData(
                         backgroundColor: Theme.of(context).cardColor),
-                    child: SfPdfViewer.asset(
+                    child: SfPdfViewer.network(
                       isNorthMap
-                          ? 'assets/pdf/north.pdf'
-                          : 'assets/pdf/south.pdf',
+                          ? 'https://infra.iitmandi.ac.in/pdf/north.pdf'
+                          : 'https://infra.iitmandi.ac.in/pdf/south.pdf',
                       enableTextSelection: false,
                       canShowPaginationDialog: false,
                       canShowTextSelectionMenu: false,
