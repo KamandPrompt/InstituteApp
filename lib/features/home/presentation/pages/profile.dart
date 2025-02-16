@@ -46,8 +46,9 @@ class _ProfileState extends State<Profile> {
       {
         "text": "Sign Out",
         "icon": Icons.logout,
-        "route": "sign_out",
-        "guest": false
+        "route": UhlLinkRoutesNames.chooseAuth,
+        "pathParameters": {},
+        "guest": true
       },
 
     ];
@@ -156,17 +157,20 @@ class _ProfileState extends State<Profile> {
               text: item['text'],
               icon: item['icon'],
               onTap: () {
-                if(item['route'] == 'sign_out'){
-                  // widget.user = null;
+                if(item['text'] == 'Sign Out'){
                   const storage = FlutterSecureStorage();
                   storage.delete(key: 'user');
-                  GoRouter.of(context).goNamed(UhlLinkRoutesNames.chooseAuth);
+                  storage.delete(key: 'isGuest');
+                  GoRouter.of(context).goNamed(item['route'], pathParameters: {
+                    for (var entry in item['pathParameters'].entries)
+                      entry.key: entry.value.toString()
+                  });
                 }
                 else {
                   GoRouter.of(context)
-                      .pushNamed(item['route'], pathParameters: {
-                    for (var entry in item['pathParameters'].entries)
-                      entry.key: entry.value.toString()
+                    .pushNamed(item['route'], pathParameters: {
+                  for (var entry in item['pathParameters'].entries)
+                    entry.key: entry.value.toString()
                   });
                 }
               },
