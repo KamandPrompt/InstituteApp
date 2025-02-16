@@ -175,8 +175,7 @@ class UhlLinkRouter {
           pageBuilder: (context, state) {
             return MaterialPage(
                 key: state.pageKey, child: const SettingsPage());
-          }),
-        
+          }), 
       GoRoute(
           name: UhlLinkRoutesNames.aboutPage,
           path: '/about',

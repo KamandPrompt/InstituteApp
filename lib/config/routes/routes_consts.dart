@@ -25,6 +25,7 @@ class UhlLinkRoutesNames {
   static const String jobPortalPage = 'job_portal_page';
   static const String achievementsPage = 'achievements_page';
 
+
   // Profile
   static const String porsPage = 'pors_page';
   static const String settingsPage = 'settings_page';
