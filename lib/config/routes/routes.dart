@@ -11,6 +11,7 @@ import 'package:uhl_link/features/authentication/presentation/pages/login.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/otp_verification_page.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/sign_up_page.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/update_password.dart';
+import 'package:uhl_link/features/home/presentation/pages/about.dart';
 import 'package:uhl_link/features/home/presentation/pages/job_portal.dart';
 import 'package:uhl_link/features/home/presentation/pages/home.dart';
 import 'package:uhl_link/features/home/presentation/widgets/PORs_page.dart';
@@ -168,24 +169,12 @@ class UhlLinkRouter {
             return MaterialPage(
                 key: state.pageKey, child: const SettingsPage());
           }),
-<<<<<<< HEAD
-
-=======
-      GoRoute(
-          name: UhlLinkRoutesNames.settingsPage,
-          path: '/settings',
-          pageBuilder: (context, state) {
-            return MaterialPage(
-                key: state.pageKey, child: const SettingsPage());
-          }), 
       GoRoute(
           name: UhlLinkRoutesNames.aboutPage,
           path: '/about',
           pageBuilder: (context, state) {
-            return MaterialPage(
-                key: state.pageKey, child: AboutPage());
+            return MaterialPage(key: state.pageKey, child: AboutPage());
           }),
->>>>>>> 4ffb060 (AboutPageUpdated)
       GoRoute(
           name: UhlLinkRoutesNames.jobDetailsPage,
           path: '/job_details/:job',
