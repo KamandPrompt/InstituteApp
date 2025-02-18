@@ -19,6 +19,7 @@ class UhlLinkRoutesNames {
   static const String quickLinksPage = 'quick_links_page';
   static const String lostFoundPage = 'lost_found_Page';
   static const String lostFoundAddItemPage = 'lost_found_add_item_page';
+  static const String feedAddItemPage = 'feed_add_item_page';
 
   // Academics
   static const String academicCalenderPage = 'academic_calender_page';

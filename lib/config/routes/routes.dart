@@ -19,6 +19,7 @@ import 'package:uhl_link/features/home/presentation/widgets/achievements_page.da
 import 'package:uhl_link/features/home/presentation/widgets/campus_map_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/job_details_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_add_item_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/feed_add_item_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/mess_menu_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/quick_links_page.dart';
@@ -118,6 +119,18 @@ class UhlLinkRouter {
             return MaterialPage(
                 key: state.pageKey,
                 child: LostFoundAddItemPage(
+                  user: jsonDecode(state.pathParameters['user']!),
+                ));
+          }),
+
+      // Feed
+      GoRoute(
+          name: UhlLinkRoutesNames.feedAddItemPage,
+          path: '/feed_add_item/:user',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: FeedAddItemPage(
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
