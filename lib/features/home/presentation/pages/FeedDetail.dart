@@ -228,3 +228,5 @@ class _EventDetailPageState extends State<EventDetailPage> {
     );
   }
 }
+
+//7c8731da519a30de8ab34b078d61bc8999bf4c95
