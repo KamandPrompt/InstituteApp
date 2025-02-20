@@ -9,8 +9,10 @@ import 'package:uhl_link/features/authentication/data/data_sources/user_data_sou
 import 'package:uhl_link/features/authentication/domain/usecases/get_user_by_email.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/signup_user.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/update_password.dart';
+import 'package:uhl_link/features/home/data/data_sources/feed_portal_data_sources.dart';
 import 'package:uhl_link/features/home/domain/usecases/add_lost_found_item.dart';
 import 'package:uhl_link/features/home/domain/usecases/get_lost_found_items.dart';
+import 'package:uhl_link/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
 import 'package:uhl_link/utils/theme.dart';
 
 import 'features/authentication/data/repository_implementations/user_repository_impl.dart';
@@ -19,18 +21,22 @@ import 'features/authentication/domain/usecases/signin_user.dart';
 import 'features/authentication/presentation/bloc/user_bloc.dart';
 import 'features/home/data/data_sources/job_portal_data_sources.dart';
 import 'features/home/data/data_sources/lost_found_data_sources.dart';
+import 'features/home/data/repository_implementations/feed_repository_impl.dart';
 import 'features/home/data/repository_implementations/job_portal_repository_impl.dart';
 import 'features/home/data/repository_implementations/lost_found_repository_impl.dart';
+import 'features/home/domain/usecases/add_feed_item.dart';
+import 'features/home/domain/usecases/get_feed_item.dart';
 import 'features/home/domain/usecases/get_jobs.dart';
 import 'features/home/presentation/bloc/job_portal_bloc/job_bloc.dart';
 import 'features/home/presentation/bloc/lost_found_bloc/lnf_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: "institute.env");
+  await dotenv.load(fileName: "assets/institute.env");
   await UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await FeedDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   const storage = FlutterSecureStorage();
   final GoRouter router = UhlLinkRouter().router;
   runApp(BlocProvider<ThemeBloc>(
@@ -67,9 +73,16 @@ class UhlLink extends StatelessWidget {
         RepositoryProvider<AddLostFoundItem>(
             create: (_) =>
                 AddLostFoundItem(LostFoundRepositoryImpl(LostFoundDB()))),
+        RepositoryProvider<GetFeedItem>(
+            create: (_) =>
+                GetFeedItem(FeedRepositoryImpl(FeedDB()))),
+        RepositoryProvider<AddFeedItem>(
+            create: (_) =>
+                AddFeedItem(FeedRepositoryImpl(FeedDB()))),
       ],
       child: MultiBlocProvider(
         providers: [
+          
           BlocProvider<AuthenticationBloc>(
               create: (context) => AuthenticationBloc(
                   loginUser: SignInUser(UserRepositoryImpl(UhlUsersDB())),
@@ -89,6 +102,12 @@ class UhlLink extends StatelessWidget {
                       GetLostFoundItems(LostFoundRepositoryImpl(LostFoundDB())),
                   addLostFoundItem: AddLostFoundItem(
                       LostFoundRepositoryImpl(LostFoundDB())))),
+          BlocProvider<FeedBloc>(
+              create: (context) => FeedBloc(
+                  getFeedItems:
+                      GetFeedItem(FeedRepositoryImpl(FeedDB())),
+                  addFeedItem: AddFeedItem(
+                      FeedRepositoryImpl(FeedDB())))),
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, state) {
