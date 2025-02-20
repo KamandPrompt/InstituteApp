@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
-        child: Image.asset("assets/images/logo.png"),
+        child: CircularProgressIndicator(),
       ),
     );
   }

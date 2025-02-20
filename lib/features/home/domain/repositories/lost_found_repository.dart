@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:uhl_link/features/home/domain/entities/lost_found_item_entity.dart';
 
 abstract class LostFoundRepository {
@@ -7,7 +8,7 @@ abstract class LostFoundRepository {
       String lostOrFound,
       String name,
       String description,
-      List<String> images,
+      FilePickerResult images,
       DateTime date,
       String phoneNo);
 }

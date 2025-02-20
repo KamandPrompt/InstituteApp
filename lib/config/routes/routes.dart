@@ -11,11 +11,11 @@ import 'package:uhl_link/features/authentication/presentation/pages/login.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/otp_verification_page.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/sign_up_page.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/update_password.dart';
-import 'package:uhl_link/features/home/presentation/pages/about.dart';
+import 'package:uhl_link/features/home/presentation/widgets/about.dart';
 import 'package:uhl_link/features/home/presentation/pages/job_portal.dart';
 import 'package:uhl_link/features/home/presentation/pages/home.dart';
 import 'package:uhl_link/features/home/presentation/widgets/PORs_page.dart';
-import 'package:uhl_link/features/home/presentation/widgets/academic_calender_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/academic_calendar_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/achievements_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/campus_map_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/feed_add_item_page.dart';
@@ -144,7 +144,7 @@ class UhlLinkRouter {
           path: '/academic_calender',
           pageBuilder: (context, state) {
             return MaterialPage(
-                key: state.pageKey, child: const AcademicCalenderPage());
+                key: state.pageKey, child:  const AcademicCalendarPage());
           }),
       GoRoute(
           name: UhlLinkRoutesNames.jobPortalPage,

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:uhl_link/utils/password_functions.dart';
 
 import '../models/user_model.dart';
 
@@ -46,7 +47,7 @@ class UhlUsersDB {
       '_id': ObjectId(),
       'name': name,
       'email': email,
-      'password': password,
+      'password': hashPassword(password),
       'image': image ?? ""
     };
     try {
@@ -64,12 +65,12 @@ class UhlUsersDB {
   }
 
   // Update
-  Future<bool?> updatePassword(String id, String password) async {
+  Future<bool?> updatePassword(String email, String password) async {
     try {
       // log(id);
-      ObjectId objId = ObjectId.fromHexString(id);
+      // ObjectId objId = ObjectId.fromHexString(id);
       final success = await collection?.updateOne(
-          where.eq('_id', objId), ModifierBuilder()..set('password', password));
+          where.eq('email', email), ModifierBuilder()..set('password', hashPassword(password)));
       return success?.isSuccess;
     } catch (e) {
       log(e.toString());
@@ -94,12 +95,18 @@ class UhlUsersDB {
   Future<User?> getUserByEmailAndPassword(String email, String password) async {
     try {
       final users = await collection
-          ?.find(where.eq('email', email).eq('password', password))
+          ?.find(where.eq('email', email))
           .toList();
       if (users?.length != 1) {
         return null;
       } else {
-        return User.fromJson(users!.first);
+        if (validatePassword(password, users!.first['password'])) {
+          log("message");
+          return User.fromJson(users.first);
+        } else {
+          log("messagaae");
+          return null;
+        }
       }
     } catch (e) {
       log(e.toString());

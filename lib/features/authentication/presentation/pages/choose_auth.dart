@@ -1,12 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/features/authentication/data/data_sources/user_data_sources.dart';
 import '../../../../widgets/screen_width_button.dart';
-import '../bloc/user_bloc.dart';
 
 class ChooseAuthPage extends StatefulWidget {
   const ChooseAuthPage({super.key});
@@ -27,8 +24,13 @@ class _ChooseAuthPageState extends State<ChooseAuthPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-              Image.asset("assets/images/logo.png"),
-              Text("Uhl Link", style: Theme.of(context).textTheme.titleLarge),
+              Image.asset(
+                "assets/images/logo.png",
+                width: MediaQuery.of(context).size.aspectRatio * 400,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              Text("Vertex", style: Theme.of(context).textTheme.titleLarge!.copyWith(letterSpacing: 2.5)),
+              Text("IIT Mandi", textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium!.copyWith(letterSpacing: 1.5)),
               const Expanded(child: SizedBox()),
               ScreenWidthButton(
                 text: "Sign Up via IIT Mandi E-Mail",

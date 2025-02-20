@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:uhl_link/features/home/data/models/lost_found_item_model.dart';
+import 'package:uhl_link/utils/cloudinary_services.dart';
 
 class LostFoundDB {
   static Db? db;
@@ -38,20 +40,22 @@ class LostFoundDB {
       String lostOrFound,
       String name,
       String description,
-      List<String> images,
+      FilePickerResult images,
       DateTime date,
       String phoneNo) async {
-    final itemValues = {
-      '_id': ObjectId(),
-      'from': from,
-      'lostOrFound': lostOrFound,
-      'name': name,
-      'description': description,
-      'images': images,
-      'date': date,
-      'phoneNo': phoneNo
-    };
     try {
+      List<String> imagesList = await uploadImagesToLNF(images);
+      // log(imagesList.toString());
+      final itemValues = {
+        '_id': ObjectId(),
+        'from': from,
+        'lostOrFound': lostOrFound,
+        'name': name,
+        'description': description,
+        'images': imagesList,
+        'date': date,
+        'phoneNo': phoneNo
+      };
       final id = await collection?.insertOne(itemValues);
       if (id != null && id.document != null) {
         return LostFoundItem.fromJson(id.document!);

@@ -34,10 +34,10 @@ class SignInEvent extends AuthenticationEvent {
 }
 
 class PasswordUpdateEvent extends AuthenticationEvent {
-  final String id;
+  final String email;
   final String newPassword;
 
-  const PasswordUpdateEvent({required this.id, required this.newPassword});
+  const PasswordUpdateEvent({required this.email, required this.newPassword});
 }
 
 class GetUserByEmailEvent extends AuthenticationEvent {

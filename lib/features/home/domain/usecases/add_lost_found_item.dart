@@ -1,3 +1,5 @@
+import 'package:file_picker/file_picker.dart';
+
 import '../entities/lost_found_item_entity.dart';
 import '../repositories/lost_found_repository.dart';
 
@@ -11,7 +13,7 @@ class AddLostFoundItem {
       String lostOrFound,
       String name,
       String description,
-      List<String> images,
+      FilePickerResult images,
       DateTime date,
       String phoneNo) {
     return repository.addLostFoundItem(

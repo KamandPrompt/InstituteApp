@@ -66,16 +66,20 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   bool _isEmailValid = false;
-  bool userLoading = false;
+  bool sendingMail = false;
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state is OTPSending) {
-          userLoading = true;
+          setState(() {
+            sendingMail = true;
+          });
         } else if (state is OTPSent) {
-          userLoading = false;
+          setState(() {
+            sendingMail = false;
+          });
 
           Fluttertoast.showToast(
               msg: "OTP sent successfully. Please check your email.",
@@ -99,7 +103,9 @@ class _SignUpPageState extends State<SignUpPage> {
               timeInSecForIosWeb: 1,
               backgroundColor: Theme.of(context).cardColor,
               textColor: Theme.of(context).colorScheme.onSurface);
-          userLoading = false;
+          setState(() {
+            sendingMail = false;
+          });
         }
       },
       child: Scaffold(
@@ -113,187 +119,193 @@ class _SignUpPageState extends State<SignUpPage> {
           centerTitle: true,
         ),
         resizeToAvoidBottomInset: false,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Stack(
-              children: [
-                SingleChildScrollView(
-                  reverse: true,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.015),
-                        FormFieldWidget(
-                          focusNode: nameFocusNode,
-                          fieldKey: nameKey,
-                          controller: nameTextEditingController,
-                          obscureText: false,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter your name.";
-                            }
-                            return null;
-                          },
-                          onChanged: (String? value) {},
-                          keyboardType: TextInputType.text,
-                          errorText: errorNameValue,
-                          prefixIcon: Icons.person_rounded,
-                          showSuffixIcon: false,
-                          hintText: "Name",
-                          textInputAction: TextInputAction.next,
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.03),
-                        FormFieldWidget(
-                          focusNode: imageFocusNode,
-                          fieldKey: imageKey,
-                          controller: imageTextEditingController,
-                          obscureText: false,
-                          validator: (value) {
-                            return null;
-                          },
-                          // onChanged: (String? value) {},
-                          keyboardType: TextInputType.text,
-                          errorText: errorImageValue,
-                          prefixIcon: Icons.image_rounded,
-                          showSuffixIcon: false,
-                          hintText: "Profile Picture Link",
-                          textInputAction: TextInputAction.next,
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.03),
-                        BlocListener<AuthenticationBloc, AuthenticationState>(
-                          listener: (context, state) {
-                            if (state is GetUserByEmailInitial) {
-                              userLoading = true;
-                            } else if (state is GetUserByEmailLoaded) {
-                              userLoading = false;
-                              if (state.user == null) {
-                                _isEmailValid = true;
-                              } else {
-                                _isEmailValid = false;
-                              }
-                            } else if (state is GetUserByEmailError) {
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              SingleChildScrollView(
+                reverse: true,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.015),
+                      FormFieldWidget(
+                        focusNode: nameFocusNode,
+                        fieldKey: nameKey,
+                        controller: nameTextEditingController,
+                        obscureText: false,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter your name.";
+                          }
+                          return null;
+                        },
+                        onChanged: (String? value) {},
+                        keyboardType: TextInputType.text,
+                        errorText: errorNameValue,
+                        prefixIcon: Icons.person_rounded,
+                        showSuffixIcon: false,
+                        hintText: "Name",
+                        textInputAction: TextInputAction.next,
+                      ),
+                      // SizedBox(
+                      //     height: MediaQuery.of(context).size.height * 0.03),
+                      // FormFieldWidget(
+                      //   focusNode: imageFocusNode,
+                      //   fieldKey: imageKey,
+                      //   controller: imageTextEditingController,
+                      //   obscureText: false,
+                      //   validator: (value) {
+                      //     return null;
+                      //   },
+                      //   // onChanged: (String? value) {},
+                      //   keyboardType: TextInputType.text,
+                      //   errorText: errorImageValue,
+                      //   prefixIcon: Icons.image_rounded,
+                      //   showSuffixIcon: false,
+                      //   hintText: "Profile Picture Link",
+                      //   textInputAction: TextInputAction.next,
+                      // ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03),
+                      BlocListener<AuthenticationBloc, AuthenticationState>(
+                        listener: (context, state) {
+                          if (state is GetUserByEmailInitial) {
+                            sendingMail = true;
+                          } else if (state is GetUserByEmailLoaded) {
+                            sendingMail = false;
+                            if (state.user == null) {
+                              _isEmailValid = true;
+                            } else {
                               _isEmailValid = false;
-                              errorEmailValue = state.message;
-                              Fluttertoast.showToast(
-                                  msg:
-                                      "Error in processing entered email and password.",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Theme.of(context).cardColor,
-                                  textColor:
-                                      Theme.of(context).colorScheme.onSurface);
                             }
-                          },
-                          child: FormFieldWidget(
-                            focusNode: emailFocusNode,
-                            fieldKey: emailKey,
-                            controller: emailTextEditingController,
-                            obscureText: false,
-                            validator: (value) {
-                              final bool emailPatternValid = RegExp(
-                                      r"^(?:[a-zA-Z0-9]+@iitmandi\.ac\.in|[a-zA-Z0-9]+@students\.iitmandi\.ac\.in)$")
-                                  .hasMatch(value!);
-                              if (!emailPatternValid) {
-                                return "Please enter a valid IIT Mandi email address.";
-                              } else if (!_isEmailValid) {
-                                return "This Email is already registered. Please login.";
-                              }
-                              return null;
-                            },
-                            onChanged: (String? value) {
-                              BlocProvider.of<AuthenticationBloc>(context)
-                                  .add(GetUserByEmailEvent(email: value ?? ""));
-                            },
-                            keyboardType: TextInputType.text,
-                            errorText: errorEmailValue,
-                            prefixIcon: Icons.email_rounded,
-                            showSuffixIcon: false,
-                            hintText: "IIT Mandi Email",
-                            textInputAction: TextInputAction.next,
-                          ),
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.03),
-                        FormFieldWidget(
-                          focusNode: passwordFocusNode,
-                          fieldKey: passwordKey,
-                          controller: passwordTextEditingController,
-                          obscureText: true,
+                          } else if (state is GetUserByEmailError) {
+                            _isEmailValid = false;
+                            errorEmailValue = state.message;
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Error in processing entered email and password.",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Theme.of(context).cardColor,
+                                textColor:
+                                    Theme.of(context).colorScheme.onSurface);
+                          }
+                        },
+                        child: FormFieldWidget(
+                          focusNode: emailFocusNode,
+                          fieldKey: emailKey,
+                          controller: emailTextEditingController,
+                          obscureText: false,
                           validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter password.";
+                            final bool emailPatternValid = RegExp(
+                                    r"^(?:[a-zA-Z0-9]+@iitmandi\.ac\.in|[a-zA-Z0-9]+@students\.iitmandi\.ac\.in)$")
+                                .hasMatch(value!);
+                            if (!emailPatternValid) {
+                              return "Please enter a valid IIT Mandi email address.";
+                            } else if (!_isEmailValid) {
+                              return "This Email is already registered. Please login.";
                             }
                             return null;
                           },
-                          onChanged: (String? value) {},
+                          onChanged: (String? value) {
+                            BlocProvider.of<AuthenticationBloc>(context)
+                                .add(GetUserByEmailEvent(email: value ?? ""));
+                          },
                           keyboardType: TextInputType.text,
-                          errorText: errorPasswordValue,
-                          prefixIcon: Icons.lock_outline_rounded,
-                          showSuffixIcon: true,
-                          hintText: "Password",
-                          textInputAction: TextInputAction.done,
+                          errorText: errorEmailValue,
+                          prefixIcon: Icons.email_rounded,
+                          showSuffixIcon: false,
+                          hintText: "IIT Mandi Email",
+                          textInputAction: TextInputAction.next,
                         ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02),
-                        Text.rich(TextSpan(children: [
-                          TextSpan(
-                              text: '* ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                      color: Theme.of(context).primaryColor)),
-                          TextSpan(
-                              text:
-                                  "This will be your new password and updating the password can be done via some logged in device only.",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .copyWith(fontFamily: 'Montserrat_Regular'))
-                        ])),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1),
-                      ]),
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03),
+                      FormFieldWidget(
+                        focusNode: passwordFocusNode,
+                        fieldKey: passwordKey,
+                        controller: passwordTextEditingController,
+                        obscureText: true,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter password.";
+                          }
+                          return null;
+                        },
+                        onChanged: (String? value) {},
+                        keyboardType: TextInputType.text,
+                        errorText: errorPasswordValue,
+                        prefixIcon: Icons.lock_outline_rounded,
+                        showSuffixIcon: true,
+                        hintText: "Password",
+                        textInputAction: TextInputAction.done,
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
+                      Text.rich(TextSpan(children: [
+                        TextSpan(
+                            text: '* ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
+                                    color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text:
+                                "This will be your new password and updating the password can be done via some logged in device only.",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(fontFamily: 'Montserrat_Regular'))
+                      ])),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1),
+                    ]),
+              ),
+              Positioned(
+                bottom: 20,
+                child: ScreenWidthButton(
+                  text: "Sign Up",
+                  buttonFunc: () async {
+                    bool nameValidator = nameKey.currentState!.validate();
+                    bool emailValidator = emailKey.currentState!.validate();
+                    bool passwordValidator =
+                        passwordKey.currentState!.validate();
+                    // bool imageValidator = imageKey.currentState!.validate();
+
+                    if (nameValidator &&
+                        emailValidator &&
+                        passwordValidator) {
+                      int otp = 1000 + Random().nextInt(9000);
+
+                      BlocProvider.of<AuthenticationBloc>(context).add(
+                          SendOTPEvent(
+                              name: nameTextEditingController.text,
+                              email: emailTextEditingController.text,
+                              password: passwordTextEditingController.text,
+                              image: imageTextEditingController.text,
+                              otp: otp));
+                    }
+                  },
+                  isLoading: sendingMail,
                 ),
-                Positioned(
-                  bottom: 20,
-                  child: ScreenWidthButton(
-                    text: "Sign Up",
-                    buttonFunc: () async {
-                      bool nameValidator = nameKey.currentState!.validate();
-                      bool emailValidator = emailKey.currentState!.validate();
-                      bool passwordValidator =
-                          passwordKey.currentState!.validate();
-                      bool imageValidator = imageKey.currentState!.validate();
-
-                      if (nameValidator &&
-                          emailValidator &&
-                          passwordValidator &&
-                          imageValidator) {
-                        int otp = 1000 + Random().nextInt(9000);
-
-                        BlocProvider.of<AuthenticationBloc>(context).add(
-                            SendOTPEvent(
-                                name: nameTextEditingController.text,
-                                email: emailTextEditingController.text,
-                                password: passwordTextEditingController.text,
-                                image: imageTextEditingController.text,
-                                otp: otp));
-                      }
-                    },
-                    isLoading: userLoading,
-                  ),
+              ),
+              if (sendingMail)
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  color: Theme.of(context).cardColor.withAlpha(200),
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(),
                 )
-              ],
-            ),
+            ],
           ),
         ),
       ),

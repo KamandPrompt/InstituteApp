@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:uhl_link/features/home/data/data_sources/lost_found_data_sources.dart';
 import 'package:uhl_link/features/home/domain/entities/lost_found_item_entity.dart';
 import '../../domain/repositories/lost_found_repository.dart';
@@ -29,7 +30,7 @@ class LostFoundRepositoryImpl implements LostFoundRepository {
   }
 
   @override
-  Future<LostFoundItemEntity?> addLostFoundItem(String from, String lostOrFound, String name, String description, List<String> images, DateTime date, String phoneNo) async {
+  Future<LostFoundItemEntity?> addLostFoundItem(String from, String lostOrFound, String name, String description, FilePickerResult images, DateTime date, String phoneNo) async {
     final item = await lostFoundDatabase.addLostFoundItem(from, lostOrFound, name, description, images, date, phoneNo);
     if (item != null) {
       return LostFoundItemEntity(

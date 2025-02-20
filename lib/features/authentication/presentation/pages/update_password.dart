@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uhl_link/config/routes/routes_consts.dart';
+import 'package:uhl_link/features/authentication/domain/entities/user_entity.dart';
 
 import '../../../../widgets/form_field_widget.dart';
 import '../../../../widgets/screen_width_button.dart';
@@ -39,11 +39,12 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    UserEntity user = UserEntity.fromJson(widget.user);
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state is PasswordUpdating) {
         } else if (state is PasswordUpdatedSuccessfully) {
-          GoRouter.of(context).goNamed(UhlLinkRoutesNames.test);
+          GoRouter.of(context).pop();
         } else if (state is PasswordUpdateError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
@@ -154,7 +155,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                       if (isConfirmPasswordValid! && isPasswordValid!) {
                         BlocProvider.of<AuthenticationBloc>(context).add(
                             PasswordUpdateEvent(
-                                id: widget.user['id'],
+                                email: user.email,
                                 newPassword:
                                     passwordTextEditingController.text));
                       }

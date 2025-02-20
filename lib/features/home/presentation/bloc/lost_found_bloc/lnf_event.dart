@@ -16,7 +16,7 @@ class AddLostFoundItemEvent extends LnfEvent {
   final String lostOrFound;
   final String name;
   final String description;
-  final List<String> images;
+  final FilePickerResult images;
   final DateTime date;
   final String phoneNo;
 

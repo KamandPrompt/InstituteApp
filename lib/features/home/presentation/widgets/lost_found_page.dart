@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -22,7 +23,6 @@ class _LostFoundPageState extends State<LostFoundPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3));
     BlocProvider.of<LnfBloc>(context).add(const GetLostFoundItemsEvent());
   }
 
@@ -59,7 +59,7 @@ class _LostFoundPageState extends State<LostFoundPage> {
         ),
         resizeToAvoidBottomInset: false,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: BlocBuilder<LnfBloc, LnfState>(
             builder: (context, state) {
               if (state is LnfItemsLoading) {
@@ -68,8 +68,10 @@ class _LostFoundPageState extends State<LostFoundPage> {
                 lnfItems = state.items;
                 return ListView.separated(
                   physics: const ClampingScrollPhysics(),
-                  primary: false,
+                  primary: true,
                   itemCount: lnfItems.length,
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.09),
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
                       color: Theme.of(context).cardColor,
@@ -106,7 +108,7 @@ class _LostFoundPageState extends State<LostFoundPage> {
                                                               alpha: 0.2),
                                                       width: 1.5,
                                                     )),
-                                                child: Image.file(File(image),
+                                                child: Image.network(image,
                                                     height:
                                                         MediaQuery.of(context)
                                                                 .size
@@ -132,58 +134,63 @@ class _LostFoundPageState extends State<LostFoundPage> {
                                         autoPlayInterval:
                                             const Duration(seconds: 5),
                                         enlargeCenterPage: true)),
-                                // Image.network(
-                                //   items[index]["image"]!,
-                                //   height: MediaQuery.of(context).size.height * 0.25,
-                                //   fit: BoxFit.cover,
-                                // ),
                                 SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.02,
                                 ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Name : ${lnfItems[index].name}",
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Name : ${lnfItems[index].name}",
+                                          textAlign: TextAlign.start,
+                                          softWrap: true,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall),
+                                      SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.01),
+                                      Text(
+                                          "Contact : ${lnfItems[index].phoneNo}",
+                                          textAlign: TextAlign.start,
+                                          softWrap: true,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall),
+                                      SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.01),
+                                      Text(
+                                          "Date : ${lnfItems[index].date.toLocal()}",
+                                          textAlign: TextAlign.start,
+                                          softWrap: true,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall),
+                                      SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.01),
+                                      Text(
+                                        "Description : ${lnfItems[index].description}",
                                         textAlign: TextAlign.start,
                                         softWrap: true,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .labelSmall),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.01),
-                                    Text("Contact : ${lnfItems[index].phoneNo}",
-                                        textAlign: TextAlign.start,
-                                        softWrap: true,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.01),
-                                    Text("Date : ${lnfItems[index].date.toLocal()}",
-                                        textAlign: TextAlign.start,
-                                        softWrap: true,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.01),
-                                    Text(
-                                      "Description : ${lnfItems[index].description}",
-                                      textAlign: TextAlign.start,
-                                      softWrap: true,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall,
-                                    ),
-                                  ],
+                                            .labelSmall,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -199,14 +206,19 @@ class _LostFoundPageState extends State<LostFoundPage> {
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(
-                      height: 20,
+                      height: 10,
                     );
                   },
                 );
               } else if (state is LnfItemsLoadingError) {
                 return const Center(child: CircularProgressIndicator());
+              } else if (state is LnfItemAdded ||
+                  state is LnfItemsAddingError) {
+                BlocProvider.of<LnfBloc>(context)
+                    .add(const GetLostFoundItemsEvent());
+                return CircularProgressIndicator();
               } else {
-                return const Center(child: CircularProgressIndicator());
+                return CircularProgressIndicator();
               }
             },
           ),
@@ -214,7 +226,7 @@ class _LostFoundPageState extends State<LostFoundPage> {
         floatingActionButton: widget.isGuest
             ? Container()
             : Padding(
-                padding: const EdgeInsets.only(right: 10, bottom: 10),
+                padding: const EdgeInsets.only(right: 0, bottom: 5),
                 child: FloatingActionButton.extended(
                   onPressed: () {
                     GoRouter.of(context).pushNamed(

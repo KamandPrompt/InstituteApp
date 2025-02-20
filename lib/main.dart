@@ -32,7 +32,7 @@ import 'features/home/presentation/bloc/lost_found_bloc/lnf_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: "assets/institute.env");
+  await dotenv.load(fileName: "institute.env");
   await UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
@@ -45,6 +45,14 @@ Future<void> main() async {
   ));
 }
 
+Future<void> func () async {
+
+  await dotenv.load(fileName: "institute.env");
+  await UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+}
+
 class UhlLink extends StatelessWidget {
   final GoRouter router;
 
@@ -53,6 +61,7 @@ class UhlLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    func();
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<SignUpUser>(

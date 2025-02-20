@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:uhl_link/config/routes/routes_consts.dart';
+import 'package:uhl_link/features/home/presentation/widgets/card.dart';
 
 import '../../../../utils/theme.dart';
 
@@ -75,6 +78,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
+            CardWidget(
+                text: "About Vertex",
+                icon: Icons.info_outline_rounded,
+                onTap: () {
+                  GoRouter.of(context).pushNamed(UhlLinkRoutesNames.aboutPage);
+                }),
           ],
         ),
       ),

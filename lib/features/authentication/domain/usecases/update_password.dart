@@ -5,7 +5,7 @@ class UpdatePassword {
 
   UpdatePassword(this.repository);
 
-  Future<bool?> execute(String id, String password) {
-    return repository.updatePassword(id, password);
+  Future<bool?> execute(String email, String password) {
+    return repository.updatePassword(email, password);
   }
 }

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
 import 'package:uhl_link/utils/functions.dart';
-
 import '../widgets/card.dart';
 
 class Profile extends StatefulWidget {
@@ -17,6 +17,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> items = [
@@ -41,7 +43,18 @@ class _ProfileState extends State<Profile> {
         'pathParameters': {},
         "guest": true
       },
+      {
+        "text": "Sign Out",
+        "icon": Icons.logout,
+        "route": UhlLinkRoutesNames.chooseAuth,
+        "pathParameters": {},
+        "guest": true
+      },
+
     ];
+
+
+
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -144,14 +157,30 @@ class _ProfileState extends State<Profile> {
               text: item['text'],
               icon: item['icon'],
               onTap: () {
-                GoRouter.of(context).pushNamed(item['route'], pathParameters: {
+                if(item['text'] == 'Sign Out'){
+                  const storage = FlutterSecureStorage();
+                  storage.delete(key: 'user');
+                  storage.delete(key: 'isGuest');
+                  GoRouter.of(context).goNamed(item['route'], pathParameters: {
+                    for (var entry in item['pathParameters'].entries)
+                      entry.key: entry.value.toString()
+                  });
+                }
+                else {
+                  GoRouter.of(context)
+                    .pushNamed(item['route'], pathParameters: {
                   for (var entry in item['pathParameters'].entries)
                     entry.key: entry.value.toString()
-                });
+                  });
+                }
               },
             ),
+
+
         ],
+
       ),
+
     );
   }
 }

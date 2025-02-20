@@ -148,7 +148,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                               }
                               return null;
                             },
-                            // errorTextSpace: 30,
+                            errorTextSpace: 30,
                             enablePinAutofill: true,
                             enabled: true,
                             textStyle: Theme.of(context).textTheme.labelSmall,

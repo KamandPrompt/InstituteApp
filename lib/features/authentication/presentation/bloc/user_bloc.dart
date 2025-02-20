@@ -109,7 +109,7 @@ class AuthenticationBloc
     emit(PasswordUpdating());
     try {
       bool isPasswordUpdated =
-          await _updatePassword(event.id, event.newPassword);
+          await _updatePassword(event.email, event.newPassword);
       if (isPasswordUpdated) {
         const flutterSecureStorage = FlutterSecureStorage();
         var currentUser = await flutterSecureStorage.read(key: 'user');
