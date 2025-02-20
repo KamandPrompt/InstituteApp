@@ -18,6 +18,7 @@ import 'package:uhl_link/features/home/presentation/widgets/PORs_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/academic_calender_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/achievements_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/campus_map_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/feed_add_item_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/job_details_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_add_item_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_page.dart';
@@ -122,6 +123,20 @@ class UhlLinkRouter {
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
+      
+      // Feed
+      GoRoute(
+          name: UhlLinkRoutesNames.feedAddItemPage,
+          path: '/feed_add_item/:user',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: FeedAddItemPage(
+                  user: jsonDecode(state.pathParameters['user']!),
+                ));
+          }),
+       
+
 
       // Academics
       GoRoute(
