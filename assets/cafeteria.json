@@ -1,248 +1,109 @@
 {
-  "cafeterias": [
-    {
-      "name": "One Bite",
-      "location": "North Campus",
-      "contact": "+91 9528550758",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "Bake-o-Mocha",
-      "location": "North Campus",
-      "contact": "Not Available",
-      "openingTime": "9:00 AM - 11:00 PM",
-      "deliveryTime": "9:00 AM - 11:00 PM",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "Himalayan Soldier Cafe",
-      "location": "North Campus",
-      "contact": "+91 80915 94095",
-      "openingTime": "10:00 AM - 11:00 PM",
-      "deliveryTime": "10:00 AM - 11:00 PM",
-      "menuImages": [
-        "https://i.postimg.cc/fWY4bt1M/Himalayan-cafe-menu-1-page-0002.jpg",
-        "https://i.postimg.cc/MKwCfZ8V/Himalayan-cafe-menu-1-page-0003.jpg"
-      ]
-    },
-    {
-      "name": "The Higher Taste",
-      "location": "North Campus",
-      "contact": "Not Available",
-      "openingTime": "9:00 AM - 12:00 AM",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://i.postimg.cc/0jZ8MwV9/Whats-App-Image-2025-01-30-at-23-44-27.jpg",
-        "https://i.postimg.cc/dttQM503/Whats-App-Image-2025-01-30-at-23-44-25-1.jpg",
-        "https://i.postimg.cc/9MhVLpSW/Whats-App-Image-2025-01-30-at-23-44-25.jpg"
-      ]
-    },
-    {
-      "name": "Drongo",
-      "location": "North Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
+  "items": [
     {
       "name": "Monal",
+      "time": "9:00 AM - 11:00 PM",
+      "contact": "Not available",
       "location": "North Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      "deliveryTime": "10:00 AM - 10:00 PM",
+      "images": [
+        "https://example.com/monal1.jpg",
+        "https://example.com/monal2.jpg"
+      ],
+      "menu": [
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/WhatsApp%20Image%202025-02-12%20at%2018.48.35_97c182e1.jpg"
       ]
     },
     {
-      "name": "Mega Star",
+      "name": "Mocha",
+      "time": "8:00 AM - 10:00 PM",
+      "contact": "Not available",
       "location": "North Campus",
-      "contact": "+91 1905267279",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      "deliveryTime": "9:00 AM - 9:00 PM",
+      "images": [
+        "https://example.com/mocha1.jpg",
+        "https://example.com/mocha2.jpg"
+      ],
+      "menu": [
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/WhatsApp%20Image%202025-02-15%20at%2023.09.23_41e2cff4.jpg",
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/WhatsApp%20Image%202025-02-15%20at%2023.09.23_4927a356.jpg",
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/WhatsApp%20Image%202025-02-15%20at%2023.09.23_e19cc17a.jpg"
       ]
     },
     {
-      "name": "Red Start",
+      "name": "Treepie",
+      "time": "7:00 AM - 9:00 PM",
+      "contact": "+91 9727757397",
       "location": "North Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      "deliveryTime": "8:00 AM - 8:00 PM",
+      "images": [
+        "https://example.com/treepie1.jpg",
+        "https://example.com/treepie2.jpg"
+      ],
+      "menu": [
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/WhatsApp%20Image%202025-02-15%20at%2023.22.24_a13a6813.jpg",
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/WhatsApp%20Image%202025-02-15%20at%2023.22.24_e9f46e7d.jpg",
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/WhatsApp%20Image%202025-02-15%20at%2023.22.24_dde51cb2.jpg"
       ]
     },
     {
-      "name": "Fruit Shop",
-      "location": "North Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      "name":"teeN's",
+      "time":"Not available",
+      "contact":"Not available",
+      "location":"South Campus",
+      "deliveryTime":"Not available",
+      "images":["https://example.com/treepie1.jpg",
+        "https://example.com/treepie2.jpg"
+      ],
+      "menu":[
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0072.jpg",
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0073.jpg"
+
       ]
     },
     {
-      "name": "Juice Shop",
-      "location": "North Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      "name":"Magpie",
+      "time":"Not available",
+      "contact":"Not available",
+      "location":"South Campus",
+      "deliveryTime":"Not available",
+      "images":["https://example.com/treepie1.jpg",
+        "https://example.com/treepie2.jpg"
+      ],
+      "menu":[
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0075.jpg",
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0076.jpg"
+
       ]
     },
     {
-      "name": "Griffon",
-      "location": "South Campus",
-      "contact": "+91 9816154265",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      "name":"Griffon",
+      "time":"Not available",
+      "contact":"Not available",
+      "location":"South Campus",
+      "deliveryTime":"Not available",
+      "images":["https://example.com/treepie1.jpg",
+        "https://example.com/treepie2.jpg"
+      ],
+      "menu":[
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0077.jpg",
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0078.jpg"
+
       ]
     },
     {
-      "name": "Bulbul",
-      "location": "South Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "4Teen’s",
-      "location": "South Campus",
-      "contact": "+91 9149787151",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "Fruit Salad/Juice Kiosk",
-      "location": "South Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "Pizza Bites",
-      "location": "Near North Campus, Salgi",
-      "contact": "+91 9625970000",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://i.postimg.cc/QxqRQLXP/Whats-App-Image-2025-01-30-at-22-55-26.jpg",
-        "https://i.postimg.cc/3xSVqg0F/Whats-App-Image-2025-01-30-at-22-55-27.jpg"
-      ]
-    },
-    {
-      "name": "Sonu Fast Food",
-      "location": "Main Road, Near North Campus, Salgi",
-      "contact": "+91 7018903256",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "New Jeeva",
-      "location": "Near North Campus, Salgi",
-      "contact": "+91 7018596320",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "Mehfil",
-      "location": "Near North Campus, Opposite Pizza Bites",
-      "contact": "+91 9455891129",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "Baba Ji Dhaba",
-      "location": "Near North Campus",
-      "contact": "+91 9373290270",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "Jassi Canteen",
-      "location": "Near North Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "New Parashar Food Corner",
-      "location": "Near North Campus, Salgi",
-      "contact": "+91 7876320033",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "The Treat",
-      "location": "Near Main Gate, South Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "Moh Maya Cafe",
-      "location": "South Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
-      ]
-    },
-    {
-      "name": "Kemps Corner Food Point",
-      "location": "South Campus",
-      "contact": "Not Available",
-      "openingTime": "Not Available",
-      "deliveryTime": "Not Available",
-      "menuImages": [
-        "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw="
+      "name":"Bulbul",
+      "time":"Not available",
+      "contact":"Not available",
+      "location":"South Campus",
+      "deliveryTime":"Not available",
+      "images":["https://example.com/treepie1.jpg",
+        "https://example.com/treepie2.jpg"
+      ],
+      "menu":[
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0079.jpg",
+        "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0080.jpg"
+
       ]
     }
-  ]
-}
+  ]}

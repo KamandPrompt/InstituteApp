@@ -15,8 +15,9 @@ class UhlLinkRoutesNames {
 
   // Explore
   static const String messMenuPage = 'mess_menu_page';
-  static const String campusMapPage = 'campus_map_page';
+  static const String cafeteria = 'cafeteria_page';
   static const String quickLinksPage = 'quick_links_page';
+  static const String campusMapPage = 'campus_map_page';
   static const String lostFoundPage = 'lost_found_Page';
   static const String lostFoundAddItemPage = 'lost_found_add_item_page';
 

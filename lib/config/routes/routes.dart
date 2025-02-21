@@ -17,6 +17,7 @@ import 'package:uhl_link/features/home/presentation/pages/home.dart';
 import 'package:uhl_link/features/home/presentation/widgets/PORs_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/academic_calendar_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/achievements_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/cafeteria.dart';
 import 'package:uhl_link/features/home/presentation/widgets/campus_map_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/job_details_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_add_item_page.dart';
@@ -200,12 +201,18 @@ class UhlLinkRouter {
           pageBuilder: (context, state) {
             return MaterialPage(key: state.pageKey, child: const TestScreen());
           }),
+      GoRoute(
+          name: UhlLinkRoutesNames.cafeteria,
+          path: '/cafeteria',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey, child: const CafeteriaPage());
+          }),
     ],
     // redirect: (BuildContext context, GoRouterState state) async {
     //   const storage = FlutterSecureStorage();
     //   final token = await storage.read(key: 'user');
-    //
-    //   if (token == null) {
+    //    //   if (token == null) {
     //     if (state.matchedLocation != '/chooseAuth') {
     //       return '/chooseAuth';
     //     }
