@@ -13,6 +13,10 @@ import 'package:uhl_link/features/home/domain/usecases/add_lost_found_item.dart'
 import 'package:uhl_link/features/home/domain/usecases/get_lost_found_items.dart';
 import 'package:uhl_link/utils/theme.dart';
 
+import 'package:uhl_link/features/home/data/data_sources/notification_data_sources.dart';
+import 'package:uhl_link/features/home/data/repository_implementations/notification_repository_impl.dart';
+import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_bloc.dart';
+
 import 'features/authentication/data/repository_implementations/user_repository_impl.dart';
 import 'features/authentication/domain/usecases/send_otp.dart';
 import 'features/authentication/domain/usecases/signin_user.dart';
@@ -41,6 +45,8 @@ Future<void> func () async {
   await UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await NotificationsDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+
 }
 
 class UhlLink extends StatelessWidget {
@@ -94,6 +100,12 @@ class UhlLink extends StatelessWidget {
                       GetLostFoundItems(LostFoundRepositoryImpl(LostFoundDB())),
                   addLostFoundItem: AddLostFoundItem(
                       LostFoundRepositoryImpl(LostFoundDB())))),
+          BlocProvider<NotificationBloc>(
+            create: (context) => NotificationBloc(
+              notificationRepository: NotificationRepositoryImpl(),
+            )
+             // Fetch notifications on startup
+          ),        
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, state) {
