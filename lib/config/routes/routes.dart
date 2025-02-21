@@ -25,6 +25,8 @@ import 'package:uhl_link/features/home/presentation/widgets/mess_menu_page.dart'
 import 'package:uhl_link/features/home/presentation/widgets/quick_links_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/settings_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/notifications_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/add_notification_page.dart'; 
+
 import 'package:uhl_link/widgets/splash_screen.dart';
 import 'package:uhl_link/widgets/test.dart';
 
@@ -200,6 +202,30 @@ class UhlLinkRouter {
           pageBuilder: (context, state) {
             return MaterialPage(key: state.pageKey, child: const TestScreen());
           }),
+      GoRoute(
+          name: UhlLinkRoutesNames.notifications,
+          path: '/notifications/:isGuest',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: NotificationsPage(
+                    isGuest: jsonDecode(state.pathParameters["isGuest"]!),
+                    user: state.extra as Map<String, dynamic>?, // Pass the user parameter
+                ));
+
+          }),
+      GoRoute(
+        name: UhlLinkRoutesNames.addNotification,
+        path: '/add_notification/:user',
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            key: state.pageKey,
+            child: AddNotificationPage(
+              user: jsonDecode(state.pathParameters['user']!), // ✅ Pass user data
+            ),
+          );
+        },
+      ),
     ],
     // redirect: (BuildContext context, GoRouterState state) async {
     //   const storage = FlutterSecureStorage();
