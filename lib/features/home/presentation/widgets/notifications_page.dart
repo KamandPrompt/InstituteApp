@@ -127,7 +127,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ),
             ),
           ),
-          floatingActionButton: FloatingActionButton(
+          floatingActionButton: widget.isGuest?null: FloatingActionButton(
             onPressed: () {
               GoRouter.of(context).pushNamed(
                 UhlLinkRoutesNames.addNotification,
