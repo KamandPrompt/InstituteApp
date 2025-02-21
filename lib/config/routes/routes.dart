@@ -186,15 +186,7 @@ class UhlLinkRouter {
                 child: JobDetailsPage(
                     job: jsonDecode(state.pathParameters["job"]!)));
           }),
-      GoRoute(
-          name: UhlLinkRoutesNames.notifications,
-          path: '/notifications/:isGuest',
-          pageBuilder: (context, state) {
-            return MaterialPage(
-                key: state.pageKey,
-                child: Notifications(
-                    isGuest: jsonDecode(state.pathParameters["isGuest"]!)));
-          }),
+
 
       GoRoute(
           name: UhlLinkRoutesNames.test,
