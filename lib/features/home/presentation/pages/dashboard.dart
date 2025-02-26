@@ -92,6 +92,12 @@ class _DashboardState extends State<Dashboard> {
         "path": UhlLinkRoutesNames.messMenuPage,
         'pathParameters': {}
       },
+      {
+        "title": 'Cafeteria',
+        "icon": Icons.local_cafe,
+        "path": UhlLinkRoutesNames.cafeteria,
+        'pathParameters': {}
+      },
     ];
     final screenSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
@@ -148,12 +154,11 @@ class _DashboardState extends State<Dashboard> {
             height: MediaQuery.of(context).size.height * 0.02,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.28,
+            height: MediaQuery.of(context).size.height * 0.35,
             child: GridView.count(
               crossAxisCount: 3,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
               children: [
                 for (int i = 0; i < items.length; i++)
                   DashboardCard(
