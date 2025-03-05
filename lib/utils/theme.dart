@@ -30,6 +30,10 @@ class UhlLinkTheme {
             color: Constants.textColorActiveLight,
             fontFamily: "Montserrat_SemiBold",
             fontSize: 20),
+        bodySmall: TextStyle(
+            color: Constants.textColorActiveLight,
+            fontFamily: "Montserrat_Regular",
+            fontSize: 18),
       ),
       cardColor: Constants.cardLight,
       hoverColor: Constants.primaryLight,
@@ -68,6 +72,10 @@ class UhlLinkTheme {
             color: Constants.textColorActiveDark,
             fontFamily: "Montserrat_SemiBold",
             fontSize: 20),
+        bodySmall: TextStyle(
+            color: Constants.textColorActiveDark,
+            fontFamily: "Montserrat_Regular",
+            fontSize: 18),
       ),
       cardColor: Constants.cardDark,
       hoverColor: Constants.primaryDark,

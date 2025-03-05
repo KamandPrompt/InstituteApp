@@ -50,7 +50,10 @@ class _HomePageState extends State<HomePage> {
                 color: Theme.of(context).colorScheme.onSurface),
             onPressed: () {
               GoRouter.of(context).pushNamed(UhlLinkRoutesNames.notifications,
-                  pathParameters: {'isGuest': jsonEncode(widget.isGuest)});
+                  pathParameters: {
+                    'isGuest': jsonEncode(widget.isGuest),
+                    'user': jsonEncode(widget.user)
+                  });
             },
           ),
         ],

@@ -26,6 +26,8 @@ import 'package:uhl_link/features/home/presentation/widgets/mess_menu_page.dart'
 import 'package:uhl_link/features/home/presentation/widgets/quick_links_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/settings_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/notifications_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/add_notification_page.dart';
+
 import 'package:uhl_link/widgets/splash_screen.dart';
 import 'package:uhl_link/widgets/test.dart';
 
@@ -144,7 +146,7 @@ class UhlLinkRouter {
           path: '/academic_calender',
           pageBuilder: (context, state) {
             return MaterialPage(
-                key: state.pageKey, child:  const AcademicCalendarPage());
+                key: state.pageKey, child: const AcademicCalendarPage());
           }),
       GoRoute(
           name: UhlLinkRoutesNames.jobPortalPage,
@@ -199,16 +201,30 @@ class UhlLinkRouter {
                 child: JobDetailsPage(
                     job: jsonDecode(state.pathParameters["job"]!)));
           }),
+
       GoRoute(
           name: UhlLinkRoutesNames.notifications,
-          path: '/notifications/:isGuest',
+          path: '/notifications/:isGuest/:user',
           pageBuilder: (context, state) {
             return MaterialPage(
                 key: state.pageKey,
-                child: Notifications(
-                    isGuest: jsonDecode(state.pathParameters["isGuest"]!)));
+                child: NotificationsPage(
+                  isGuest: jsonDecode(state.pathParameters["isGuest"]!),
+                  user: jsonDecode(state.pathParameters['user']!),
+                ));
           }),
-
+      GoRoute(
+        name: UhlLinkRoutesNames.addNotification,
+        path: '/add_notification/:user',
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            key: state.pageKey,
+            child: AddNotificationPage(
+              user: jsonDecode(state.pathParameters['user']!),
+            ),
+          );
+        },
+      ),
       GoRoute(
           name: UhlLinkRoutesNames.test,
           path: '/test',

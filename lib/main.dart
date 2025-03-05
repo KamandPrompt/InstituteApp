@@ -11,9 +11,15 @@ import 'package:uhl_link/features/authentication/domain/usecases/signup_user.dar
 import 'package:uhl_link/features/authentication/domain/usecases/update_password.dart';
 import 'package:uhl_link/features/home/data/data_sources/feed_portal_data_sources.dart';
 import 'package:uhl_link/features/home/domain/usecases/add_lost_found_item.dart';
+import 'package:uhl_link/features/home/domain/usecases/add_notification.dart';
 import 'package:uhl_link/features/home/domain/usecases/get_lost_found_items.dart';
 import 'package:uhl_link/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
+import 'package:uhl_link/features/home/domain/usecases/get_notification.dart';
 import 'package:uhl_link/utils/theme.dart';
+
+import 'package:uhl_link/features/home/data/data_sources/notification_data_sources.dart';
+import 'package:uhl_link/features/home/data/repository_implementations/notification_repository_impl.dart';
+import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_bloc.dart';
 
 import 'features/authentication/data/repository_implementations/user_repository_impl.dart';
 import 'features/authentication/domain/usecases/send_otp.dart';
@@ -45,12 +51,12 @@ Future<void> main() async {
   ));
 }
 
-Future<void> func () async {
-
+Future<void> func() async {
   await dotenv.load(fileName: "institute.env");
   await UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await NotificationsDB.connect(dotenv.env['DB_CONNECTION_URL']!);
 }
 
 class UhlLink extends StatelessWidget {
@@ -88,6 +94,13 @@ class UhlLink extends StatelessWidget {
         RepositoryProvider<AddFeedItem>(
             create: (_) =>
                 AddFeedItem(FeedRepositoryImpl(FeedDB()))),
+
+        RepositoryProvider<GetNotifications>(
+            create: (_) => GetNotifications(
+                NotificationRepositoryImpl(NotificationsDB()))),
+        RepositoryProvider<AddNotification>(
+            create: (_) =>
+                AddNotification(NotificationRepositoryImpl(NotificationsDB()))),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -117,6 +130,14 @@ class UhlLink extends StatelessWidget {
                       GetFeedItem(FeedRepositoryImpl(FeedDB())),
                   addFeedItem: AddFeedItem(
                       FeedRepositoryImpl(FeedDB())))),
+          BlocProvider<NotificationBloc>(
+              create: (context) => NotificationBloc(
+                  getNotifications: GetNotifications(
+                      NotificationRepositoryImpl(NotificationsDB())),
+                  addNotification: AddNotification(
+                      NotificationRepositoryImpl(NotificationsDB())))
+              // Fetch notifications on startup
+              ),
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, state) {

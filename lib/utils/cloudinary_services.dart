@@ -16,13 +16,15 @@ Future<List<String>> uploadImagesToLNF(FilePickerResult? images) async {
   for (PlatformFile image in images.files) {
     try {
       File imageFile = File(image.path!);
-      var uri = Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/raw/upload");
+      var uri =
+          Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/raw/upload");
 
       var request = http.MultipartRequest("POST", uri);
       request.fields["upload_preset"] = "lost_and_found";
       request.fields["resource_type"] = "raw"; // Change from "raw" to "image"
 
-      var multipartFile = await http.MultipartFile.fromPath("file", imageFile.path);
+      var multipartFile =
+          await http.MultipartFile.fromPath("file", imageFile.path);
       request.files.add(multipartFile);
 
       var response = await request.send();
@@ -43,4 +45,38 @@ Future<List<String>> uploadImagesToLNF(FilePickerResult? images) async {
   }
 
   return imageUrls;
+}
+
+Future<String?> uploadImageToNotifications(String image) async {
+  String cloudName = dotenv.env["CLOUDINARY_CLOUD_NAME"] ?? "";
+
+  try {
+    File imageFile = File(image);
+    var uri =
+        Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/raw/upload");
+
+    var request = http.MultipartRequest("POST", uri);
+    request.fields["upload_preset"] = "notifications";
+    request.fields["resource_type"] = "raw"; // Change from "raw" to "image"
+
+    var multipartFile =
+        await http.MultipartFile.fromPath("file", imageFile.path);
+    request.files.add(multipartFile);
+
+    var response = await request.send();
+    var responseBody = await response.stream.bytesToString();
+    // log(responseBody);
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(responseBody);
+      String imageUrl = jsonResponse["secure_url"];
+      // log("Image uploaded successfully: $imageUrl");
+      return imageUrl;
+    } else {
+      // log("Image upload failed: ${response.statusCode}");
+    }
+  } catch (e) {
+    log("Error uploading image: $e");
+  }
+  return null;
 }

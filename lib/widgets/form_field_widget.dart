@@ -16,6 +16,7 @@ class FormFieldWidget extends StatefulWidget {
   final bool isLargeField;
   final void Function()? onTap;
   bool? readOnly;
+  int? maxLines;
 
   FormFieldWidget({
     super.key,
@@ -34,6 +35,7 @@ class FormFieldWidget extends StatefulWidget {
     required this.focusNode,
     required this.textInputAction,
     this.isLargeField = false, // Default to false
+    this.maxLines
   });
 
   @override
@@ -117,7 +119,6 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
                       borderRadius: const BorderRadius.all(Radius.circular(12)),
                       gapPadding: 24),
                 ),
-              ),
               Positioned(
                 left: 10,
                 top: 13,

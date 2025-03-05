@@ -141,14 +141,14 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Stack(
-            alignment: Alignment.center,
+            alignment: Alignment.topCenter,
             children: [
               SingleChildScrollView(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 physics: const ClampingScrollPhysics(),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
