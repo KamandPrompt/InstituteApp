@@ -109,7 +109,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
 
               // Event Details
               Text(
-                'Hosted by',
+                'Event Name',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 15 * textScale * (screenWidth / 360),
                     ),

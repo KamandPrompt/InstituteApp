@@ -154,15 +154,16 @@ class _FeedPageState extends State<FeedPage> {
                   crossAxisAlignment: CrossAxisAlignment
                       .start, // Ensures text aligns to the left
                   children: [
-                    const Text("Hosted By",
+                    Text("Event Name",
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
+                            fontSize: 14,
+                            color: Theme.of(context).primaryColor)),
+
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.008),
                     Text(feedItems[index].host,
                         style: TextStyle(
-                            fontSize: 14,
-                            color: Theme.of(context).primaryColor)),
+                            fontSize: 20, fontWeight: FontWeight.bold)),
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.008),
                     Text(
