@@ -27,6 +27,7 @@ import 'package:uhl_link/features/home/presentation/widgets/quick_links_page.dar
 import 'package:uhl_link/features/home/presentation/widgets/settings_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/notifications_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/add_notification_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/feed_add_item_page.dart';
 
 import 'package:uhl_link/widgets/splash_screen.dart';
 import 'package:uhl_link/widgets/test.dart';
@@ -125,7 +126,17 @@ class UhlLinkRouter {
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
-
+      // Feed
+      GoRoute(
+          name: UhlLinkRoutesNames.feedAddItemPage,
+          path: '/feed_add_item/:user',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: FeedAddItemPage(
+                  user: jsonDecode(state.pathParameters['user']!),
+                ));
+          }),
       // Academics
       GoRoute(
           name: UhlLinkRoutesNames.academicCalenderPage,
