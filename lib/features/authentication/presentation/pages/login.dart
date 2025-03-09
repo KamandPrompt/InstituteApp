@@ -172,6 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: MediaQuery.of(context).size.height * 0.03),
                       FormFieldWidget(
                         focusNode: passwordFocusNode,
+                        maxLines: 1,
                         fieldKey: passwordKey,
                         controller: passwordTextEditingController,
                         obscureText: true,
