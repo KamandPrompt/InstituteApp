@@ -15,9 +15,12 @@ import 'package:uhl_link/features/home/domain/usecases/add_notification.dart';
 import 'package:uhl_link/features/home/domain/usecases/get_lost_found_items.dart';
 import 'package:uhl_link/features/home/domain/usecases/get_notification.dart';
 import 'package:uhl_link/utils/theme.dart';
+import 'package:uhl_link/features/home/data/data_sources/feed_portal_data_sources.dart';
+import 'package:uhl_link/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
 
 import 'package:uhl_link/features/home/data/data_sources/notification_data_sources.dart';
 import 'package:uhl_link/features/home/data/repository_implementations/notification_repository_impl.dart';
+import 'features/home/data/repository_implementations/feed_repository_impl.dart';
 import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_bloc.dart';
 
 import 'features/authentication/data/repository_implementations/user_repository_impl.dart';
@@ -31,6 +34,8 @@ import 'features/home/data/repository_implementations/lost_found_repository_impl
 import 'features/home/domain/usecases/get_jobs.dart';
 import 'features/home/presentation/bloc/job_portal_bloc/job_bloc.dart';
 import 'features/home/presentation/bloc/lost_found_bloc/lnf_bloc.dart';
+import 'features/home/domain/usecases/add_feed_item.dart';
+import 'features/home/domain/usecases/get_feed_item.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +53,7 @@ Future<void> func() async {
   await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await NotificationsDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await FeedDB.connect(dotenv.env['DB_CONNECTION_URL']!);
 }
 
 class UhlLink extends StatelessWidget {
@@ -81,6 +87,10 @@ class UhlLink extends StatelessWidget {
         RepositoryProvider<AddLostFoundItem>(
             create: (_) =>
                 AddLostFoundItem(LostFoundRepositoryImpl(LostFoundDB()))),
+        RepositoryProvider<GetFeedItem>(
+            create: (_) => GetFeedItem(FeedRepositoryImpl(FeedDB()))),
+        RepositoryProvider<AddFeedItem>(
+            create: (_) => AddFeedItem(FeedRepositoryImpl(FeedDB()))),
         RepositoryProvider<GetNotifications>(
             create: (_) => GetNotifications(
                 NotificationRepositoryImpl(NotificationsDB()))),
@@ -110,6 +120,10 @@ class UhlLink extends StatelessWidget {
                       GetLostFoundItems(LostFoundRepositoryImpl(LostFoundDB())),
                   addLostFoundItem: AddLostFoundItem(
                       LostFoundRepositoryImpl(LostFoundDB())))),
+          BlocProvider<FeedBloc>(
+              create: (context) => FeedBloc(
+                  getFeedItems: GetFeedItem(FeedRepositoryImpl(FeedDB())),
+                  addFeedItem: AddFeedItem(FeedRepositoryImpl(FeedDB())))),
           BlocProvider<NotificationBloc>(
               create: (context) => NotificationBloc(
                   getNotifications: GetNotifications(
