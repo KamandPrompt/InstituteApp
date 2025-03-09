@@ -9,6 +9,7 @@ import 'package:uhl_link/features/authentication/data/data_sources/user_data_sou
 import 'package:uhl_link/features/authentication/domain/usecases/get_user_by_email.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/signup_user.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/update_password.dart';
+import 'package:uhl_link/features/authentication/domain/usecases/update_profile.dart';
 import 'package:uhl_link/features/home/domain/usecases/add_lost_found_item.dart';
 import 'package:uhl_link/features/home/domain/usecases/add_notification.dart';
 import 'package:uhl_link/features/home/domain/usecases/get_lost_found_items.dart';
@@ -74,6 +75,8 @@ class UhlLink extends StatelessWidget {
             create: (_) => SignInUser(UserRepositoryImpl(UhlUsersDB()))),
         RepositoryProvider<UpdatePassword>(
             create: (_) => UpdatePassword(UserRepositoryImpl(UhlUsersDB()))),
+        RepositoryProvider<UpdateProfile>(
+            create: (_) => UpdateProfile(UserRepositoryImpl(UhlUsersDB()))),
         RepositoryProvider<GetUserByEmail>(
             create: (_) => GetUserByEmail(UserRepositoryImpl(UhlUsersDB()))),
         RepositoryProvider<GetJobs>(
@@ -105,7 +108,8 @@ class UhlLink extends StatelessWidget {
                   getUserByEmail:
                       GetUserByEmail(UserRepositoryImpl(UhlUsersDB())),
                   signUpUser: SignUpUser(UserRepositoryImpl(UhlUsersDB())),
-                  sendOTP: SendOTP(UserRepositoryImpl(UhlUsersDB())))),
+                  sendOTP: SendOTP(UserRepositoryImpl(UhlUsersDB())),
+                  updateProfile: UpdateProfile(UserRepositoryImpl(UhlUsersDB())))),
           BlocProvider<JobPortalBloc>(
               create: (context) => JobPortalBloc(
                     getJobs: GetJobs(JobPortalRepositoryImpl(JobPortalDB())),

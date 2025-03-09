@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:uhl_link/features/authentication/domain/entities/user_entity.dart';
 import 'package:uhl_link/utils/password_functions.dart';
 
+import '../../../../utils/cloudinary_services.dart';
 import '../models/user_model.dart';
 
 class UhlUsersDB {
@@ -43,6 +45,9 @@ class UhlUsersDB {
   // create
   Future<User?> createUser(
       String name, String email, String password, String? image) async {
+    if (image != null) {
+      image = await uploadImageToNotifications(image);
+    }
     final userValues = {
       '_id': ObjectId(),
       'name': name,
@@ -69,12 +74,38 @@ class UhlUsersDB {
     try {
       // log(id);
       // ObjectId objId = ObjectId.fromHexString(id);
-      final success = await collection?.updateOne(
-          where.eq('email', email), ModifierBuilder()..set('password', hashPassword(password)));
+      final success = await collection?.updateOne(where.eq('email', email),
+          ModifierBuilder()..set('password', hashPassword(password)));
       return success?.isSuccess;
     } catch (e) {
       log(e.toString());
       return false;
+    }
+  }
+
+  // Update
+  Future<UserEntity?> updateProfile(
+      String name, String email, String password, String? image) async {
+    if (image != null && !image.contains("https://") && image != "") {
+      image = await uploadImageToNotifications(image);
+    }
+    final userValues = {
+      'name': name,
+      'email': email,
+      'password': hashPassword(password),
+      'image': image
+    };
+    try {
+      final success = await collection?.updateOne(
+          where.eq('email', email),
+          ModifierBuilder()
+            ..set('name', name)
+            ..set('password', hashPassword(password))
+            ..set('image', image));
+      return success!.isSuccess ? UserEntity.fromJson(userValues) : null;
+    } catch (e) {
+      log(e.toString());
+      return null;
     }
   }
 

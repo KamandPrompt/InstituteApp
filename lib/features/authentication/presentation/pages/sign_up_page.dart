@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -28,10 +30,6 @@ class _SignUpPageState extends State<SignUpPage> {
       TextEditingController();
   final FocusNode passwordFocusNode = FocusNode();
   //
-  final TextEditingController imageTextEditingController =
-      TextEditingController();
-  final FocusNode imageFocusNode = FocusNode();
-  //
   final TextEditingController nameTextEditingController =
       TextEditingController();
   final FocusNode nameFocusNode = FocusNode();
@@ -42,9 +40,6 @@ class _SignUpPageState extends State<SignUpPage> {
   String? errorPasswordValue;
   final GlobalKey<FormState> passwordKey = GlobalKey();
 
-  String? errorImageValue;
-  final GlobalKey<FormState> imageKey = GlobalKey();
-
   String? errorNameValue;
   final GlobalKey<FormState> nameKey = GlobalKey();
 
@@ -52,15 +47,12 @@ class _SignUpPageState extends State<SignUpPage> {
   void dispose() {
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
-    imageFocusNode.dispose();
     nameFocusNode.dispose();
     emailTextEditingController.dispose();
     passwordTextEditingController.dispose();
-    imageTextEditingController.dispose();
     nameTextEditingController.dispose();
     emailKey.currentState?.dispose();
     passwordKey.currentState?.dispose();
-    imageKey.currentState?.dispose();
     nameKey.currentState?.dispose();
     super.dispose();
   }
@@ -68,8 +60,31 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _isEmailValid = false;
   bool sendingMail = false;
 
+  //
+  FilePickerResult? picker;
+
+  Future<void> pickImage() async {
+    try {
+      FilePickerResult? files = await FilePicker.platform.pickFiles(
+          allowMultiple: false,
+          type: FileType.custom,
+          allowedExtensions: ["jpg", "jpeg", "png", "gif"]);
+      setState(() {
+        picker = files;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Error uploading images.",
+              style: Theme.of(context).textTheme.labelSmall),
+          backgroundColor: Theme.of(context).cardColor));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final aspectRatio = MediaQuery.of(context).size.aspectRatio;
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state is OTPSending) {
@@ -132,8 +147,44 @@ class _SignUpPageState extends State<SignUpPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      GestureDetector(
+                        onTap: () async {
+                          await pickImage();
+                        },
+                        child: Container(
+                          width: height * 0.2,
+                          height: height * 0.2,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(height * 0.1),
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.scrim,
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Center(
+                              child: ClipRRect(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(height * 0.1)),
+                                child: (picker == null || picker!.files.isEmpty)
+                                    ? Icon(
+                                  Icons.image_rounded,
+                                  color: Theme.of(context).colorScheme.scrim,
+                                  size: aspectRatio * 100,
+                                )
+                                    : SizedBox(
+                                    width: height * 0.2,
+                                    height: height * 0.2,
+                                    child: Image.file(
+                                      File(picker!.files.first.path!),
+                                      fit: BoxFit.cover,
+                                      alignment: Alignment.center,
+                                    )),
+                              )),
+                        ),
+                      ),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.015),
+                          height: MediaQuery.of(context).size.height * 0.03),
                       FormFieldWidget(
                         focusNode: nameFocusNode,
                         fieldKey: nameKey,
@@ -145,6 +196,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           }
                           return null;
                         },
+                        maxLines: 1,
                         onChanged: (String? value) {},
                         keyboardType: TextInputType.text,
                         errorText: errorNameValue,
@@ -214,6 +266,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             }
                             return null;
                           },
+                          maxLines: 1,
                           onChanged: (String? value) {
                             BlocProvider.of<AuthenticationBloc>(context)
                                 .add(GetUserByEmailEvent(email: value ?? ""));
@@ -239,6 +292,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           }
                           return null;
                         },
+                        maxLines: 1,
                         onChanged: (String? value) {},
                         keyboardType: TextInputType.text,
                         errorText: errorPasswordValue,
@@ -290,11 +344,11 @@ class _SignUpPageState extends State<SignUpPage> {
                               name: nameTextEditingController.text,
                               email: emailTextEditingController.text,
                               password: passwordTextEditingController.text,
-                              image: imageTextEditingController.text,
+                              image: picker?.files.first.path,
                               otp: otp));
                     }
                   },
-                  isLoading: sendingMail,
+                  // isLoading: sendingMail,
                 ),
               ),
               if (sendingMail)

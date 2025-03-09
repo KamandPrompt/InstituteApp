@@ -7,7 +7,7 @@ class UhlLinkRoutesNames {
   static const String login = 'login';
   static const String signup = 'signup';
   static const String otpVerify = 'otp_verify';
-  static const String updatePassword = 'update_password';
+  static const String updateProfile = 'update_profile';
 
   static const String home = 'home';
 

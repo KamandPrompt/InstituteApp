@@ -87,4 +87,16 @@ class UserRepositoryImpl implements UserRepository {
       return null;
     }
   }
+
+  @override
+  Future<UserEntity?> updateProfile(
+      String name, String email, String password, String? image) async {
+    UserEntity? user =
+        await authDatabase.updateProfile(name, email, password, image);
+    if (user != null) {
+      return user;
+    } else {
+      return null;
+    }
+  }
 }

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -7,7 +10,8 @@ import 'package:uhl_link/features/home/presentation/widgets/card.dart';
 import '../../../../utils/theme.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  final Map<String, dynamic>? user;
+  const SettingsPage({super.key, this.user});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -78,11 +82,26 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
+            if (widget.user != null || widget.user!.isNotEmpty)
+              CardWidget(
+                  text: "Update Profile",
+                  icon: CupertinoIcons.profile_circled,
+                  onTap: () {
+                    GoRouter.of(context).pushNamed(
+                        UhlLinkRoutesNames.updateProfile,
+                        pathParameters: {"user": jsonEncode(widget.user)});
+                  }),
             CardWidget(
                 text: "About Vertex",
                 icon: Icons.info_outline_rounded,
                 onTap: () {
                   GoRouter.of(context).pushNamed(UhlLinkRoutesNames.aboutPage);
+                }),
+            CardWidget(
+                text: "Sign Out",
+                icon: Icons.logout_rounded,
+                onTap: () {
+                  GoRouter.of(context).pushNamed(UhlLinkRoutesNames.chooseAuth);
                 }),
           ],
         ),

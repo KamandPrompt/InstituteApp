@@ -46,16 +46,31 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
   late bool _obscureText; // To manage the visibility of the text
   late int? _maxLines; // To manage the max lines dynamically
 
-  @override
-  void initState() {
-    super.initState();
-    _obscureText = widget.obscureText;
-    _maxLines = widget.maxLines;
-  }
+@override
+void initState() {
+  super.initState();
+  _obscureText = widget.obscureText;
+  _maxLines = widget.maxLines;
 
-  void _toggleVisibility() {
+  widget.focusNode.addListener(() {
     setState(() {
-      _obscureText = !_obscureText;
+      // Uncomment if you want text selection on focus
+      // if (widget.focusNode.hasFocus) {
+      //   widget.controller.selection = TextSelection(
+      //     baseOffset: 0,
+      //     extentOffset: widget.controller.text.length,
+      //   );
+      // }
+    });
+  });
+}
+
+void _toggleVisibility() {
+  setState(() {
+    _obscureText = !_obscureText;
+  });
+}
+
     });
   }
 
