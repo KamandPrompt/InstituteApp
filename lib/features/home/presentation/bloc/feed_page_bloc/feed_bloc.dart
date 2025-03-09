@@ -40,7 +40,9 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
           event.host,
           event.description,
           event.images,
-          event.link);
+          event.link,
+          event.organiser
+          );
       if (item != null) {
         emit(FeedItemAdded(item: item));
       } else {

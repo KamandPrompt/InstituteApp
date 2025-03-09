@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -27,6 +28,12 @@ class _FeedPageState extends State<FeedPage> {
     super.initState();
     Future.delayed(const Duration(seconds: 3));
     BlocProvider.of<FeedBloc>(context).add(const GetFeedItemsEvent());
+  }
+
+  @override
+  void dispose() {
+    log("disposed");
+    super.dispose();
   }
 
   List<FeedItemEntity> feedItems = [];

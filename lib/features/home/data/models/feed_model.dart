@@ -6,13 +6,15 @@ class Feeditem {
   final String description;
   final List<String> images;
   final String link;
+  final String organiser;
 
   Feeditem(
       {required this.id,
       required this.host,
       required this.description,
       required this.images,
-      required this.link});
+      required this.link,
+      required this.organiser});
 
   factory Feeditem.fromJson(Map<String, dynamic> json) {
     return Feeditem(
@@ -20,7 +22,8 @@ class Feeditem {
         host: json['host'],
         description: json['description'],
         images: List<String>.from(json['images']),
-        link: json['link']);
+        link: json['link'],
+        organiser:json['organiser']);
   }
 
   Map<String, dynamic> toMap() {
@@ -29,7 +32,8 @@ class Feeditem {
       'host': host,
       'description': description,
       'images': images,
-      'link': link
+      'link': link,
+      'organiser':organiser
     };
   }
 }

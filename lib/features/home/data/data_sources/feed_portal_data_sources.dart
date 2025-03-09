@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:uhl_link/features/home/data/models/feed_model.dart';
 
@@ -34,13 +35,14 @@ class FeedDB {
 
   // Add Lost Found Item
   Future<Feeditem?> addFeeditem(
-      String host, String description, List<String> images, String link) async {
+      String host, String description, List<String> images, String link,String organiser) async {
     final itemValues = {
       '_id': ObjectId(),
       'host': host,
       'description': description,
       'images': images,
-      'link': link
+      'link': link,
+      'organiser':organiser
     };
     try {
       final id = await collection?.insertOne(itemValues);

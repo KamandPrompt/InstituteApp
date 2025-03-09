@@ -10,8 +10,9 @@ class AddFeedItem {
       String host,
       String description,
       List<String> images,
-      String link) {
+      String link,
+      String organiser) {
     return repository.addFeedItem(
-        host, description, images,link);
+        host, description, images,link,organiser);
   }
 }

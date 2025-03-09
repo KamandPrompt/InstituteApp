@@ -17,10 +17,13 @@ class AddFeedItemEvent extends FeedEvent {
   final String description;
   final List<String> images;
   final String link;
+  final String organiser;
 
   const AddFeedItemEvent(
       {required this.host,
       required this.description,
       required this.images,
-      required this.link});
+      required this.link,
+      required this.organiser
+      });
 }

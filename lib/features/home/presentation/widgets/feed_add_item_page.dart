@@ -24,6 +24,10 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
   final FocusNode nameFocusNode = FocusNode();
   String? errorNameValue;
   final GlobalKey<FormState> nameKey = GlobalKey();
+  final TextEditingController organiserController = TextEditingController();
+  final FocusNode organiserFocusNode = FocusNode();
+  String? errorOrganiserValue;
+  final GlobalKey<FormState> organiserKey = GlobalKey();
 
   final TextEditingController linkController = TextEditingController();
   final FocusNode linkFocusNode = FocusNode();
@@ -68,6 +72,8 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
     super.dispose();
     nameController.dispose();
     nameFocusNode.dispose();
+    organiserController.dispose();
+    organiserFocusNode.dispose();
     linkController.dispose();
     linkFocusNode.dispose();
     descriptionController.dispose();
@@ -190,7 +196,7 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       obscureText: false,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Name is required.';
+                          return 'Event Name is required.';
                         }
                         return null;
                       },
@@ -199,6 +205,25 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       prefixIcon: Icons.event,
                       showSuffixIcon: false,
                       hintText: "Event Name",
+                      textInputAction: TextInputAction.next,
+                    ),
+                    SizedBox(height: height * 0.03),
+                    FormFieldWidget(
+                      focusNode: organiserFocusNode,
+                      fieldKey: organiserKey,
+                      controller: organiserController,
+                      obscureText: false,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'organiser Name is required.';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      errorText: errorOrganiserValue,
+                      prefixIcon: Icons.event,
+                      showSuffixIcon: false,
+                      hintText: "Organiser",
                       textInputAction: TextInputAction.next,
                     ),
                     SizedBox(height: height * 0.03),
@@ -250,6 +275,8 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       buttonFunc: () {
                         final bool isNameValid =
                             nameKey.currentState!.validate();
+                        final bool isorganiserValid =
+                            organiserKey.currentState!.validate();
                         final bool isLinkValid =
                             linkKey.currentState!.validate();
                         final bool isDescriptionValid =
@@ -264,11 +291,13 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                         }
 
                         if (isNameValid &&
+                            isorganiserValid &&
                             isLinkValid &&
                             isDescriptionValid &&
                             picker != null) {
                           BlocProvider.of<FeedBloc>(context)
                               .add(AddFeedItemEvent(
+                            organiser: organiserController.text,
                             host: nameController.text,
                             description: descriptionController.text,
                             link: linkController.text,
