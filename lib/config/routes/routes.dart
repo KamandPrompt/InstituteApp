@@ -17,6 +17,8 @@ import 'package:uhl_link/features/home/presentation/pages/home.dart';
 import 'package:uhl_link/features/home/presentation/widgets/PORs_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/academic_calendar_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/achievements_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/buy_sell_add_item_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/buy_sell_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/cafeteria.dart';
 import 'package:uhl_link/features/home/presentation/widgets/campus_map_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/job_details_page.dart';
@@ -122,6 +124,27 @@ class UhlLinkRouter {
             return MaterialPage(
                 key: state.pageKey,
                 child: LostFoundAddItemPage(
+                  user: jsonDecode(state.pathParameters['user']!),
+                ));
+          }),
+          GoRoute(
+          name: UhlLinkRoutesNames.buySellPage,
+          path: '/buy_sell/:isGuest/:user',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: BuySellPage(
+                  isGuest: jsonDecode(state.pathParameters['isGuest']!),
+                  user: jsonDecode(state.pathParameters['user']!),
+                ));
+          }),
+          GoRoute(
+          name: UhlLinkRoutesNames.buySellAddItemPage,
+          path: '/buy_sell_add_item/:user',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: BuySellAddItemPage(
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
