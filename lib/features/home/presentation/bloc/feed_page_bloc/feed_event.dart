@@ -16,8 +16,8 @@ class AddFeedItemEvent extends FeedEvent {
   final String title;
   final String description;
   final FilePickerResult images;
-  final String link;
-  final String host;
+  final String? link;
+  final String? host;
 
   const AddFeedItemEvent(
       {required this.title,

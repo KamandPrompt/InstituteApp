@@ -29,7 +29,7 @@ class FeedRepositoryImpl implements FeedRepository {
 
   @override
   Future<FeedItemEntity?> addFeedItem(
-      String host, String description, FilePickerResult images, String link,String organiser) async {
+      String host, String description, FilePickerResult images, String? link,String? organiser) async {
     final item =
         await feedDatabase.addFeeditem(host, description, images, link,organiser);
     if (item != null) {
