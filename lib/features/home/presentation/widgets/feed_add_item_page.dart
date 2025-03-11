@@ -215,9 +215,6 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       controller: hostController,
                       obscureText: false,
                       validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Host (Club/School/etc.) is required.';
-                        }
                         return null;
                       },
                       maxLines: 1,
