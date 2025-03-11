@@ -36,7 +36,7 @@ class FeedDB {
 
   // Add Lost Found Item
   Future<FeedItem?> addFeeditem(
-      String title, String description, FilePickerResult images, String? link, String? host) async {
+      String title, String description, FilePickerResult images, String link, String host) async {
     List<String> imagesList = await uploadImagesToFeeds(images);
     final itemValues = {
       '_id': ObjectId(),
