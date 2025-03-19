@@ -20,11 +20,11 @@ class Dashboard extends StatefulWidget {
 int currentImage = 0;
 
 final List<String> carouselImages = [
-  'https://www.iitmandi.ac.in/images/slider/slider5.jpg',
-  'https://www.iitmandi.ac.in/images/slider/slider5.jpg',
-  'https://www.iitmandi.ac.in/images/slider/slider5.jpg',
-  'https://www.iitmandi.ac.in/images/slider/slider5.jpg',
-  'https://www.iitmandi.ac.in/images/slider/slider5.jpg',
+  "https://raw.githubusercontent.com/Aman071106/IITApp/main/other_resources/dashboard_images/xpecto_merch.jpg",
+  "https://raw.githubusercontent.com/Aman071106/IITApp/main/other_resources/dashboard_images/xpecto_merch.jpg",
+  "https://raw.githubusercontent.com/Aman071106/IITApp/main/other_resources/dashboard_images/xpecto_merch.jpg",
+  "https://raw.githubusercontent.com/Aman071106/IITApp/main/other_resources/dashboard_images/xpecto_merch.jpg",
+  "https://raw.githubusercontent.com/Aman071106/IITApp/main/other_resources/dashboard_images/xpecto_merch.jpg"
 ];
 
 class _DashboardState extends State<Dashboard> {
