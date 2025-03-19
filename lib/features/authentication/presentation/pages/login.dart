@@ -160,7 +160,8 @@ class _LoginPageState extends State<LoginPage> {
                             BlocProvider.of<AuthenticationBloc>(context)
                                 .add(GetUserByEmailEvent(email: value ?? ""));
                           },
-                          keyboardType: TextInputType.emailAddress,
+                          maxLines: 1,
+                          keyboardType: TextInputType.text,
                           errorText: errorEmailValue,
                           prefixIcon: Icons.mail_rounded,
                           showSuffixIcon: false,
@@ -172,6 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: MediaQuery.of(context).size.height * 0.03),
                       FormFieldWidget(
                         focusNode: passwordFocusNode,
+                        maxLines: 1,
                         fieldKey: passwordKey,
                         controller: passwordTextEditingController,
                         obscureText: true,

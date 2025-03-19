@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/utils/functions.dart';
 import '../widgets/card.dart';
 
 class Profile extends StatefulWidget {
@@ -17,18 +17,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
-
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> items = [
-      {
-        "text": "Update Password",
-        "icon": Icons.password_rounded,
-        "route": UhlLinkRoutesNames.updatePassword,
-        'pathParameters': {"user": jsonEncode(widget.user)},
-        "guest": false
-      },
       {
         "text": "Achievements/PORs",
         "icon": Icons.emoji_events_rounded,
@@ -40,21 +31,11 @@ class _ProfileState extends State<Profile> {
         "text": "Settings",
         "icon": Icons.settings,
         "route": UhlLinkRoutesNames.settingsPage,
-        'pathParameters': {},
+        'pathParameters': {"user": jsonEncode(widget.user)},
         "guest": true
       },
-      {
-        "text": "Sign Out",
-        "icon": Icons.logout,
-        "route": UhlLinkRoutesNames.chooseAuth,
-        "pathParameters": {},
-        "guest": true
-      },
-
     ];
-
-
-
+    final aspectRatio = MediaQuery.of(context).size.aspectRatio;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -69,25 +50,34 @@ class _ProfileState extends State<Profile> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              CircleAvatar(
-                radius: MediaQuery.of(context).size.aspectRatio * 90,
-                backgroundColor: Theme.of(context).primaryColor,
-                child: widget.isGuest
-                    ? const Icon(Icons.person, size: 30)
-                    : ClipOval(
-                        child: Image.network(
-                            "https://drive.google.com/uc?export=download&id=${getIdFromDriveLink(widget.user!['image'])}",
-                            fit: BoxFit.cover,
-                            loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return const CircularProgressIndicator();
-                        }, errorBuilder: (context, object, trace) {
-                          return const Icon(Icons.error_outline_outlined,
-                              size: 30);
-                        }),
-                      ),
+              Container(
+                width: aspectRatio * 180,
+                height: aspectRatio * 180,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(aspectRatio * 90),
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(aspectRatio * 90)),
+                  child: (widget.isGuest || widget.user!['image'] == "")
+                      ? Icon(Icons.person,
+                          size: 30,
+                          color: Theme.of(context).colorScheme.onPrimary)
+                      : CachedNetworkImage(
+                          imageUrl: widget.user!['image'],
+                          fit: BoxFit.cover,
+                          progressIndicatorBuilder:
+                              (context, string, loadingProgress) {
+                            return CircularProgressIndicator(
+                                color: Theme.of(context).colorScheme.onPrimary);
+                          },
+                          errorWidget: (context, object, trace) {
+                            return Icon(Icons.error_outline_outlined,
+                                size: 30,
+                                color: Theme.of(context).colorScheme.onPrimary);
+                          }),
+                ),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.03,
@@ -157,7 +147,7 @@ class _ProfileState extends State<Profile> {
               text: item['text'],
               icon: item['icon'],
               onTap: () {
-                if(item['text'] == 'Sign Out'){
+                if (item['text'] == 'Sign Out') {
                   const storage = FlutterSecureStorage();
                   storage.delete(key: 'user');
                   storage.delete(key: 'isGuest');
@@ -165,22 +155,17 @@ class _ProfileState extends State<Profile> {
                     for (var entry in item['pathParameters'].entries)
                       entry.key: entry.value.toString()
                   });
-                }
-                else {
+                } else {
                   GoRouter.of(context)
-                    .pushNamed(item['route'], pathParameters: {
-                  for (var entry in item['pathParameters'].entries)
-                    entry.key: entry.value.toString()
+                      .pushNamed(item['route'], pathParameters: {
+                    for (var entry in item['pathParameters'].entries)
+                      entry.key: entry.value.toString()
                   });
                 }
               },
             ),
-
-
         ],
-
       ),
-
     );
   }
 }

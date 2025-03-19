@@ -185,7 +185,7 @@ class _CafeteriaPageState extends State<CafeteriaPage> {
                           ),
                         ),
                         child: Text("View Menu",
-                            style: Theme.of(context).textTheme.labelSmall),
+                            style: Theme.of(context).textTheme.labelSmall!.copyWith(color: Theme.of(context).colorScheme.onPrimary)),
                       ),
                     ],
                   ),

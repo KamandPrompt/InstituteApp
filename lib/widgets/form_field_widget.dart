@@ -51,7 +51,14 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
   void initState() {
     super.initState();
     widget.focusNode.addListener(() {
-      setState(() {});
+      setState(() {
+        // if (widget.focusNode.hasFocus) {
+        //   widget.controller.selection = TextSelection(
+        //     baseOffset: 0,
+        //     extentOffset: widget.controller.text.length,
+        //   );
+        // }
+      });
     });
   }
 

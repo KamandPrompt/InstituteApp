@@ -10,7 +10,7 @@ import 'package:uhl_link/features/authentication/presentation/pages/choose_auth.
 import 'package:uhl_link/features/authentication/presentation/pages/login.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/otp_verification_page.dart';
 import 'package:uhl_link/features/authentication/presentation/pages/sign_up_page.dart';
-import 'package:uhl_link/features/authentication/presentation/pages/update_password.dart';
+import 'package:uhl_link/features/authentication/presentation/pages/update_profile.dart';
 import 'package:uhl_link/features/home/presentation/widgets/about.dart';
 import 'package:uhl_link/features/home/presentation/pages/job_portal.dart';
 import 'package:uhl_link/features/home/presentation/pages/home.dart';
@@ -29,6 +29,7 @@ import 'package:uhl_link/features/home/presentation/widgets/quick_links_page.dar
 import 'package:uhl_link/features/home/presentation/widgets/settings_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/notifications_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/add_notification_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/feed_add_item_page.dart';
 
 import 'package:uhl_link/widgets/splash_screen.dart';
 import 'package:uhl_link/widgets/test.dart';
@@ -149,6 +150,17 @@ class UhlLinkRouter {
                 ));
           }),
 
+      // Feed
+      GoRoute(
+          name: UhlLinkRoutesNames.feedAddItemPage,
+          path: '/feed_add_item/:user',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: FeedAddItemPage(
+                  user: jsonDecode(state.pathParameters['user']!),
+                ));
+          }),
       // Academics
       GoRoute(
           name: UhlLinkRoutesNames.academicCalenderPage,
@@ -174,12 +186,12 @@ class UhlLinkRouter {
 
       // Profile
       GoRoute(
-          name: UhlLinkRoutesNames.updatePassword,
+          name: UhlLinkRoutesNames.updateProfile,
           path: '/updatePassword/:user',
           pageBuilder: (context, state) {
             return MaterialPage(
                 key: state.pageKey,
-                child: UpdatePasswordPage(
+                child: UpdateProfilePage(
                     user: jsonDecode(state.pathParameters['user']!)));
           }),
       GoRoute(
@@ -190,10 +202,12 @@ class UhlLinkRouter {
           }),
       GoRoute(
           name: UhlLinkRoutesNames.settingsPage,
-          path: '/settings',
+          path: '/settings/:user',
           pageBuilder: (context, state) {
             return MaterialPage(
-                key: state.pageKey, child: const SettingsPage());
+                key: state.pageKey,
+                child: SettingsPage(
+                    user: jsonDecode(state.pathParameters['user']!)));
           }),
       GoRoute(
           name: UhlLinkRoutesNames.aboutPage,

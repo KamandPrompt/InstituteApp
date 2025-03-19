@@ -7,7 +7,7 @@ class UhlLinkRoutesNames {
   static const String login = 'login';
   static const String signup = 'signup';
   static const String otpVerify = 'otp_verify';
-  static const String updatePassword = 'update_password';
+  static const String updateProfile = 'update_profile';
 
   static const String home = 'home';
 
@@ -25,6 +25,8 @@ class UhlLinkRoutesNames {
   static const String buySellPage = 'buy_sell_page';
   static const String buySellAddItemPage = 'buy_sell_add_item_page';
 
+  static const String feedAddItemPage = 'feed_add_item_page';
+  static const String feedDetailPage = 'feed_detail_page';
   // Academics
   static const String academicCalenderPage = 'academic_calender_page';
   static const String jobPortalPage = 'job_portal_page';

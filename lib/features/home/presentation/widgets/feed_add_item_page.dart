@@ -1,51 +1,45 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uhl_link/features/authentication/domain/entities/user_entity.dart';
+import 'package:uhl_link/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
 
 import '../../../../widgets/form_field_widget.dart';
 import '../../../../widgets/screen_width_button.dart';
-import '../bloc/lost_found_bloc/lnf_bloc.dart';
 
-class LostFoundAddItemPage extends StatefulWidget {
+class FeedAddItemPage extends StatefulWidget {
   final Map<String, dynamic> user;
-  const LostFoundAddItemPage({super.key, required this.user});
+  const FeedAddItemPage({super.key, required this.user});
 
   @override
-  State<LostFoundAddItemPage> createState() => _LostFoundAddItemPageState();
+  State<FeedAddItemPage> createState() => _FeedAddItemPageState();
 }
 
-class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
+class _FeedAddItemPageState extends State<FeedAddItemPage> {
   bool imageSelected = false;
 
-  //
-  final TextEditingController nameController = TextEditingController();
-  final FocusNode nameFocusNode = FocusNode();
-  String? errorNameValue;
-  final GlobalKey<FormState> nameKey = GlobalKey();
-
-  //
-  final TextEditingController contactController = TextEditingController();
-  final FocusNode contactFocusNode = FocusNode();
-  String? errorContactValue;
-  final GlobalKey<FormState> contactKey = GlobalKey();
-
-  //
-  final TextEditingController dateController = TextEditingController();
-  final FocusNode dateFocusNode = FocusNode();
-  String? errorDateValue;
-  final GlobalKey<FormState> dateKey = GlobalKey();
-
-  //
+  // 
+  final TextEditingController titleController = TextEditingController();
+  final FocusNode titleFocusNode = FocusNode();
+  String? errorTitleValue;
+  final GlobalKey<FormState> titleKey = GlobalKey();
+  // 
+  final TextEditingController hostController = TextEditingController();
+  final FocusNode hostFocusNode = FocusNode();
+  String? errorHostValue;
+  final GlobalKey<FormState> hostKey = GlobalKey();
+  // 
+  final TextEditingController linkController = TextEditingController();
+  final FocusNode linkFocusNode = FocusNode();
+  String? errorLinkValue;
+  final GlobalKey<FormState> linkKey = GlobalKey();
+  // 
   final TextEditingController descriptionController = TextEditingController();
   final FocusNode descriptionFocusNode = FocusNode();
   String? errorDescriptionValue;
   final GlobalKey<FormState> descriptionKey = GlobalKey();
 
-  //
   FilePickerResult? picker;
 
   Future<void> pickImage() async {
@@ -74,18 +68,15 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
 
   bool itemAdding = false;
 
-  String? itemStatus;
-  List<String> lostOrFound = ["Lost", "Found"];
-
   @override
   void dispose() {
     super.dispose();
-    nameController.dispose();
-    nameFocusNode.dispose();
-    contactController.dispose();
-    contactFocusNode.dispose();
-    dateController.dispose();
-    dateFocusNode.dispose();
+    titleController.dispose();
+    titleFocusNode.dispose();
+    hostController.dispose();
+    hostFocusNode.dispose();
+    linkController.dispose();
+    linkFocusNode.dispose();
     descriptionController.dispose();
     descriptionFocusNode.dispose();
   }
@@ -95,35 +86,34 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
-    UserEntity user = UserEntity.fromJson(widget.user);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
-        title: Text("Add Lost Item",
-            style: Theme.of(context).textTheme.bodyMedium),
+        title:
+            Text("Add Feeds", style: Theme.of(context).textTheme.bodyMedium),
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: true,
-      body: BlocListener<LnfBloc, LnfState>(
+      body: BlocListener<FeedBloc, FeedState>(
         listener: (context, state) {
-          if (state is LnfAddingItem) {
+          if (state is FeedAddingItem) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Adding Item...",
+                content: Text("Adding feed...",
                     style: Theme.of(context).textTheme.labelSmall),
                 backgroundColor: Theme.of(context).cardColor));
             setState(() {
               itemAdding = true;
             });
-          } else if (state is LnfItemAdded) {
+          } else if (state is FeedItemAdded) {
             setState(() {
               itemAdding = false;
             });
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Item Added Successfully",
+                content: Text("Feed added successfully",
                     style: Theme.of(context).textTheme.labelSmall),
                 backgroundColor: Theme.of(context).cardColor));
             GoRouter.of(context).pop();
-          } else if (state is LnfItemsAddingError) {
+          } else if (state is FeedItemsAddingError) {
             setState(() {
               itemAdding = false;
             });
@@ -198,50 +188,44 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
                     FormFieldWidget(
-                      focusNode: nameFocusNode,
-                      fieldKey: nameKey,
-                      controller: nameController,
+                      focusNode: titleFocusNode,
+                      fieldKey: titleKey,
+                      controller: titleController,
                       obscureText: false,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Name is required.';
+                          return 'Feed title is required.';
                         }
                         return null;
                       },
                       maxLines: 1,
                       keyboardType: TextInputType.emailAddress,
-                      errorText: errorNameValue,
-                      prefixIcon: Icons.person,
+                      errorText: errorTitleValue,
+                      prefixIcon: Icons.feed,
                       showSuffixIcon: false,
-                      hintText: "Enter your Name",
+                      hintText: "Event title",
                       textInputAction: TextInputAction.next,
                     ),
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
                     FormFieldWidget(
-                      focusNode: contactFocusNode,
-                      fieldKey: contactKey,
-                      controller: contactController,
+                      focusNode: hostFocusNode,
+                      fieldKey: hostKey,
+                      controller: hostController,
                       obscureText: false,
                       validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return "Contact number is required.";
-                        }
-                        if (!RegExp(r'^\d{10}$').hasMatch(value)) {
-                          return "Enter a valid 10-digit Contact Number.";
-                        }
                         return null;
                       },
                       maxLines: 1,
-                      keyboardType: TextInputType.phone,
-                      errorText: errorContactValue,
-                      prefixIcon: Icons.location_searching_rounded,
+                      keyboardType: TextInputType.emailAddress,
+                      errorText: errorHostValue,
+                      prefixIcon: Icons.person,
                       showSuffixIcon: false,
-                      hintText: "Enter your Contact No.",
+                      hintText: "Enter host (Club/School)",
                       textInputAction: TextInputAction.next,
                     ),
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
                     FormFieldWidget(
                       focusNode: descriptionFocusNode,
                       fieldKey: descriptionKey,
@@ -249,107 +233,36 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       obscureText: false,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Description is required.';
+                          return 'Feed description is required.';
                         }
                         return null;
                       },
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
                       errorText: errorDescriptionValue,
-                      prefixIcon: Icons.image_aspect_ratio,
+                      prefixIcon: Icons.description_rounded,
                       showSuffixIcon: false,
-                      hintText: "Describe Lost Item",
+                      hintText: "Enter feed description",
                       textInputAction: TextInputAction.newline,
                     ),
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
                     FormFieldWidget(
-                      focusNode: dateFocusNode,
-                      fieldKey: dateKey,
-                      controller: dateController,
+                      focusNode: linkFocusNode,
+                      fieldKey: linkKey,
+                      controller: linkController,
                       obscureText: false,
                       validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Lost Date is required";
-                        }
                         return null;
                       },
-                      onTap: () async {
-                        DateTime date = DateTime.now();
-                        FocusScope.of(context).requestFocus(FocusNode());
-
-                        date = (await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate:
-                              DateTime.now().subtract(const Duration(days: 7)),
-                          lastDate: DateTime.now(),
-                        ))!;
-
-                        dateController.text = date.toString().substring(0, 10);
-                      },
+                      maxLines: 1,
                       keyboardType: TextInputType.emailAddress,
-                      errorText: errorDateValue,
-                      prefixIcon: Icons.date_range_rounded,
+                      errorText: errorLinkValue,
+                      prefixIcon: Icons.link_rounded,
                       showSuffixIcon: false,
-                      hintText: "Enter Date of Lost/Found",
-                      textInputAction: TextInputAction.done,
+                      hintText: "Enter feed required link",
+                      textInputAction: TextInputAction.next,
                     ),
-                    SizedBox(height: height * 0.03),
-                    FormField<String>(builder: (FormFieldState<String> state) {
-                      return InputDecorator(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 15),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.scrim,
-                                  width: 1),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)),
-                              gapPadding: 24),
-                          fillColor: Theme.of(context).cardColor,
-                          filled: true,
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)),
-                              gapPadding: 24),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: itemStatus,
-                            isDense: true,
-                            hint: Text(
-                              "Lost/Found",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.scrim),
-                            ),
-                            dropdownColor: Theme.of(context).cardColor,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                itemStatus = newValue;
-                              });
-                            },
-                            items: lostOrFound.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      );
-                    }),
-                    SizedBox(height: height * 0.1),
+                    SizedBox(height: height * 0.08),
                   ],
                 ),
               ),
@@ -358,48 +271,39 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                 child: Positioned(
                     bottom: 20,
                     child: ScreenWidthButton(
-                      text: "Add Item",
+                      text: "Add Feed",
                       buttonFunc: () {
-                        final bool isNameValid = nameKey.currentState!.validate();
-                        final bool isContactValid =
-                            contactKey.currentState!.validate();
+                        final bool isTitleValid =
+                            titleKey.currentState!.validate();
+                        final bool isHostValid =
+                            hostKey.currentState!.validate();
+                        final bool isLinkValid =
+                            linkKey.currentState!.validate();
                         final bool isDescriptionValid =
                             descriptionKey.currentState!.validate();
-                        final bool isDateValid = dateKey.currentState!.validate();
-
-                        if (itemStatus == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Please Select Lost or Found",
-                                  style: Theme.of(context).textTheme.labelSmall),
-                              backgroundColor: Theme.of(context).cardColor));
-                        }
 
                         if (picker == null || picker!.files.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("Please Upload Images",
-                                  style: Theme.of(context).textTheme.labelSmall),
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall),
                               backgroundColor: Theme.of(context).cardColor));
                         }
 
-                        if (isNameValid &&
-                            isDateValid &&
-                            isContactValid &&
-                            isDescriptionValid &&
-                            itemStatus != null &&
-                            picker != null) {
-                          BlocProvider.of<LnfBloc>(context)
-                              .add(AddLostFoundItemEvent(
-                            name: nameController.text,
-                            phoneNo: contactController.text,
+                        if (isTitleValid &&
+                            isHostValid &&
+                            isLinkValid &&
+                            isDescriptionValid) {
+                          BlocProvider.of<FeedBloc>(context)
+                              .add(AddFeedItemEvent(
+                            host: hostController.text,
+                            title: titleController.text,
                             description: descriptionController.text,
-                            date: DateTime.parse(dateController.text),
-                            lostOrFound: itemStatus!,
-                            from: user.email,
+                            link: linkController.text,
                             images: picker!,
                           ));
                         }
                       },
-                      // isLoading: userLoading,
                     )),
               ),
               if (itemAdding)

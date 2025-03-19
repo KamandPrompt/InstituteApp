@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/features/home/presentation/pages/academics.dart';
 import 'package:uhl_link/features/home/presentation/pages/dashboard.dart';
-import 'package:uhl_link/features/home/presentation/pages/explore.dart';
+import 'package:uhl_link/features/home/presentation/pages/feeds.dart';
 import 'package:uhl_link/features/home/presentation/pages/profile.dart';
 import 'package:uhl_link/features/home/presentation/pages/job_portal.dart';
 
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   final homePageTitles = [
     "Dashboard",
-    "Explore",
+    "Feeds",
     "Academics",
     "Job Portal",
     "Profile",
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     List<Widget> homePages = [
       Dashboard(isGuest: widget.isGuest, user: widget.user),
-      Explore(isGuest: widget.isGuest, user: widget.user),
+      FeedPage(isGuest: widget.isGuest, user: widget.user),
       Academics(isGuest: widget.isGuest, user: widget.user),
       const JobPortalPage(),
       Profile(isGuest: widget.isGuest, user: widget.user),
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
       ),
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: homePages[currentBottomBarIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.dashboard_rounded), label: "Dashboard"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.travel_explore_rounded), label: "Explore"),
+              icon: Icon(Icons.feed), label: "Feed"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.school_rounded), label: "Academics"),
             BottomNavigationBarItem(

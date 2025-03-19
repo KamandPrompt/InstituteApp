@@ -72,6 +72,20 @@ class PasswordUpdateError extends AuthenticationState {
   const PasswordUpdateError({required this.message});
 }
 
+class ProfileUpdating extends AuthenticationState {}
+
+class ProfileUpdatedSuccessfully extends AuthenticationState {
+  final UserEntity user;
+
+  const ProfileUpdatedSuccessfully({required this.user});
+}
+
+class ProfileUpdateError extends AuthenticationState {
+  final String message;
+
+  const ProfileUpdateError({required this.message});
+}
+
 class GetUserByEmailInitial extends AuthenticationState {}
 
 class GetUserByEmailLoaded extends AuthenticationState {

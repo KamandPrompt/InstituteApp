@@ -7,6 +7,7 @@ import 'package:uhl_link/features/authentication/domain/entities/user_entity.dar
 import 'package:uhl_link/features/authentication/domain/usecases/send_otp.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/signin_user.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/update_password.dart';
+import 'package:uhl_link/features/authentication/domain/usecases/update_profile.dart';
 
 import '../../domain/usecases/get_user_by_email.dart';
 import '../../domain/usecases/signup_user.dart';
@@ -21,19 +22,22 @@ class AuthenticationBloc
   final SendOTP sendOTP;
   final UpdatePassword updatePassword;
   final GetUserByEmail getUserByEmail;
+  final UpdateProfile updateProfile;
 
   AuthenticationBloc(
       {required this.getUserByEmail,
       required this.loginUser,
       required this.signUpUser,
       required this.sendOTP,
-      required this.updatePassword})
+      required this.updatePassword,
+      required this.updateProfile})
       : super(AuthenticationInitial()) {
     on<SignInEvent>(onSignInEvent);
     on<SignUpEvent>(onSignUpEvent);
     on<SendOTPEvent>(onSendOTPEvent);
     on<PasswordUpdateEvent>(onPasswordUpdateEvent);
     on<GetUserByEmailEvent>(onGetUserByEmailEvent);
+    on<ProfileUpdateEvent>(onProfileUpdateEvent);
   }
 
   void onSignUpEvent(
@@ -136,6 +140,25 @@ class AuthenticationBloc
       emit(GetUserByEmailLoaded(user: user));
     } catch (e) {
       emit(GetUserByEmailError(message: "Error during fetching email : $e"));
+    }
+  }
+
+  void onProfileUpdateEvent(
+      ProfileUpdateEvent event, Emitter<AuthenticationState> emit) async {
+    emit(ProfileUpdating());
+    try {
+      final user = await updateProfile.execute(
+          event.newName, event.email, event.newPassword, event.newImage);
+      if (user != null) {
+        const flutterSecureStorage = FlutterSecureStorage();
+        flutterSecureStorage.write(
+            key: 'user', value: jsonEncode(user.toMap()));
+        emit(ProfileUpdatedSuccessfully(user: user));
+      } else {
+        emit(const ProfileUpdateError(message: "Login Failed"));
+      }
+    } catch (e) {
+      emit(ProfileUpdateError(message: "Error during login : $e"));
     }
   }
 }

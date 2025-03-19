@@ -35,7 +35,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     String porsString = dotenv.env["POR_EMAILS"] ?? "";
     List<String> pors = porsString.split(',');
-    UserEntity user = UserEntity.fromJson(widget.user!);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
@@ -153,7 +152,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         ),
       ),
-      floatingActionButton: pors.contains(user.email)
+      floatingActionButton: !widget.isGuest && pors.contains(widget.user!["email"])
           ? FloatingActionButton(
               onPressed: () {
                 GoRouter.of(context).pushNamed(

@@ -7,4 +7,5 @@ abstract class UserRepository {
   Future<UserEntity?> signInUser(String email, String password);
   Future<bool?> updatePassword(String email, String password);
   Future<UserEntity?> getUserByEmail(String email);
+  Future<UserEntity?> updateProfile(String name, String email, String password, String? image);
 }

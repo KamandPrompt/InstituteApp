@@ -40,6 +40,15 @@ class PasswordUpdateEvent extends AuthenticationEvent {
   const PasswordUpdateEvent({required this.email, required this.newPassword});
 }
 
+class ProfileUpdateEvent extends AuthenticationEvent {
+  final String newName;
+  final String email;
+  final String? newImage;
+  final String newPassword;
+
+  const ProfileUpdateEvent({required this.newName, required this.email, required this.newPassword, required this.newImage});
+}
+
 class GetUserByEmailEvent extends AuthenticationEvent {
   final String email;
 
