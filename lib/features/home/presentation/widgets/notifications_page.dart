@@ -8,6 +8,7 @@ import 'package:uhl_link/features/home/domain/entities/notifications_entity.dart
 import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_bloc.dart';
 import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_event.dart';
 import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_state.dart';
+import 'package:uhl_link/utils/env_utils.dart';
 
 class NotificationsPage extends StatefulWidget {
   final bool isGuest;
@@ -102,7 +103,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         ),
       ),
-      floatingActionButton: (widget.user != null && Admin.isAdmin(widget.user!['email']))
+      floatingActionButton: (widget.user != null && isAdmin(widget.user!['email']))
           ? FloatingActionButton(
         onPressed: () {
           GoRouter.of(context).pushNamed(UhlLinkRoutesNames.addNotification,   pathParameters: {
