@@ -9,6 +9,8 @@ import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notif
 import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_event.dart';
 import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_state.dart';
 import 'package:uhl_link/utils/env_utils.dart';
+import 'package:uhl_link/config/routes/routes_consts.dart';
+
 
 class NotificationsPage extends StatefulWidget {
   final bool isGuest;
