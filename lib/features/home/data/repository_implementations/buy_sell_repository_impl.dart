@@ -1,6 +1,7 @@
 import 'package:uhl_link/features/home/data/data_sources/buy_sell_data_sources.dart';
 import 'package:uhl_link/features/home/domain/entities/buy_sell_item_entity.dart';
 import '../../domain/repositories/buy_sell_repository.dart';
+import 'package:file_picker/file_picker.dart';
 
 class BuySellRepositoryImpl implements BuySellRepository {
   final BuySellDB buySellDatabase;
@@ -34,23 +35,23 @@ class BuySellRepositoryImpl implements BuySellRepository {
   Future<BuySellItemEntity?> addBuySellItem(
       String productName,
       String productDescription,
-      List<String> productImage,
+      FilePickerResult productImage,
       String soldBy,
-      int maxPrice, // ✅ Add maxPrice parameter
-      int minPrice,
+      String maxPrice, // ✅ Add maxPrice parameter
+      String minPrice,
       DateTime addDate,
       String phoneNo,
        
   ) async {
     final item = await buySellDatabase.postItem(
-        productName: productName,
-        productDescription: productDescription,
-        productImage: productImage,
-        soldBy: soldBy,
-        maxPrice: maxPrice, // ✅ Pass maxPrice to database
-        minPrice: minPrice,
-        addDate: addDate,
-        phoneNo: phoneNo,
+         productName,
+        productDescription,
+       productImage,
+        soldBy,
+       maxPrice, // ✅ Pass maxPrice to database
+         minPrice,
+        addDate,
+         phoneNo,
           
     );
     if (item != null) {

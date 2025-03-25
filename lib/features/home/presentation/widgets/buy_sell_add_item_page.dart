@@ -437,9 +437,9 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                             productDescription: descriptionController.text,
                             addDate: DateTime.parse(dateController.text),
                             soldBy: user.email,
-                            maxPrice: int.parse(maxPriceController.text) ,
-                            minPrice: int.parse(minPriceController.text),
-                            productImage: picker!.files.map((file) => file.path!).toList(),
+                            maxPrice: maxPriceController.text ,
+                            minPrice: minPriceController.text,
+                            productImage: picker!,
                           ));
                         }
                       },

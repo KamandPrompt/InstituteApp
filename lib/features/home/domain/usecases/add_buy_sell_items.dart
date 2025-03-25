@@ -1,5 +1,6 @@
 import '../entities/buy_sell_item_entity.dart';
 import '../repositories/buy_sell_repository.dart';
+import 'package:file_picker/file_picker.dart';
 
 class AddBuySellItem {
   final BuySellRepository repository;
@@ -9,10 +10,10 @@ class AddBuySellItem {
   Future<BuySellItemEntity?> execute(
       String productName,
       String productDescription,
-      List<String> productImage,
+      FilePickerResult productImage,
       String soldBy,
-      int maxPrice, 
-      int minPrice, 
+      String maxPrice, 
+      String minPrice, 
       DateTime addDate,
       String phoneNo) {
     return repository.addBuySellItem(

@@ -1,4 +1,5 @@
 import 'package:uhl_link/features/home/domain/entities/buy_sell_item_entity.dart';
+import 'package:file_picker/file_picker.dart';
 
 abstract class BuySellRepository {
   Future<List<BuySellItemEntity>> getBuySellItems();
@@ -6,10 +7,10 @@ abstract class BuySellRepository {
   Future<BuySellItemEntity?> addBuySellItem(
       String productName,
       String productDescription,
-      List<String> productImage,
+      FilePickerResult productImage,
       String soldBy,
-      int maxPrice, 
-      int minPrice, 
+      String maxPrice, 
+      String minPrice, 
       DateTime addDate,
       String phoneNo);
 }

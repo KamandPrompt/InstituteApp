@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:uhl_link/features/home/data/models/buy_sell_item_model.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:uhl_link/utils/cloudinary_services.dart';
 
 class BuySellDB {
   static Db? db;
@@ -32,17 +34,20 @@ class BuySellDB {
   }
 
   // Post a Buy or Sell Item
-  Future<BuySellItem?> postItem({
-    required String productName,
-    required String productDescription,
-    required List<String> productImage,
-    required String soldBy, 
-    required int maxPrice,  // ✅ Added maxPrice
-    required int minPrice,  // ✅ Added minPrice// User ID who is selling the item
-    required DateTime addDate,
-    required String phoneNo, // WhatsApp number
-   
-  }) async {
+  Future<BuySellItem?> postItem(
+     String productName,
+     String productDescription,
+     FilePickerResult productImage,
+     String soldBy, 
+     String maxPrice,  // ✅ Added maxPrice
+     String minPrice,  // ✅ Added minPrice// User ID who is selling the item
+     DateTime addDate,
+     String phoneNo, // WhatsApp number
+   )
+   async {
+     try {
+      List<String> imagesList = await uploadImagesToLNF(productImage); 
+  
     final itemValues = {
       '_id': ObjectId(),
       'productName': productName,
@@ -55,14 +60,13 @@ class BuySellDB {
       'phoneNo': phoneNo,
       
     };
-    try {
       final result = await collection?.insertOne(itemValues);
       if (result != null && result.document != null) {
         return BuySellItem.fromJson(result.document!);
       } else {
         return null;
       }
-    } catch (e) {
+    }catch (e) {
       log("Error posting item: ${e.toString()}");
       return null;
     }

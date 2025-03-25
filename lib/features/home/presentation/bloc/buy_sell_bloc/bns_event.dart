@@ -14,10 +14,10 @@ class GetBuySellItemsEvent extends BuySellEvent {
 class AddBuySellItemEvent extends BuySellEvent {
   final String productName;
   final String productDescription;
-  final List<String> productImage;
+  final FilePickerResult productImage;
   final String soldBy;
-  final int maxPrice; 
-  final int minPrice; 
+  final String maxPrice; 
+  final String minPrice; 
   final DateTime addDate;
   final String phoneNo;
 

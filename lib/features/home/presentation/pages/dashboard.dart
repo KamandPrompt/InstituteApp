@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 import 'package:uhl_link/config/routes/routes_consts.dart';
 import 'package:uhl_link/features/home/presentation/widgets/dashboard_card.dart';
 
@@ -19,15 +21,59 @@ class Dashboard extends StatefulWidget {
 
 int currentImage = 0;
 
-final List<String> carouselImages = [
-  'https://www.iitmandi.ac.in/images/slider/slider5.jpg',
-  'https://www.iitmandi.ac.in/images/slider/slider5.jpg',
-  'https://www.iitmandi.ac.in/images/slider/slider5.jpg',
-  'https://www.iitmandi.ac.in/images/slider/slider5.jpg',
-  'https://www.iitmandi.ac.in/images/slider/slider5.jpg',
-];
+final List<String> carouselImages = [];
 
 class _DashboardState extends State<Dashboard> {
+  List<String> carouselImages = []; // Initially empty
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchImages();
+  }
+
+  Future<void> fetchImages() async {
+    try {
+      // GitHub API endpoint for the directory contents
+      const String apiUrl =
+          'https://api.github.com/repos/KamandPrompt/InstituteApp/contents/other_resources/dashboard_images';
+
+      final response = await http.get(Uri.parse(apiUrl));
+
+      if (response.statusCode == 200) {
+        List<dynamic> files = jsonDecode(response.body);
+
+        // Filter for image files and construct raw URLs
+        List<String> imageUrls = files
+            .where((file) =>
+                file['type'] == 'file' &&
+                (file['name'].endsWith('.jpg') ||
+                    file['name'].endsWith('.png') ||
+                    file['name'].endsWith('.jpeg')))
+            .map((file) =>
+                'https://raw.githubusercontent.com/KamandPrompt/InstituteApp/main/other_resources/dashboard_images/${file['name']}')
+            .toList();
+
+        setState(() {
+          carouselImages = imageUrls;
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load images');
+      }
+    } catch (e) {
+      log('Error fetching images: $e');
+      setState(() {
+        isLoading = false;
+      });
+      // Fallback to a default image or handle error
+      carouselImages = [
+        'https://via.placeholder.com/150' // Fallback image
+      ];
+    }
+  }
+
   Widget carouselIndicatorWidget() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

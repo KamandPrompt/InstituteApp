@@ -6,8 +6,8 @@ class BuySellItem {
   final String productDescription;
   final List<String> productImage;
   final String soldBy;
-  final int maxPrice;
-  final int minPrice;  // User who added the item for selling
+  final String maxPrice;
+  final String minPrice;  // User who added the item for selling
   final DateTime addDate;
   final String phoneNo; // WhatsApp number
 
