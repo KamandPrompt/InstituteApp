@@ -21,8 +21,6 @@ class Dashboard extends StatefulWidget {
 
 int currentImage = 0;
 
-final List<String> carouselImages = [];
-
 class _DashboardState extends State<Dashboard> {
   List<String> carouselImages = []; // Initially empty
   bool isLoading = true;
@@ -106,7 +104,7 @@ class _DashboardState extends State<Dashboard> {
         'path': UhlLinkRoutesNames.lostFoundPage,
         'pathParameters': {
           "isGuest": jsonEncode(widget.isGuest),
-          "user": jsonEncode(widget.user)
+          "user": jsonEncode(widget.user ?? {}), // Handle null user
         }
       },
       {
@@ -114,7 +112,7 @@ class _DashboardState extends State<Dashboard> {
         "icon": Icons.shopping_cart_outlined,
         "path": UhlLinkRoutesNames.buySellPage,
         'pathParameters': {
-           "isGuest": jsonEncode(widget.isGuest),
+          "isGuest": jsonEncode(widget.isGuest),
           "user": jsonEncode(widget.user)
         }
       },
@@ -133,8 +131,11 @@ class _DashboardState extends State<Dashboard> {
       {
         "title": 'Events',
         "icon": Icons.menu,
-        "path": UhlLinkRoutesNames.test,
-        'pathParameters': {}
+        "path": UhlLinkRoutesNames.events,
+        'pathParameters': {
+          "isGuest": jsonEncode(widget.isGuest),
+          "user": jsonEncode(widget.user ?? {}), // Handle null user
+        }
       },
       {
         "title": 'Mess Menu',

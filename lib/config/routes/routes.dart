@@ -21,6 +21,7 @@ import 'package:uhl_link/features/home/presentation/widgets/buy_sell_add_item_pa
 import 'package:uhl_link/features/home/presentation/widgets/buy_sell_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/cafeteria.dart';
 import 'package:uhl_link/features/home/presentation/widgets/campus_map_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/events_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/job_details_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_add_item_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_page.dart';
@@ -129,6 +130,21 @@ class UhlLinkRouter {
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
+      // Events
+      GoRoute(
+        name: UhlLinkRoutesNames.events,
+        path: '/events/:isGuest/:user',
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            key: state.pageKey,
+            child: EventsPage(
+              isGuest: jsonDecode(state.pathParameters['isGuest']!),
+              user: jsonDecode(state.pathParameters['user']!),
+            ),
+          );
+        },
+      ),
+      // Buy & Sell
       GoRoute(
           name: UhlLinkRoutesNames.buySellPage,
           path: '/buy_sell/:isGuest/:user',
@@ -150,7 +166,6 @@ class UhlLinkRouter {
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
-
       // Feed
       GoRoute(
           name: UhlLinkRoutesNames.feedAddItemPage,
@@ -180,14 +195,20 @@ class UhlLinkRouter {
                   isGuest: jsonDecode(state.pathParameters['isGuest']!),
                 ));
           }),
+      // achievements
       GoRoute(
-          name: UhlLinkRoutesNames.achievementsPage,
-          path: '/achievements',
-          pageBuilder: (context, state) {
-            return MaterialPage(
-                key: state.pageKey, child: const AchievementsPage());
-          }),
-
+        name: UhlLinkRoutesNames.achievementsPage,
+        path: '/achievements/:isGuest/:user',
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            key: state.pageKey,
+            child: AchievementsPage(
+              isGuest: jsonDecode(state.pathParameters['isGuest']!),
+              user: jsonDecode(state.pathParameters['user']!),
+            ),
+          );
+        },
+      ),
       // Profile
       GoRoute(
           name: UhlLinkRoutesNames.updateProfile,
@@ -228,7 +249,6 @@ class UhlLinkRouter {
                 child: JobDetailsPage(
                     job: jsonDecode(state.pathParameters["job"]!)));
           }),
-
       GoRoute(
           name: UhlLinkRoutesNames.notifications,
           path: '/notifications/:isGuest/:user',
@@ -247,7 +267,8 @@ class UhlLinkRouter {
             return MaterialPage(
                 key: state.pageKey,
                 child: NotificationDetailsPage(
-                  notificationMap: jsonDecode(state.pathParameters['notification']!),
+                  notificationMap:
+                      jsonDecode(state.pathParameters['notification']!),
                 ));
           }),
       GoRoute(
@@ -262,7 +283,6 @@ class UhlLinkRouter {
           );
         },
       ),
-
       // Test
       GoRoute(
           name: UhlLinkRoutesNames.test,
@@ -270,7 +290,6 @@ class UhlLinkRouter {
           pageBuilder: (context, state) {
             return MaterialPage(key: state.pageKey, child: const TestScreen());
           }),
-
       // Cafeteria
       GoRoute(
           name: UhlLinkRoutesNames.cafeteria,

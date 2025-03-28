@@ -28,7 +28,6 @@ class _FeedPageState extends State<FeedPage> {
     BlocProvider.of<FeedBloc>(context).add(const GetFeedItemsEvent());
   }
 
-  List<FeedItemEntity> feedItems = [];
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class _FeedPageState extends State<FeedPage> {
             if (state is FeedItemsLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is FeedItemsLoaded) {
-              feedItems = state.items;
+              List<FeedItemEntity> feedItems = state.items;
               if (feedItems.isEmpty) {
                 return Center(
                     child: Text('No feeds available',
@@ -53,12 +52,16 @@ class _FeedPageState extends State<FeedPage> {
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).size.height * 0.09),
                 itemBuilder: (BuildContext context, int index) {
-                  return feedItemCard(context, index);
+                  return feedItems[index].type == "Feed"
+                      ? feedItemCard(context, index, feedItems)
+                      : Container();
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
-                    height: 10,
-                  );
+                  return feedItems[index].type == "Feed"
+                      ? SizedBox(
+                          height: 10,
+                        )
+                      : Container();
                 },
               );
             } else if (state is FeedItemsLoadingError) {
@@ -74,7 +77,9 @@ class _FeedPageState extends State<FeedPage> {
             }
           },
         ),
-        (!widget.isGuest && widget.user != null && isAdmin(widget.user!["email"]))
+        (!widget.isGuest &&
+                widget.user != null &&
+                isAdmin(widget.user!["email"]))
             ? Positioned(
                 right: 0,
                 bottom: 0,
@@ -91,12 +96,13 @@ class _FeedPageState extends State<FeedPage> {
                   icon: Icon(Icons.add_box_rounded,
                       size: 20, color: Theme.of(context).colorScheme.onPrimary),
                 ),
-              ) : Container(),
+              )
+            : Container(),
       ],
     );
   }
 
-  Card feedItemCard(BuildContext context, int index) {
+  Card feedItemCard(BuildContext context, int index, List<FeedItemEntity> feedItems) {
     return Card(
       color: Theme.of(context).cardColor,
       elevation: 2,
@@ -114,40 +120,51 @@ class _FeedPageState extends State<FeedPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                feedItems[index].images.isNotEmpty ? CarouselSlider(
-                  items: feedItems[index]
-                      .images
-                      .map((image) => ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Container(
-                              decoration: BoxDecoration(
+                feedItems[index].images.isNotEmpty
+                    ? CarouselSlider(
+                        items: feedItems[index]
+                            .images
+                            .map((image) => ClipRRect(
                                   borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(
-                                    color: Theme.of(context)
-                                        .cardColor
-                                        .withValues(alpha: 0.2),
-                                    width: 1.5,
-                                  )),
-                              child: CachedNetworkImage(imageUrl: image,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.25,
-                                  errorWidget: (context, object, stacktrace) {
-                                return Icon(Icons.error_outline_rounded,
-                                    size: 40,
-                                    color: Theme.of(context).primaryColor);
-                              }, fit: BoxFit.cover),
-                            ),
-                          ))
-                      .toList(),
-                  options: CarouselOptions(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      autoPlay: true,
-                      aspectRatio: 16 / 9,
-                      viewportFraction: 1,
-                      autoPlayInterval: const Duration(seconds: 5),
-                      enlargeCenterPage: true),
-                ) : Container(),
-                feedItems[index].images.isNotEmpty ? SizedBox(height: MediaQuery.of(context).size.height * 0.02) : Container(),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          color: Theme.of(context)
+                                              .cardColor
+                                              .withValues(alpha: 0.2),
+                                          width: 1.5,
+                                        )),
+                                    child: CachedNetworkImage(
+                                        imageUrl: image,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.25,
+                                        errorWidget:
+                                            (context, object, stacktrace) {
+                                          return Icon(
+                                              Icons.error_outline_rounded,
+                                              size: 40,
+                                              color: Theme.of(context)
+                                                  .primaryColor);
+                                        },
+                                        fit: BoxFit.cover),
+                                  ),
+                                ))
+                            .toList(),
+                        options: CarouselOptions(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            autoPlay: true,
+                            aspectRatio: 16 / 9,
+                            viewportFraction: 1,
+                            autoPlayInterval: const Duration(seconds: 5),
+                            enlargeCenterPage: true),
+                      )
+                    : Container(),
+                feedItems[index].images.isNotEmpty
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02)
+                    : Container(),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: Column(
@@ -175,13 +192,15 @@ class _FeedPageState extends State<FeedPage> {
                           softWrap: true,
                           style: Theme.of(context).textTheme.labelSmall),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.001), // Space between text and View More
+                          height: MediaQuery.of(context).size.height *
+                              0.001), // Space between text and View More
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => FeedDetailPage(
+                                      type: feedItems[index].type,
                                       images: feedItems[index].images,
                                       host: feedItems[index].host,
                                       description: feedItems[index].description,

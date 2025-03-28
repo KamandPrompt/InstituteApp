@@ -34,13 +34,8 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
       AddFeedItemEvent event, Emitter<FeedState> emit) async {
     emit(FeedAddingItem());
     try {
-      final item = await addFeedItem.execute(
-          event.title,
-          event.description,
-          event.images,
-          event.link,
-          event.host
-          );
+      final item = await addFeedItem.execute(event.title, event.description,
+          event.images, event.link, event.host, event.type, event.emailId);
       if (item != null) {
         emit(FeedItemAdded(item: item));
       } else {

@@ -19,22 +19,30 @@ class FeedAddItemPage extends StatefulWidget {
 class _FeedAddItemPageState extends State<FeedAddItemPage> {
   bool imageSelected = false;
 
-  // 
+  //
   final TextEditingController titleController = TextEditingController();
   final FocusNode titleFocusNode = FocusNode();
   String? errorTitleValue;
   final GlobalKey<FormState> titleKey = GlobalKey();
-  // 
+  //
   final TextEditingController hostController = TextEditingController();
   final FocusNode hostFocusNode = FocusNode();
   String? errorHostValue;
   final GlobalKey<FormState> hostKey = GlobalKey();
-  // 
+  //
+  final TextEditingController emailIdController = TextEditingController();
+  final FocusNode emailIdFocusNode = FocusNode();
+  String? errorEmailIdValue;
+  final GlobalKey<FormState> emailIdKey = GlobalKey();
+  //
+  String feedStatus = "Feed";
+  List<String> types = ["Feed", "Event", "Achievement"];
+  //
   final TextEditingController linkController = TextEditingController();
   final FocusNode linkFocusNode = FocusNode();
   String? errorLinkValue;
   final GlobalKey<FormState> linkKey = GlobalKey();
-  // 
+  //
   final TextEditingController descriptionController = TextEditingController();
   final FocusNode descriptionFocusNode = FocusNode();
   String? errorDescriptionValue;
@@ -71,6 +79,8 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
   @override
   void dispose() {
     super.dispose();
+    emailIdController.dispose();
+    emailIdFocusNode.dispose();
     titleController.dispose();
     titleFocusNode.dispose();
     hostController.dispose();
@@ -89,8 +99,7 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
-        title:
-            Text("Add Feeds", style: Theme.of(context).textTheme.bodyMedium),
+        title: Text("Add Feeds", style: Theme.of(context).textTheme.bodyMedium),
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: true,
@@ -190,6 +199,23 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                     ),
                     SizedBox(height: height * 0.02),
                     FormFieldWidget(
+                      focusNode: emailIdFocusNode,
+                      fieldKey: emailIdKey,
+                      controller: emailIdController
+                        ..text = widget.user['email'],
+                      obscureText: false,
+                      validator: (value) => null,
+                      maxLines: 1,
+                      keyboardType: TextInputType.none,
+                      errorText: null,
+                      prefixIcon: Icons.email,
+                      showSuffixIcon: false,
+                      hintText: "Email ID",
+                      textInputAction: TextInputAction.none,
+                      readOnly: true,
+                    ),
+                    SizedBox(height: height * 0.02),
+                    FormFieldWidget(
                       focusNode: titleFocusNode,
                       fieldKey: titleKey,
                       controller: titleController,
@@ -205,7 +231,7 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       errorText: errorTitleValue,
                       prefixIcon: Icons.feed,
                       showSuffixIcon: false,
-                      hintText: "Event title",
+                      hintText: "Event Title",
                       textInputAction: TextInputAction.next,
                     ),
                     SizedBox(height: height * 0.02),
@@ -225,6 +251,61 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       hintText: "Enter host (Club/School)",
                       textInputAction: TextInputAction.next,
                     ),
+                    SizedBox(height: height * 0.02),
+                    FormField<String>(builder: (FormFieldState<String> state) {
+                      return InputDecorator(
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 15),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.scrim,
+                                  width: 1),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12)),
+                              gapPadding: 24),
+                          fillColor: Theme.of(context).cardColor,
+                          filled: true,
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12)),
+                              gapPadding: 24),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: feedStatus,
+                            isDense: true,
+                            hint: Text(
+                              "Type Feed/Event/Achievement",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall
+                                  ?.copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.scrim),
+                            ),
+                            dropdownColor: Theme.of(context).cardColor,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                feedStatus = newValue ?? "Feed";
+                              });
+                            },
+                            items: types.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      );
+                    }),
                     SizedBox(height: height * 0.02),
                     FormFieldWidget(
                       focusNode: descriptionFocusNode,
@@ -282,26 +363,27 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                         final bool isDescriptionValid =
                             descriptionKey.currentState!.validate();
 
-                        if (picker == null || picker!.files.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Please Upload Images",
-                                  style:
-                                      Theme.of(context).textTheme.labelSmall),
-                              backgroundColor: Theme.of(context).cardColor));
-                        }
+                        // if (picker == null || picker!.files.isEmpty) {
+                        //   return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //       content: Text("Please Upload Images",
+                        //           style:
+                        //               Theme.of(context).textTheme.labelSmall),
+                        //       backgroundColor: Theme.of(context).cardColor));
+                        // }
 
                         if (isTitleValid &&
                             isHostValid &&
                             isLinkValid &&
                             isDescriptionValid) {
-                          BlocProvider.of<FeedBloc>(context)
-                              .add(AddFeedItemEvent(
-                            host: hostController.text,
-                            title: titleController.text,
-                            description: descriptionController.text,
-                            link: linkController.text,
-                            images: picker!,
-                          ));
+                          BlocProvider.of<FeedBloc>(context).add(
+                              AddFeedItemEvent(
+                                  host: hostController.text,
+                                  title: titleController.text,
+                                  description: descriptionController.text,
+                                  link: linkController.text,
+                                  images: picker ?? FilePickerResult([]),
+                                  type: feedStatus,
+                                  emailId: emailIdController.text));
                         }
                       },
                     )),

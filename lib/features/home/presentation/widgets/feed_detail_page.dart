@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FeedDetailPage extends StatefulWidget {
+  final String type;
   final List<String> images;
   final String title;
   final String description;
@@ -12,6 +13,7 @@ class FeedDetailPage extends StatefulWidget {
 
   const FeedDetailPage({
     super.key,
+    required this.type,
     required this.images,
     required this.host,
     required this.description,
@@ -36,7 +38,7 @@ class _FeedDetailPageState extends State<FeedDetailPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         title:
-            Text("Feed Details", style: Theme.of(context).textTheme.bodyMedium),
+            Text("${widget.type} Details", style: Theme.of(context).textTheme.bodyMedium),
         centerTitle: true,
       ),
       body: Padding(

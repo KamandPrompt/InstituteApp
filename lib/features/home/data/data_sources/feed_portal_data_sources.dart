@@ -23,7 +23,7 @@ class FeedDB {
     try {
       final items = await collection?.find().toList();
       if (items != null) {
-        // log("inside portal-${items.toString()}");
+        log("inside portal-${items.toString()}");
         return items.map((item) => FeedItem.fromJson(item)).toList();
       } else {
         return [];
@@ -36,7 +36,13 @@ class FeedDB {
 
   // Add Lost Found Item
   Future<FeedItem?> addFeeditem(
-      String title, String description, FilePickerResult images, String link, String host) async {
+      String title,
+      String description,
+      FilePickerResult images,
+      String link,
+      String host,
+      String type,
+      String emailId) async {
     List<String> imagesList = await uploadImagesToFeeds(images);
     final itemValues = {
       '_id': ObjectId(),
@@ -45,6 +51,8 @@ class FeedDB {
       'images': imagesList,
       'link': link,
       'host': host,
+      'type': type,
+      'emailId': emailId
     };
     try {
       final id = await collection?.insertOne(itemValues);

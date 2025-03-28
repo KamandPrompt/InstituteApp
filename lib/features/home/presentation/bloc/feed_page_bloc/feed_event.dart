@@ -18,12 +18,15 @@ class AddFeedItemEvent extends FeedEvent {
   final FilePickerResult images;
   final String link;
   final String host;
+  final String type;
+  final String emailId;
 
   const AddFeedItemEvent(
       {required this.title,
       required this.description,
       required this.images,
       required this.link,
-      required this.host
-      });
+      required this.host,
+      required this.type,
+      required this.emailId});
 }

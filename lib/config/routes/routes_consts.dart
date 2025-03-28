@@ -28,6 +28,7 @@ class UhlLinkRoutesNames {
 
   static const String feedAddItemPage = 'feed_add_item_page';
   static const String feedDetailPage = 'feed_detail_page';
+  static const String events = 'events_page';
   // Academics
   static const String academicCalenderPage = 'academic_calender_page';
   static const String jobPortalPage = 'job_portal_page';

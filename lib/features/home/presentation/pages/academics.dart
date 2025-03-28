@@ -1,12 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../config/routes/routes_consts.dart';
 import '../widgets/card.dart';
 
 class Academics extends StatefulWidget {
   final bool isGuest;
   final Map<String, dynamic>? user;
+
   const Academics({super.key, required this.isGuest, required this.user});
 
   @override
@@ -19,21 +21,18 @@ class _AcademicsState extends State<Academics> {
       "text": "Academic Calender",
       "icon": Icons.calendar_month_rounded,
       "route": UhlLinkRoutesNames.academicCalenderPage,
-      "guest": true
+      "guest": true,
+      "requiresParams": false, // Added to indicate no path parameters needed
     },
-    // {
-    //   "text": "Job Portal",
-    //   "icon": Icons.work_outline_rounded,
-    //   "route": UhlLinkRoutesNames.jobPortalPage,
-    //   "guest": false
-    // },
     {
       "text": "Achievements",
       "icon": Icons.verified_rounded,
       "route": UhlLinkRoutesNames.achievementsPage,
-      "guest": true
+      "guest": true,
+      "requiresParams": true, // Added to indicate path parameters are needed
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -50,7 +49,17 @@ class _AcademicsState extends State<Academics> {
               text: item['text'],
               icon: item['icon'],
               onTap: () {
-                GoRouter.of(context).pushNamed(item['route']);
+                if (item["requiresParams"] == true) {
+                  GoRouter.of(context).pushNamed(
+                    item['route'],
+                    pathParameters: {
+                      'isGuest': jsonEncode(widget.isGuest),
+                      'user': jsonEncode(widget.user ?? {}),
+                    },
+                  );
+                } else {
+                  GoRouter.of(context).pushNamed(item['route']);
+                }
               },
             ),
         ],
