@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:vertex/config/routes/routes.dart';
 import 'package:vertex/features/authentication/data/data_sources/user_data_sources.dart';
 import 'package:vertex/features/authentication/domain/usecases/get_user_by_email.dart';
@@ -40,14 +41,18 @@ import 'features/home/presentation/bloc/job_portal_bloc/job_bloc.dart';
 import 'features/home/presentation/bloc/lost_found_bloc/lnf_bloc.dart';
 import 'features/home/domain/usecases/add_feed_item.dart';
 import 'features/home/domain/usecases/get_feed_item.dart';
+import 'package:vertex/utils/database_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   const storage = FlutterSecureStorage();
   final GoRouter router = UhlLinkRouter().router;
-  runApp(BlocProvider<ThemeBloc>(
-    create: (context) => ThemeBloc(storage: storage)..loadSavedTheme(),
-    child: UhlLink(router: router),
+  runApp(ChangeNotifierProvider(
+    create: (context) => DatabaseProvider()..connectToDB(),
+    child: BlocProvider<ThemeBloc>(
+      create: (context) => ThemeBloc(storage: storage)..loadSavedTheme(),
+      child: UhlLink(router: router),
+    ),
   ));
 }
 
@@ -134,8 +139,7 @@ class UhlLink extends StatelessWidget {
                   getNotifications: GetNotifications(
                       NotificationRepositoryImpl(NotificationsDB())),
                   addNotification: AddNotification(
-                      NotificationRepositoryImpl(NotificationsDB())))
-              ),
+                      NotificationRepositoryImpl(NotificationsDB())))),
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, state) {

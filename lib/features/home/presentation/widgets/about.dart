@@ -160,7 +160,7 @@ class _AboutPageState extends State<AboutPage> {
                   // Base style
                   children: const [
                     TextSpan(
-                      text: "- ",
+                      text: "○ ",
                     ),
                     TextSpan(
                       text: "Event Updates",
@@ -184,7 +184,7 @@ class _AboutPageState extends State<AboutPage> {
                   // Base style
                   children: const [
                     TextSpan(
-                      text: "- ",
+                      text: "○ ",
                     ),
                     TextSpan(
                       text: "Navigation",
@@ -208,7 +208,7 @@ class _AboutPageState extends State<AboutPage> {
                   // Base style
                   children: const [
                     TextSpan(
-                      text: "- ",
+                      text: "○ ",
                     ),
                     TextSpan(
                       text: "Others",
@@ -225,7 +225,7 @@ class _AboutPageState extends State<AboutPage> {
               const SizedBox(
                 height: 20,
               ),
-              Text(
+              /*Text(
                 "Project Leads:",
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
@@ -248,7 +248,7 @@ class _AboutPageState extends State<AboutPage> {
               const SizedBox(
                 height: 20,
               ),
-              contributorsWidget(designTeam),
+              contributorsWidget(designTeam),*/
             ],
           ),
         ),

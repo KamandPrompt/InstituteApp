@@ -119,8 +119,13 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     });
 
     on<InitializeTheme>((event, emit) async {
-      final isDark =
-          (await storage.read(key: 'isDark')) == "true" ? true : false;
+      bool isDark = false;
+      try {
+        isDark = (await storage.read(key: 'isDark')) == "true" ? true : false;
+      } catch (e) {
+        await storage.deleteAll();
+        isDark = false;
+      }
       emit(ThemeState(isDark: isDark));
     });
   }

@@ -19,21 +19,31 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    _checkUserLoggedIn();
     super.initState();
+    final dbConnection = connectToDB();
+
+    _checkUserLoggedIn(dbConnection);
   }
 
-  Future<void> _checkUserLoggedIn() async {
-    // Check if a user token exists
-    final token = await _storage.read(key: 'user');
-    // if (!mounted) return;
-    await connectToDB();
-    // Navigate based on the token presence
-    if (token != null) {
-      GoRouter.of(context).goNamed(UhlLinkRoutesNames.home,
-          pathParameters: {'isGuest': jsonEncode(false), 'user': token});
-    } else {
+  Future<void> _checkUserLoggedIn(Future<void> dbConnection) async {
+    try {
+      // Check if a user token exists
+      final token = await _storage.read(key: 'user');
+
+      // Wait for the database connection to complete
+      await dbConnection;
+
+      // Navigate based on the token presence
+      if (token != null) {
+        GoRouter.of(context).goNamed(UhlLinkRoutesNames.home,
+            pathParameters: {'isGuest': jsonEncode(false), 'user': token});
+      } else {
+        GoRouter.of(context).goNamed(UhlLinkRoutesNames.chooseAuth);
+      }
+    } catch (e) {
+      await _storage.deleteAll();
       GoRouter.of(context).goNamed(UhlLinkRoutesNames.chooseAuth);
+      debugPrint('Error during splash screen initialization: $e');
     }
   }
 
