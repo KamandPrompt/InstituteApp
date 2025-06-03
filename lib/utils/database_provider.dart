@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:vertex/utils/functions.dart';
 import 'package:flutter/material.dart';
 import '../features/authentication/data/data_sources/user_data_sources.dart'
     show UhlUsersDB;
@@ -20,14 +20,14 @@ class DatabaseProvider with ChangeNotifier {
 
   Future<void> connectToDB() async {
     try {
-      await dotenv.load(fileName: "institute.env");
+      final config = await loadEncryptedConfig();
       await Future.wait([
-        UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!),
-        JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!),
-        LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!),
-        BuySellDB.connect(dotenv.env['DB_CONNECTION_URL']!),
-        NotificationsDB.connect(dotenv.env['DB_CONNECTION_URL']!),
-        FeedDB.connect(dotenv.env['DB_CONNECTION_URL']!),
+        UhlUsersDB.connect(config['DB_CONNECTION_URL']!),
+        JobPortalDB.connect(config['DB_CONNECTION_URL']!),
+        LostFoundDB.connect(config['DB_CONNECTION_URL']!),
+        BuySellDB.connect(config['DB_CONNECTION_URL']!),
+        NotificationsDB.connect(config['DB_CONNECTION_URL']!),
+        FeedDB.connect(config['DB_CONNECTION_URL']!),
       ]);
       _isConnected = true;
       notifyListeners();

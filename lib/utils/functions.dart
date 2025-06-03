@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:encrypt/encrypt.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -62,16 +63,40 @@ Future<UserEntity?> getUser() async {
   }
 }
 
+Future<Map<String, String>> loadEncryptedConfig() async {
+  final bytes = await rootBundle.load('.enc');
+  final data = bytes.buffer.asUint8List();
+
+  final key = Key.fromUtf8('iioft_mandi_kamandprompt_sntc_pc');
+  final iv = IV(data.sublist(0, 16));
+  final encrypted = Encrypted(data.sublist(16));
+
+  final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+  final decrypted = encrypter.decrypt(encrypted, iv: iv);
+
+  final configLines = decrypted.split('\n');
+  final config = <String, String>{};
+
+  for (final line in configLines) {
+    if (line.contains('=')) {
+      final parts = line.split('=');
+      config[parts[0].trim()] = parts[1].trim();
+    }
+  }
+
+  return config;
+}
+
 Future<void> connectToDB() async {
   try {
-    await dotenv.load(fileName: "institute.env");
+    final config = await loadEncryptedConfig();
     await Future.wait([
-      UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!),
-      JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!),
-      LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!),
-      BuySellDB.connect(dotenv.env['DB_CONNECTION_URL']!),
-      NotificationsDB.connect(dotenv.env['DB_CONNECTION_URL']!),
-      FeedDB.connect(dotenv.env['DB_CONNECTION_URL']!),
+      UhlUsersDB.connect(config['DB_CONNECTION_URL']!),
+      JobPortalDB.connect(config['DB_CONNECTION_URL']!),
+      LostFoundDB.connect(config['DB_CONNECTION_URL']!),
+      BuySellDB.connect(config['DB_CONNECTION_URL']!),
+      NotificationsDB.connect(config['DB_CONNECTION_URL']!),
+      FeedDB.connect(config['DB_CONNECTION_URL']!),
     ]);
   } catch (e) {
     log('Error connecting to DB: $e');

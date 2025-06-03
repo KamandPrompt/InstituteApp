@@ -28,7 +28,6 @@ class _FeedPageState extends State<FeedPage> {
     BlocProvider.of<FeedBloc>(context).add(const GetFeedItemsEvent());
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -77,32 +76,45 @@ class _FeedPageState extends State<FeedPage> {
             }
           },
         ),
-        (!widget.isGuest &&
-                widget.user != null &&
-                isAdmin(widget.user!["email"]))
-            ? Positioned(
-                right: 0,
-                bottom: 0,
-                child: FloatingActionButton.extended(
-                  onPressed: () {
-                    GoRouter.of(context).pushNamed(
-                        UhlLinkRoutesNames.feedAddItemPage,
-                        pathParameters: {"user": jsonEncode(widget.user)});
-                  },
-                  label: Text('Add Events',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          fontSize: 14)),
-                  icon: Icon(Icons.add_box_rounded,
-                      size: 20, color: Theme.of(context).colorScheme.onPrimary),
-                ),
-              )
-            : Container(),
+        FutureBuilder(
+            future: isAdmin(widget.user!['email']),
+            builder: (context, snapshot) {
+              return (!widget.isGuest &&
+                      widget.user != null &&
+                      snapshot.hasData &&
+                      snapshot.data == true)
+                  ? Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: FloatingActionButton.extended(
+                        onPressed: () {
+                          GoRouter.of(context).pushNamed(
+                              UhlLinkRoutesNames.feedAddItemPage,
+                              pathParameters: {
+                                "user": jsonEncode(widget.user)
+                              });
+                        },
+                        label: Text('Add Events',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                    fontSize: 14)),
+                        icon: Icon(Icons.add_box_rounded,
+                            size: 20,
+                            color: Theme.of(context).colorScheme.onPrimary),
+                      ),
+                    )
+                  : Container();
+            }),
       ],
     );
   }
 
-  Card feedItemCard(BuildContext context, int index, List<FeedItemEntity> feedItems) {
+  Card feedItemCard(
+      BuildContext context, int index, List<FeedItemEntity> feedItems) {
     return Card(
       color: Theme.of(context).cardColor,
       elevation: 2,
@@ -130,8 +142,7 @@ class _FeedPageState extends State<FeedPage> {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(15),
                                         border: Border.all(
-                                          color: Theme.of(context)
-                                              .cardColor,
+                                          color: Theme.of(context).cardColor,
                                           width: 1.5,
                                         )),
                                     child: CachedNetworkImage(

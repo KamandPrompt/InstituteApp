@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
+import 'package:vertex/utils/functions.dart';
 
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/user_repository.dart';
@@ -31,9 +31,9 @@ class UserRepositoryImpl implements UserRepository {
   Future<SendReport?> sendOTP(String name, String email, String password,
       String? image, int otp) async {
     try {
-      await dotenv.load(fileName: "institute.env");
-      String maintainerEmail = dotenv.env['LEAD_EMAIL']!;
-      String maintainerPassword = dotenv.env['LEAD_PASSWORD']!;
+      final config = await loadEncryptedConfig();
+      String maintainerEmail = config['LEAD_EMAIL']!;
+      String maintainerPassword = config['LEAD_PASSWORD']!;
 
       final smtpServer = gmail(maintainerEmail, maintainerPassword);
 

@@ -95,31 +95,44 @@ class _AchievementsPageState extends State<AchievementsPage> {
                 }
               },
             ),
-            (!widget.isGuest && isAdmin(widget.user["email"] ?? ""))
-                ? Positioned(
-                    right: 10,
-                    bottom: 10,
-                    child: FloatingActionButton.extended(
-                      onPressed: () {
-                        GoRouter.of(context).pushNamed(
-                          UhlLinkRoutesNames.feedAddItemPage,
-                          pathParameters: {"user": jsonEncode(widget.user)},
-                        );
-                      },
-                      label: Text(
-                        'Add Achievements',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            fontSize: 14),
-                      ),
-                      icon: Icon(
-                        Icons.add_box_rounded,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                    ),
-                  )
-                : Container(),
+            FutureBuilder(
+                future: isAdmin(widget.user['email']),
+                builder: (context, snapshot) {
+                  return (!widget.isGuest &&
+                          snapshot.hasData &&
+                          snapshot.data == true)
+                      ? Positioned(
+                          right: 10,
+                          bottom: 10,
+                          child: FloatingActionButton.extended(
+                            onPressed: () {
+                              GoRouter.of(context).pushNamed(
+                                UhlLinkRoutesNames.feedAddItemPage,
+                                pathParameters: {
+                                  "user": jsonEncode(widget.user)
+                                },
+                              );
+                            },
+                            label: Text(
+                              'Add Achievements',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                      fontSize: 14),
+                            ),
+                            icon: Icon(
+                              Icons.add_box_rounded,
+                              size: 20,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          ),
+                        )
+                      : Container();
+                }),
           ],
         ),
       ),
@@ -155,8 +168,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
-                                        color: Theme.of(context)
-                                            .cardColor,
+                                        color: Theme.of(context).cardColor,
                                         width: 1.5,
                                       ),
                                     ),

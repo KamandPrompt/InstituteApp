@@ -1,16 +1,18 @@
 import "dart:developer";
 import "dart:io";
 import "package:file_picker/file_picker.dart";
-import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:http/http.dart" as http;
 import "dart:convert";
+
+import "package:vertex/utils/functions.dart";
 
 Future<List<String>> uploadImagesToLNF(FilePickerResult? images) async {
   if (images == null || images.files.isEmpty) {
     return [];
   }
 
-  String cloudName = dotenv.env["CLOUDINARY_CLOUD_NAME"] ?? "";
+  final config = await loadEncryptedConfig();
+  String cloudName = config["CLOUDINARY_CLOUD_NAME"] ?? "";
   List<String> imageUrls = [];
 
   for (PlatformFile image in images.files) {
@@ -48,7 +50,8 @@ Future<List<String>> uploadImagesToLNF(FilePickerResult? images) async {
 }
 
 Future<String?> uploadImageToNotifications(String image) async {
-  String cloudName = dotenv.env["CLOUDINARY_CLOUD_NAME"] ?? "";
+  final config = await loadEncryptedConfig();
+  String cloudName = config["CLOUDINARY_CLOUD_NAME"] ?? "";
 
   try {
     File imageFile = File(image);
@@ -86,7 +89,8 @@ Future<List<String>> uploadImagesToFeeds(FilePickerResult? images) async {
     return [];
   }
 
-  String cloudName = dotenv.env["CLOUDINARY_CLOUD_NAME"] ?? "";
+  final config = await loadEncryptedConfig();
+  String cloudName = config["CLOUDINARY_CLOUD_NAME"] ?? "";
   List<String> imageUrls = [];
 
   for (PlatformFile image in images.files) {
@@ -128,7 +132,8 @@ Future<List<String>> uploadImagesToBNS(FilePickerResult? images) async {
     return [];
   }
 
-  String cloudName = dotenv.env["CLOUDINARY_CLOUD_NAME"] ?? "";
+  final config = await loadEncryptedConfig();
+  String cloudName = config["CLOUDINARY_CLOUD_NAME"] ?? "";
   List<String> imageUrls = [];
 
   for (PlatformFile image in images.files) {

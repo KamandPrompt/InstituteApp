@@ -1,13 +1,15 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:vertex/utils/functions.dart';
 
-List<String> getAdminEmails() {
-  String adminEmailsString = dotenv.env["POR_EMAILS"] ?? "";
+Future<List<String>> getAdminEmails() async {
+  final config = await loadEncryptedConfig();
+  String adminEmailsString = config["POR_EMAILS"] ?? "";
   if (adminEmailsString.isEmpty) {
     return [];
   }
   return adminEmailsString.split(',').map((email) => email.trim()).toList();
 }
 
-bool isAdmin(String email) {
-  return getAdminEmails().contains(email);
+Future<bool> isAdmin(String email) async {
+  final adminEmails = await getAdminEmails();
+  return adminEmails.contains(email);
 }

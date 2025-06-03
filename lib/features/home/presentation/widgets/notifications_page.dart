@@ -85,7 +85,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall!
-                                    .copyWith(fontWeight: FontWeight.w600, fontSize: 17),
+                                    .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 17),
                               ),
                               const SizedBox(height: 3),
                               Text(
@@ -123,19 +125,27 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         ),
       ),
-      floatingActionButton:
-          (!widget.isGuest && widget.user != null && isAdmin(widget.user!['email']))
-              ? FloatingActionButton(
-                  onPressed: () {
-                    GoRouter.of(context).pushNamed(
-                      UhlLinkRoutesNames.addNotification,
-                      pathParameters: {"user": jsonEncode(widget.user)},
-                    );
-                  },
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  child: const Icon(Icons.add),
-                )
-              : null,
+      floatingActionButton: FutureBuilder(
+          future: isAdmin(widget.user!['email']),
+          builder: (context, snapshot) {
+            if (!widget.isGuest &&
+                widget.user != null &&
+                snapshot.hasData &&
+                snapshot.data == true) {
+              return FloatingActionButton(
+                onPressed: () {
+                  GoRouter.of(context).pushNamed(
+                    UhlLinkRoutesNames.addNotification,
+                    pathParameters: {"user": jsonEncode(widget.user)},
+                  );
+                },
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                child: const Icon(Icons.add),
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          }),
     );
   }
 }
