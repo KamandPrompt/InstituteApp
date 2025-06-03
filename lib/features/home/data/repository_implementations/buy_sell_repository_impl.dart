@@ -1,5 +1,5 @@
-import 'package:uhl_link/features/home/data/data_sources/buy_sell_data_sources.dart';
-import 'package:uhl_link/features/home/domain/entities/buy_sell_item_entity.dart';
+import 'package:vertex/features/home/data/data_sources/buy_sell_data_sources.dart';
+import 'package:vertex/features/home/domain/entities/buy_sell_item_entity.dart';
 import '../../domain/repositories/buy_sell_repository.dart';
 import 'package:file_picker/file_picker.dart';
 

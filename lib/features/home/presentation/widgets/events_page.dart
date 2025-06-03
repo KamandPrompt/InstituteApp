@@ -5,11 +5,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/features/home/domain/entities/feed_entity.dart';
-import 'package:uhl_link/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
-import 'package:uhl_link/features/home/presentation/widgets/feed_detail_page.dart';
-import 'package:uhl_link/utils/env_utils.dart';
+import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/home/domain/entities/feed_entity.dart';
+import 'package:vertex/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
+import 'package:vertex/features/home/presentation/widgets/feed_detail_page.dart';
+import 'package:vertex/utils/env_utils.dart';
 
 class EventsPage extends StatefulWidget {
   final bool isGuest;
@@ -157,8 +157,7 @@ class _EventsPageState extends State<EventsPage> {
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
                                         color: Theme.of(context)
-                                            .cardColor
-                                            .withValues(alpha: 0.2),
+                                            .cardColor,
                                         width: 1.5,
                                       ),
                                     ),

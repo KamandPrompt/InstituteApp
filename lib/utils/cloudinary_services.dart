@@ -19,7 +19,7 @@ Future<List<String>> uploadImagesToLNF(FilePickerResult? images) async {
       var uri =
           Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/raw/upload");
 
-      var request = http.MultipartRequest("POST", uri);
+      var request = http.MultipartRequest("POST", uri); 
       request.fields["upload_preset"] = "lost_and_found";
       request.fields["resource_type"] = "raw"; // Change from "raw" to "image"
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:uhl_link/utils/constants.dart';
+import 'package:vertex/utils/constants.dart';
 
 class AcademicCalendarPage extends StatefulWidget {
   const AcademicCalendarPage({super.key});

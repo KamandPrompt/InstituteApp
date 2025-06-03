@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_bloc.dart';
-import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_event.dart';
-import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_state.dart';
-import 'package:uhl_link/utils/env_utils.dart';
+import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/home/presentation/bloc/notification_bloc/notification_bloc.dart';
+import 'package:vertex/features/home/presentation/bloc/notification_bloc/notification_event.dart';
+import 'package:vertex/features/home/presentation/bloc/notification_bloc/notification_state.dart';
+import 'package:vertex/utils/env_utils.dart';
 
 class NotificationsPage extends StatefulWidget {
   final bool isGuest;

@@ -54,7 +54,7 @@ class _MarqueeTextState extends State<MarqueeText> {
       scrollDirection: Axis.horizontal,
       controller: _scrollController,
       physics: NeverScrollableScrollPhysics(),
-      hitTestBehavior: HitTestBehavior.translucent,
+      // hitTestBehavior: HitTestBehavior.translucent,
       child: widget.text,
     );
   }

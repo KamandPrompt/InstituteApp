@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:uhl_link/features/home/domain/entities/notifications_entity.dart';
+import 'package:vertex/features/home/domain/entities/notifications_entity.dart';
 
 abstract class NotificationState extends Equatable {
   const NotificationState();

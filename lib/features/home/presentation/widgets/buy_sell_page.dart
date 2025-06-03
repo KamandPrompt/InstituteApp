@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/features/home/domain/entities/buy_sell_item_entity.dart';
-import 'package:uhl_link/features/home/presentation/bloc/buy_sell_bloc/bns_bloc.dart';
+import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/home/domain/entities/buy_sell_item_entity.dart';
+import 'package:vertex/features/home/presentation/bloc/buy_sell_bloc/bns_bloc.dart';
 
 class BuySellPage extends StatefulWidget {
   final bool isGuest;
@@ -90,10 +90,7 @@ class _BuySellPageState extends State<BuySellPage> {
                                                     border: Border.all(
                                                       color:
                                                           Theme.of(context)
-                                                              .cardColor
-                                                              .withValues(
-                                                                  alpha:
-                                                                      0.2),
+                                                              .cardColor,
                                                       width: 1.5,
                                                     )),
                                                 child: CachedNetworkImage(

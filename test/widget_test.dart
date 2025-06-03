@@ -8,9 +8,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uhl_link/config/routes/routes.dart';
+import 'package:vertex/config/routes/routes.dart';
 
-import 'package:uhl_link/main.dart';
+import 'package:vertex/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

@@ -1,6 +1,6 @@
-import 'package:uhl_link/features/home/data/data_sources/notification_data_sources.dart';
-import 'package:uhl_link/features/home/domain/entities/notifications_entity.dart';
-import 'package:uhl_link/features/home/domain/repositories/notification_repository.dart';
+import 'package:vertex/features/home/data/data_sources/notification_data_sources.dart';
+import 'package:vertex/features/home/domain/entities/notifications_entity.dart';
+import 'package:vertex/features/home/domain/repositories/notification_repository.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
   final NotificationsDB notificationsDB;

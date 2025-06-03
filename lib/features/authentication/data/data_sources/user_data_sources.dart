@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:mongo_dart/mongo_dart.dart';
-import 'package:uhl_link/features/authentication/domain/entities/user_entity.dart';
-import 'package:uhl_link/utils/password_functions.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
+import 'package:vertex/utils/password_functions.dart';
 
 import '../../../../utils/cloudinary_services.dart';
 import '../models/user_model.dart';

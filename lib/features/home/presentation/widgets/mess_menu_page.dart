@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uhl_link/utils/constants.dart';
+import 'package:vertex/utils/constants.dart';
 
 class MessMenuPage extends StatefulWidget {
   const MessMenuPage({super.key});

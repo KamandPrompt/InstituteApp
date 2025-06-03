@@ -1,4 +1,4 @@
-import 'package:uhl_link/features/home/domain/entities/buy_sell_item_entity.dart';
+import 'package:vertex/features/home/domain/entities/buy_sell_item_entity.dart';
 import 'package:file_picker/file_picker.dart';
 
 abstract class BuySellRepository {

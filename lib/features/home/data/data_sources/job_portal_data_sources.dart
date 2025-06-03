@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:mongo_dart/mongo_dart.dart';
-import 'package:uhl_link/features/home/data/models/job_model.dart';
+import 'package:vertex/features/home/data/models/job_model.dart';
 
 class JobPortalDB {
   static Db? db;

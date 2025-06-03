@@ -2,7 +2,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:uhl_link/features/home/domain/entities/lost_found_item_entity.dart';
+import 'package:vertex/features/home/domain/entities/lost_found_item_entity.dart';
 
 import '../../../domain/usecases/add_lost_found_item.dart';
 import '../../../domain/usecases/get_lost_found_items.dart';

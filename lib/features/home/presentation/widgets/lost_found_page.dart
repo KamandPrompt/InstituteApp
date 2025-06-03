@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/features/home/domain/entities/lost_found_item_entity.dart';
-import 'package:uhl_link/features/home/presentation/bloc/lost_found_bloc/lnf_bloc.dart';
+import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/home/domain/entities/lost_found_item_entity.dart';
+import 'package:vertex/features/home/presentation/bloc/lost_found_bloc/lnf_bloc.dart';
 
 class LostFoundPage extends StatefulWidget {
   final bool isGuest;
@@ -114,10 +114,7 @@ class _LostFoundPageState extends State<LostFoundPage> {
                                                         border: Border.all(
                                                           color:
                                                               Theme.of(context)
-                                                                  .cardColor
-                                                                  .withValues(
-                                                                      alpha:
-                                                                          0.2),
+                                                                  .cardColor,
                                                           width: 1.5,
                                                         )),
                                                     child: CachedNetworkImage(

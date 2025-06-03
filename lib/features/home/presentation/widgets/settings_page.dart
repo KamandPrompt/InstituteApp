@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/features/home/presentation/widgets/card.dart';
+import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/home/presentation/widgets/card.dart';
 
 import '../../../../utils/theme.dart';
 
@@ -72,8 +72,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Theme.of(context).colorScheme.onPrimary,
                         inactiveTrackColor: Theme.of(context)
                             .colorScheme
-                            .scrim
-                            .withValues(alpha: 0.5),
+                            .scrim,
                         trackOutlineColor:
                             const WidgetStatePropertyAll(Colors.transparent),
                       ),

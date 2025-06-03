@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uhl_link/features/home/domain/entities/job_entity.dart';
+import 'package:vertex/features/home/domain/entities/job_entity.dart';
 
 import '../../../../utils/functions.dart';
 import '../../../../widgets/screen_width_button.dart';
@@ -132,8 +132,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                         side: BorderSide(
                           color: Theme.of(context)
                               .colorScheme
-                              .scrim
-                              .withValues(alpha: 0.5),
+                              .scrim,
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(6),
@@ -197,8 +196,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                         side: BorderSide(
                           color: Theme.of(context)
                               .colorScheme
-                              .scrim
-                              .withValues(alpha: 0.5),
+                              .scrim,
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(6),
@@ -242,8 +240,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                         side: BorderSide(
                           color: Theme.of(context)
                               .colorScheme
-                              .scrim
-                              .withValues(alpha: 0.5),
+                              .scrim,
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(6),
@@ -316,7 +313,7 @@ Widget aboutJobWidget(BuildContext context, String heading, String value) {
     margin: const EdgeInsets.symmetric(vertical: 10),
     decoration: BoxDecoration(
         border: Border.all(
-          color: Theme.of(context).colorScheme.scrim.withValues(alpha: 0.5),
+          color: Theme.of(context).colorScheme.scrim,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(6),

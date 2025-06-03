@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uhl_link/config/routes/routes_consts.dart';
+import 'package:vertex/config/routes/routes_consts.dart';
 import '../widgets/card.dart';
 
 class Profile extends StatefulWidget {

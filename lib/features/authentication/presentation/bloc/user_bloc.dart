@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mailer/mailer.dart';
-import 'package:uhl_link/features/authentication/domain/entities/user_entity.dart';
-import 'package:uhl_link/features/authentication/domain/usecases/send_otp.dart';
-import 'package:uhl_link/features/authentication/domain/usecases/signin_user.dart';
-import 'package:uhl_link/features/authentication/domain/usecases/update_password.dart';
-import 'package:uhl_link/features/authentication/domain/usecases/update_profile.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
+import 'package:vertex/features/authentication/domain/usecases/send_otp.dart';
+import 'package:vertex/features/authentication/domain/usecases/signin_user.dart';
+import 'package:vertex/features/authentication/domain/usecases/update_password.dart';
+import 'package:vertex/features/authentication/domain/usecases/update_profile.dart';
 
 import '../../domain/usecases/get_user_by_email.dart';
 import '../../domain/usecases/signup_user.dart';

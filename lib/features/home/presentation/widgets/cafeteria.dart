@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:uhl_link/utils/constants.dart';
+import 'package:vertex/utils/constants.dart';
 
 class CafeteriaPage extends StatefulWidget {
   const CafeteriaPage({super.key});
@@ -51,8 +51,7 @@ class _CafeteriaPageState extends State<CafeteriaPage> {
                                     borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
                                       color: Theme.of(context)
-                                          .cardColor
-                                          .withValues(alpha: 0.2),
+                                          .cardColor,
                                       width: 1.5,
                                     ),
                                     color: Theme.of(context).cardColor,

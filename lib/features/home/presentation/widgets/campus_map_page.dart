@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:uhl_link/features/home/presentation/widgets/card.dart';
+import 'package:vertex/features/home/presentation/widgets/card.dart';
 
 class CampusMapPage extends StatefulWidget {
   const CampusMapPage({super.key});

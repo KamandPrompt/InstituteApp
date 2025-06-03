@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:mongo_dart/mongo_dart.dart';
-import 'package:uhl_link/features/home/data/models/notification_model.dart';
+import 'package:vertex/features/home/data/models/notification_model.dart';
 
 import '../../../../utils/cloudinary_services.dart';
 

@@ -25,7 +25,7 @@ class JobCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
           side: BorderSide(
-        color: Theme.of(context).colorScheme.scrim.withValues(alpha: 0.5),
+        color: Theme.of(context).colorScheme.scrim,
         width: 1.5,
       )),
       color: Theme.of(context).cardColor,
@@ -74,8 +74,7 @@ class JobCard extends StatelessWidget {
                     border: Border.all(
                       color: Theme.of(context)
                           .colorScheme
-                          .scrim
-                          .withValues(alpha: 0.5),
+                          .scrim,
                       width: 1.5,
                     ),
                     borderRadius: BorderRadius.circular(10),
@@ -164,7 +163,7 @@ class JobCard extends StatelessWidget {
             Divider(
                 height: 1.5,
                 color:
-                    Theme.of(context).colorScheme.scrim.withValues(alpha: 0.5)),
+                    Theme.of(context).colorScheme.scrim),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(

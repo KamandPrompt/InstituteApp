@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uhl_link/features/home/domain/entities/notifications_entity.dart';
-import 'package:uhl_link/widgets/marquee_text.dart';
+import 'package:vertex/features/home/domain/entities/notifications_entity.dart';
+import 'package:vertex/widgets/marquee_text.dart';
 
 class NotificationDetailsPage extends StatelessWidget {
   final Map<String, dynamic> notificationMap;

@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
-import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/features/home/presentation/widgets/dashboard_card.dart';
+import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/home/presentation/widgets/dashboard_card.dart';
 
 class Dashboard extends StatefulWidget {
   final bool isGuest;
@@ -169,7 +169,7 @@ class _DashboardState extends State<Dashboard> {
                               border: Border.all(
                                 color: Theme.of(context)
                                     .cardColor
-                                    .withValues(alpha: 0.2),
+                                    .withAlpha(2),
                                 width: 1.5,
                               )),
                           child: CachedNetworkImage(

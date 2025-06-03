@@ -65,8 +65,7 @@ class _FeedDetailPageState extends State<FeedDetailPage> {
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
                                         color: Theme.of(context)
-                                            .cardColor
-                                            .withValues(alpha: 0.2),
+                                            .cardColor,
                                         width: 1.5,
                                       )),
                                   child: CachedNetworkImage(

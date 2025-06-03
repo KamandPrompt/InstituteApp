@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'package:mongo_dart/mongo_dart.dart';
-import 'package:uhl_link/features/home/data/models/buy_sell_item_model.dart';
+import 'package:vertex/features/home/data/models/buy_sell_item_model.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:uhl_link/utils/cloudinary_services.dart';
+import 'package:vertex/utils/cloudinary_services.dart';
 
 class BuySellDB {
   static Db? db;

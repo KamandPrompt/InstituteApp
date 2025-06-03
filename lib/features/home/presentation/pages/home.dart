@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uhl_link/features/home/presentation/pages/academics.dart';
-import 'package:uhl_link/features/home/presentation/pages/dashboard.dart';
-import 'package:uhl_link/features/home/presentation/pages/feeds.dart';
-import 'package:uhl_link/features/home/presentation/pages/profile.dart';
-import 'package:uhl_link/features/home/presentation/pages/job_portal.dart';
+import 'package:vertex/features/home/presentation/pages/academics.dart';
+import 'package:vertex/features/home/presentation/pages/dashboard.dart';
+import 'package:vertex/features/home/presentation/pages/feeds.dart';
+import 'package:vertex/features/home/presentation/pages/profile.dart';
+import 'package:vertex/features/home/presentation/pages/job_portal.dart';
 
 import '../../../../config/routes/routes_consts.dart';
 

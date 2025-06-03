@@ -1,4 +1,4 @@
-import 'package:uhl_link/features/home/data/data_sources/job_portal_data_sources.dart';
+import 'package:vertex/features/home/data/data_sources/job_portal_data_sources.dart';
 import '../../domain/entities/job_entity.dart';
 import '../../domain/repositories/job_portal_repository.dart';
 

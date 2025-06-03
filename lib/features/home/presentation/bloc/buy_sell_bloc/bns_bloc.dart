@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:uhl_link/features/home/domain/entities/buy_sell_item_entity.dart';
+import 'package:vertex/features/home/domain/entities/buy_sell_item_entity.dart';
 import 'package:file_picker/file_picker.dart';
 import '../../../domain/usecases/add_buy_sell_items.dart';
 import '../../../domain/usecases/get_buy_sell_items.dart';

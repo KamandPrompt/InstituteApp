@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:uhl_link/features/home/domain/entities/job_entity.dart';
+import 'package:vertex/features/home/domain/entities/job_entity.dart';
 
 import '../../../domain/usecases/get_jobs.dart';
 

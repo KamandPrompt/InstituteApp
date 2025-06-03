@@ -1,6 +1,6 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:uhl_link/features/home/data/data_sources/feed_portal_data_sources.dart';
-import 'package:uhl_link/features/home/domain/entities/feed_entity.dart';
+import 'package:vertex/features/home/data/data_sources/feed_portal_data_sources.dart';
+import 'package:vertex/features/home/domain/entities/feed_entity.dart';
 import '../../domain/repositories/feed_repository.dart';
 
 class FeedRepositoryImpl implements FeedRepository {

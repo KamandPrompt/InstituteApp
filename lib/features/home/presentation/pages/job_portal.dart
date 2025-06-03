@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/features/home/domain/entities/job_entity.dart';
-import 'package:uhl_link/features/home/presentation/bloc/job_portal_bloc/job_bloc.dart';
-import 'package:uhl_link/features/home/presentation/widgets/job_card.dart';
+import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/home/domain/entities/job_entity.dart';
+import 'package:vertex/features/home/presentation/bloc/job_portal_bloc/job_bloc.dart';
+import 'package:vertex/features/home/presentation/widgets/job_card.dart';
 
 class JobPortalPage extends StatefulWidget {
   final bool isGuest;
