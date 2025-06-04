@@ -41,7 +41,7 @@ class _FeedPageState extends State<FeedPage> {
               List<FeedItemEntity> feedItems = state.items;
               if (feedItems.isEmpty) {
                 return Center(
-                    child: Text('No feeds available',
+                    child: Text('No feeds available.',
                         style: Theme.of(context).textTheme.bodySmall));
               }
               return ListView.separated(
@@ -65,7 +65,7 @@ class _FeedPageState extends State<FeedPage> {
               );
             } else if (state is FeedItemsLoadingError) {
               return const Center(
-                  child: Text('Failed to load feed items.',
+                  child: Text('Failed to load feed items.\n Check your internet connection.',
                       style: TextStyle(color: Colors.red)));
             } else if (state is FeedItemAdded ||
                 state is FeedItemsAddingError) {
@@ -94,7 +94,7 @@ class _FeedPageState extends State<FeedPage> {
                                 "user": jsonEncode(widget.user)
                               });
                         },
-                        label: Text('Add Events',
+                        label: Text('Add Feeds',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -120,6 +120,10 @@ class _FeedPageState extends State<FeedPage> {
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+              color: Theme.of(context).colorScheme.onSurface,
+              width: 1,
+            )
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(

@@ -59,7 +59,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
                     return Center(
                       child: Text(
                         'No achievements available',
-                        style: Theme.of(context).textTheme.labelSmall,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     );
                   }
@@ -146,6 +146,10 @@ class _AchievementsPageState extends State<AchievementsPage> {
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+              color: Theme.of(context).colorScheme.onSurface,
+              width: 1,
+            )
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(

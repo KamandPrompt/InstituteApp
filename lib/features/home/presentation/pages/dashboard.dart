@@ -149,6 +149,12 @@ class _DashboardState extends State<Dashboard> {
         "path": UhlLinkRoutesNames.cafeteria,
         'pathParameters': {}
       },
+      {
+        "title": 'Quick Links',
+        "icon": Icons.link_rounded,
+        "path": UhlLinkRoutesNames.quickLinksPage,
+        'pathParameters': {},
+      }
     ];
     final screenSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
@@ -160,39 +166,52 @@ class _DashboardState extends State<Dashboard> {
         mainAxisSize: MainAxisSize.min,
         children: [
           CarouselSlider(
-              items: carouselImages
-                  .map((image) => ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                color: Theme.of(context)
-                                    .cardColor
-                                    .withAlpha(2),
-                                width: 1.5,
-                              )),
-                          child: CachedNetworkImage(
-                              imageUrl: image, fit: BoxFit.cover),
+            items: carouselImages
+                .map((image) => ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: Theme.of(context).cardColor.withAlpha(2),
+                            width: 1.5,
+                          ),
                         ),
-                      ))
-                  .toList(),
-              options: CarouselOptions(
-                  height: screenSize.height * 0.3,
-                  autoPlay: true,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 1,
-                  autoPlayInterval: const Duration(seconds: 5),
-                  enlargeCenterPage: true,
-                  onPageChanged: (value, _) {
-                    setState(() {
-                      currentImage = value;
-                    });
-                  })),
+                        child: CachedNetworkImage(
+                          imageUrl: image,
+                          fit: BoxFit.cover,
+                          progressIndicatorBuilder: (context, url, progress) =>
+                              Center(
+                            child: CircularProgressIndicator(
+                              value: progress.progress,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ))
+                .toList(),
+            options: CarouselOptions(
+              height: screenSize.height * 0.3,
+              autoPlay: true,
+              aspectRatio: 16 / 9,
+              viewportFraction: 1,
+              autoPlayInterval: const Duration(seconds: 5),
+              enlargeCenterPage: true,
+              onPageChanged: (value, _) {
+                setState(() {
+                  currentImage = value;
+                });
+              },
+            ),
+          ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.01,
           ),
-          carouselIndicatorWidget(),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.04,
+            child: carouselIndicatorWidget(),
+          ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.01,
           ),

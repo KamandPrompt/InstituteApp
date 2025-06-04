@@ -50,7 +50,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 if (notifications.isEmpty) {
                   return Center(
                     child: Text(
-                      "No Notifications",
+                      "No Notifications.\nCheck your internet connection or try again later.",
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   );

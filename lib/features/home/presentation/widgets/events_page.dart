@@ -58,7 +58,7 @@ class _EventsPageState extends State<EventsPage> {
                     return Center(
                       child: Text(
                         'No events available',
-                        style: Theme.of(context).textTheme.labelSmall,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     );
                   }
@@ -147,6 +147,10 @@ class _EventsPageState extends State<EventsPage> {
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+              color: Theme.of(context).colorScheme.onSurface,
+              width: 1,
+            )
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
