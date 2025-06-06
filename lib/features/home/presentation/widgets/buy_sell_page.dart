@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:vertex/config/routes/routes_consts.dart';
 import 'package:vertex/features/home/domain/entities/buy_sell_item_entity.dart';
 import 'package:vertex/features/home/presentation/bloc/buy_sell_bloc/bns_bloc.dart';
+import 'package:vertex/utils/functions.dart';
 
 class BuySellPage extends StatefulWidget {
   final bool isGuest;
@@ -27,6 +28,25 @@ class _BuySellPageState extends State<BuySellPage> {
   }
 
   List<BuySellItemEntity> bnsItems = [];
+
+  Widget priceTagWidget({required String tag}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+      decoration: BoxDecoration(
+        color:
+            tag.contains('Min') ? Colors.green.shade100 : Colors.red.shade100,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Text(
+        tag,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            color: tag.contains('Min') ? Colors.green : Colors.red,
+            fontWeight: FontWeight.bold),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,157 +77,190 @@ class _BuySellPageState extends State<BuySellPage> {
                 }
                 return ListView.separated(
                   physics: const ClampingScrollPhysics(),
-                  primary: false,
+                  primary: true,
                   itemCount: bnsItems.length,
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.09),
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
                       color: Theme.of(context).cardColor,
                       elevation: 2,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(15),
+                        side: BorderSide(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withAlpha(100),
+                          width: 2,
+                        ),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: MediaQuery.of(context).size.height * 0.02,
-                          horizontal: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            bnsItems[index].productImage.isNotEmpty
-                                ? CarouselSlider(
-                                    items: bnsItems[index]
-                                        .productImage
-                                        .map((image) => ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius
-                                                            .circular(15),
-                                                    border: Border.all(
-                                                      color:
-                                                          Theme.of(context)
-                                                              .cardColor,
-                                                      width: 1.5,
-                                                    )),
-                                                child: CachedNetworkImage(
-                                                    imageUrl: image,
-                                                    height: MediaQuery
-                                                                .of(context)
-                                                            .size
-                                                            .height *
-                                                        0.25,
-                                                    placeholder:
-                                                        (context, url) {
-                                                      return Center(
-                                                          child:
-                                                              CircularProgressIndicator());
-                                                    },
-                                                    errorWidget: (context,
-                                                        object,
-                                                        stacktrace) {
-                                                      return Icon(
-                                                          Icons
-                                                              .error_outline_rounded,
-                                                          size: 40,
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryColor);
-                                                    },
-                                                    fit: BoxFit.cover),
-                                              ),
-                                            ))
-                                        .toList(),
-                                    options: CarouselOptions(
-                                        height: screenSize.height * 0.3,
-                                        autoPlay: true,
-                                        aspectRatio: 16 / 9,
-                                        viewportFraction: 1,
-                                        autoPlayInterval:
-                                            const Duration(seconds: 5),
-                                        enlargeCenterPage: true))
-                                : Container(),
-                            bnsItems[index].productImage.isNotEmpty
-                                ? SizedBox(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          bnsItems[index].productImage.isNotEmpty
+                              ? CarouselSlider(
+                                  items: bnsItems[index]
+                                      .productImage
+                                      .map((image) => ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(15),
+                                                topRight: Radius.circular(15)),
+                                            child: CachedNetworkImage(
+                                                imageUrl: image,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.25,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    20,
+                                                placeholder: (context, url) {
+                                                  return Center(
+                                                      child:
+                                                          CircularProgressIndicator());
+                                                },
+                                                errorWidget: (context, object,
+                                                    stacktrace) {
+                                                  return Icon(
+                                                      Icons
+                                                          .error_outline_rounded,
+                                                      size: 40,
+                                                      color: Theme.of(context)
+                                                          .primaryColor);
+                                                },
+                                                fit: BoxFit.cover),
+                                          ))
+                                      .toList(),
+                                  options: CarouselOptions(
+                                      height: screenSize.height * 0.3,
+                                      autoPlay: true,
+                                      aspectRatio: 16 / 9,
+                                      viewportFraction: 1,
+                                      autoPlayInterval:
+                                          const Duration(seconds: 5),
+                                      enlargeCenterPage: true))
+                              : Container(),
+                          // bnsItems[index].productImage.isNotEmpty
+                          //     ? SizedBox(
+                          //         height: MediaQuery.of(context).size.height *
+                          //             0.02,
+                          //       )
+                          //     : Container(),
+                          Container(
+                            width: MediaQuery.of(context).size.width - 30,
+                            margin: EdgeInsets.symmetric(
+                                horizontal:
+                                    MediaQuery.of(context).size.height * 0.015,
+                                vertical:
+                                    MediaQuery.of(context).size.height * 0.015),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    DateFormat.yMMMMd()
+                                        .format(bnsItems[index].addDate),
+                                    textAlign: TextAlign.end,
+                                    softWrap: true,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall),
+                                SizedBox(
                                     height: MediaQuery.of(context).size.height *
-                                        0.02,
-                                  )
-                                : Container(),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      "Product Name: ${bnsItems[index].productName}",
-                                      textAlign: TextAlign.start,
-                                      softWrap: true,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall),
-                                  SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.01),
-                                  Text("Contact: ${bnsItems[index].phoneNo}",
-                                      textAlign: TextAlign.start,
-                                      softWrap: true,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall),
-                                  SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.01),
-                                  Text(
-                                      "Date: ${DateFormat.yMMMMd().format(bnsItems[index].addDate)}",
-                                      textAlign: TextAlign.start,
-                                      softWrap: true,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall),
-                                  SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.01),
-                                  Text(
-                                    "Description: ${bnsItems[index].productDescription}",
-                                    textAlign: TextAlign.start,
+                                        0.005),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(bnsItems[index].productName,
+                                              textAlign: TextAlign.start,
+                                              softWrap: true,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelSmall!
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 17)),
+                                          SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.005),
+                                          Text(bnsItems[index].phoneNo,
+                                              textAlign: TextAlign.start,
+                                              softWrap: true,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelSmall!
+                                                  .copyWith(fontSize: 17))
+                                        ]),
+                                    IconButton(
+                                        onPressed: () async {
+                                          await makePhoneCall(
+                                              bnsItems[index].phoneNo);
+                                        },
+                                        icon: CircleAvatar(
+                                          backgroundColor: Theme.of(context)
+                                              .primaryColor
+                                              .withAlpha(50),
+                                          child: Icon(Icons.phone_rounded,
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                        )),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.005),
+                                Text(bnsItems[index].productDescription,
+                                    textAlign: TextAlign.justify,
                                     softWrap: true,
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
-                                  ),
-                                  SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.01),
-                                  Text(
-                                    "MaxPrice: ${bnsItems[index].maxPrice}",
-                                    textAlign: TextAlign.start,
-                                    softWrap: true,
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
-                                  ),
-                                  SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.01),
-                                  Text(
-                                    "MinPrice: ${bnsItems[index].minPrice}",
-                                    textAlign: TextAlign.start,
-                                    softWrap: true,
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
-                                  ),
-                                ],
-                              ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withAlpha(180))),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.015),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    priceTagWidget(
+                                        tag:
+                                            "Min: ${bnsItems[index].minPrice}"),
+                                    Icon(Icons.compare_arrows,
+                                        size: 30,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                            .withAlpha(150)),
+                                    priceTagWidget(
+                                      tag: "Max: ${bnsItems[index].maxPrice}",
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     );
                   },

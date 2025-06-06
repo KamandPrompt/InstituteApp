@@ -41,6 +41,15 @@ Future<void> launchURL(String url) async {
   }
 }
 
+Future<void> makePhoneCall(String phoneNumber) async {
+  final Uri url = Uri(scheme: 'tel', path: phoneNumber);
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
 Future<bool> checkUserLoggedIn() async {
   const storage = FlutterSecureStorage();
 
