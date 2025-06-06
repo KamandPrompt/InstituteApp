@@ -40,7 +40,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: BlocBuilder<NotificationBloc, NotificationState>(
             builder: (context, state) {
               if (state is NotificationsLoading) {
@@ -72,8 +72,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
                         color: Theme.of(context).cardColor,
                         elevation: 2,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withAlpha(50),
+                              width: 1.5,
+                            )),
                         child: Padding(
                           padding: const EdgeInsets.all(12),
                           child: Column(

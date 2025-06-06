@@ -121,8 +121,8 @@ class _FeedPageState extends State<FeedPage> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
         side: BorderSide(
-              color: Theme.of(context).colorScheme.onSurface,
-              width: 1,
+              color: Theme.of(context).colorScheme.onSurface.withAlpha(50),
+              width: 1.5,
             )
       ),
       child: Padding(

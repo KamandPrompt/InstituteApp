@@ -41,7 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                   side: BorderSide(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface.withAlpha(100),
                     width: 1.5,
                   )),
               clipBehavior: Clip.hardEdge,

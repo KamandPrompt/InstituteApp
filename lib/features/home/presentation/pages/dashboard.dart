@@ -169,25 +169,20 @@ class _DashboardState extends State<Dashboard> {
             items: carouselImages
                 .map((image) => ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: Theme.of(context).cardColor.withAlpha(2),
-                            width: 1.5,
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        fit: BoxFit.cover,
+                        progressIndicatorBuilder: (context, url, progress) =>
+                            Center(
+                          child: CircularProgressIndicator(
+                            value: progress.progress,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
-                        child: CachedNetworkImage(
-                          imageUrl: image,
-                          fit: BoxFit.cover,
-                          progressIndicatorBuilder: (context, url, progress) =>
-                              Center(
-                            child: CircularProgressIndicator(
-                              value: progress.progress,
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          ),
-                        ),
+                        errorWidget: (context, object, stacktrace) {
+                          return Icon(Icons.error_outline_rounded,
+                              size: 40, color: Theme.of(context).primaryColor);
+                        },
                       ),
                     ))
                 .toList(),

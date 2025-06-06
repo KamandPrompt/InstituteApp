@@ -139,7 +139,7 @@ class _AboutPageState extends State<AboutPage> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: const ClampingScrollPhysics(),

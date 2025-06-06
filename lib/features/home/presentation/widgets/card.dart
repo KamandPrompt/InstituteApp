@@ -29,7 +29,7 @@ class _CardWidgetState extends State<CardWidget> {
             side: BorderSide(
               color: widget.isTrue
                   ? Theme.of(context).primaryColor
-                  : Theme.of(context).colorScheme.onSurface,
+                  : Theme.of(context).colorScheme.onSurface.withAlpha(100),
               width: widget.isTrue ? 3 : 1.5,
             )),
         clipBehavior: Clip.hardEdge,
