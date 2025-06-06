@@ -96,6 +96,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
     final width = MediaQuery.of(context).size.width;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
     UserEntity user = UserEntity.fromJson(widget.user);
+    final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
@@ -145,8 +146,9 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
             children: [
               SingleChildScrollView(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 physics: const ClampingScrollPhysics(),
+                primary: true,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,228 +158,246 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       onTap: () async {
                         await pickImage();
                       },
-                      child: Container(
-                        width: width - 40,
+                      child: SizedBox(
+                        width: width - 20,
                         height: height * 0.3,
-                        decoration: BoxDecoration(
+                        child: Card(
                           color: Theme.of(context).cardColor,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.scrim,
-                              width: 1.5),
-                        ),
-                        child: Center(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(
+                                color: Theme.of(context).colorScheme.scrim,
+                                width: 1.5,
+                                strokeAlign: BorderSide.strokeAlignOutside),
+                          ),
                           child: ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(12)),
                             child: (picker == null || picker!.files.isEmpty)
-                                ? Icon(
-                                    Icons.image_rounded,
-                                    color: Theme.of(context).colorScheme.scrim,
-                                    size: aspectRatio * 150,
+                                ? Center(
+                                    child: Icon(
+                                      Icons.image_rounded,
+                                      color:
+                                          Theme.of(context).colorScheme.scrim,
+                                      size: aspectRatio * 150,
+                                    ),
                                   )
-                                : SizedBox(
-                                    width: width - 40,
-                                    height: height * 0.3,
-                                    child: GridView.builder(
-                                        itemCount: picker!.files.length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2),
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return Image.file(
-                                            File(picker!.files[index].path!),
-                                            fit: BoxFit.cover,
-                                            alignment: Alignment.center,
-                                          );
-                                        }),
-                                  ),
+                                : GridView.builder(
+                                    itemCount: picker!.files.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Image.file(
+                                        File(picker!.files[index].path!),
+                                        fit: BoxFit.cover,
+                                        alignment: Alignment.center,
+                                      );
+                                    }),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(height: height * 0.02),
-                    FormFieldWidget(
-                      focusNode: nameFocusNode,
-                      fieldKey: nameKey,
-                      controller: nameController,
-                      obscureText: false,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Name is required.';
-                        }
-                        return null;
-                      },
-                      maxLines: 1,
-                      keyboardType: TextInputType.emailAddress,
-                      errorText: errorNameValue,
-                      prefixIcon: Icons.person,
-                      showSuffixIcon: false,
-                      hintText: "Enter your Name",
-                      textInputAction: TextInputAction.next,
-                    ),
-                    SizedBox(height: height * 0.02),
-                    FormFieldWidget(
-                      focusNode: contactFocusNode,
-                      fieldKey: contactKey,
-                      controller: contactController,
-                      obscureText: false,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return "Contact number is required.";
-                        }
-                        if (!RegExp(r'^\d{10}$').hasMatch(value)) {
-                          return "Enter a valid 10-digit Contact Number.";
-                        }
-                        return null;
-                      },
-                      maxLines: 1,
-                      keyboardType: TextInputType.phone,
-                      errorText: errorContactValue,
-                      prefixIcon: Icons.location_searching_rounded,
-                      showSuffixIcon: false,
-                      hintText: "Enter your Contact No.",
-                      textInputAction: TextInputAction.next,
-                    ),
-                    SizedBox(height: height * 0.02),
-                    FormFieldWidget(
-                      focusNode: descriptionFocusNode,
-                      fieldKey: descriptionKey,
-                      controller: descriptionController,
-                      obscureText: false,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Description is required.';
-                        }
-                        return null;
-                      },
-                      maxLines: null,
-                      keyboardType: TextInputType.multiline,
-                      errorText: errorDescriptionValue,
-                      prefixIcon: Icons.image_aspect_ratio,
-                      showSuffixIcon: false,
-                      hintText: "Describe Lost Item",
-                      textInputAction: TextInputAction.newline,
-                    ),
-                    SizedBox(height: height * 0.02),
-                    FormFieldWidget(
-                      focusNode: dateFocusNode,
-                      fieldKey: dateKey,
-                      controller: dateController,
-                      obscureText: false,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Lost Date is required";
-                        }
-                        return null;
-                      },
-                      onTap: () async {
-                        DateTime date = DateTime.now();
-                        FocusScope.of(context).requestFocus(FocusNode());
-
-                        date = (await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate:
-                              DateTime.now().subtract(const Duration(days: 7)),
-                          lastDate: DateTime.now(),
-                        ))!;
-
-                        dateController.text = date.toString().substring(0, 10);
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      errorText: errorDateValue,
-                      prefixIcon: Icons.date_range_rounded,
-                      showSuffixIcon: false,
-                      hintText: "Enter Date of Lost/Found",
-                      textInputAction: TextInputAction.done,
-                    ),
-                    SizedBox(height: height * 0.02),
-                    FormField<String>(builder: (FormFieldState<String> state) {
-                      return InputDecorator(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 15),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.scrim,
-                                  width: 1),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)),
-                              gapPadding: 24),
-                          fillColor: Theme.of(context).cardColor,
-                          filled: true,
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)),
-                              gapPadding: 24),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: itemStatus,
-                            isDense: true,
-                            hint: Text(
-                              "Lost/Found",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.scrim),
-                            ),
-                            dropdownColor: Theme.of(context).cardColor,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                itemStatus = newValue;
-                              });
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          FormFieldWidget(
+                            focusNode: nameFocusNode,
+                            fieldKey: nameKey,
+                            controller: nameController,
+                            obscureText: false,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Name is required.';
+                              }
+                              return null;
                             },
-                            items: lostOrFound.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              );
-                            }).toList(),
+                            maxLines: 1,
+                            keyboardType: TextInputType.emailAddress,
+                            errorText: errorNameValue,
+                            prefixIcon: Icons.person,
+                            showSuffixIcon: false,
+                            hintText: "Enter your Name",
+                            textInputAction: TextInputAction.next,
                           ),
-                        ),
-                      );
-                    }),
-                    SizedBox(height: height * 0.1),
+                          SizedBox(height: height * 0.015),
+                          FormFieldWidget(
+                            focusNode: contactFocusNode,
+                            fieldKey: contactKey,
+                            controller: contactController,
+                            obscureText: false,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return "Contact number is required.";
+                              }
+                              if (!RegExp(r'^\d{10}$').hasMatch(value)) {
+                                return "Enter a valid 10-digit Contact Number.";
+                              }
+                              return null;
+                            },
+                            maxLines: 1,
+                            keyboardType: TextInputType.phone,
+                            errorText: errorContactValue,
+                            prefixIcon: Icons.location_searching_rounded,
+                            showSuffixIcon: false,
+                            hintText: "Enter your Contact No.",
+                            textInputAction: TextInputAction.next,
+                          ),
+                          SizedBox(height: height * 0.015),
+                          FormFieldWidget(
+                            focusNode: descriptionFocusNode,
+                            fieldKey: descriptionKey,
+                            controller: descriptionController,
+                            obscureText: false,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Description is required.';
+                              }
+                              return null;
+                            },
+                            maxLines: null,
+                            keyboardType: TextInputType.multiline,
+                            errorText: errorDescriptionValue,
+                            prefixIcon: Icons.description_rounded,
+                            showSuffixIcon: false,
+                            hintText: "Describe Lost Item",
+                            textInputAction: TextInputAction.newline,
+                          ),
+                          SizedBox(height: height * 0.015),
+                          FormFieldWidget(
+                            focusNode: dateFocusNode,
+                            fieldKey: dateKey,
+                            controller: dateController,
+                            obscureText: false,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Lost Date is required";
+                              }
+                              return null;
+                            },
+                            onTap: () async {
+                              DateTime date = DateTime.now();
+                              FocusScope.of(context).requestFocus(FocusNode());
+
+                              date = (await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now()
+                                    .subtract(const Duration(days: 7)),
+                                lastDate: DateTime.now(),
+                              ))!;
+
+                              dateController.text =
+                                  date.toString().substring(0, 10);
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            errorText: errorDateValue,
+                            prefixIcon: Icons.date_range_rounded,
+                            showSuffixIcon: false,
+                            hintText: "Enter Date of Lost/Found",
+                            textInputAction: TextInputAction.done,
+                          ),
+                          SizedBox(height: height * 0.015),
+                          FormField<String>(
+                              builder: (FormFieldState<String> state) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            Theme.of(context).colorScheme.scrim,
+                                        width: 1),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12)),
+                                    gapPadding: 24),
+                                fillColor: Theme.of(context).cardColor,
+                                filled: true,
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 2),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12)),
+                                    gapPadding: 24),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  value: itemStatus,
+                                  isDense: true,
+                                  hint: Text(
+                                    "Lost/Found",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .scrim),
+                                  ),
+                                  dropdownColor: Theme.of(context).cardColor,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      itemStatus = newValue;
+                                    });
+                                  },
+                                  items: lostOrFound.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall,
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            );
+                          }),
+                          SizedBox(height: height * 0.08),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-              Visibility(
-                visible: MediaQuery.of(context).viewInsets.bottom == 0,
-                child: Positioned(
+              if (!isKeyboardVisible)
+                Positioned(
                     bottom: 20,
                     child: ScreenWidthButton(
                       text: "Add Item",
                       buttonFunc: () {
-                        final bool isNameValid = nameKey.currentState!.validate();
+                        final bool isNameValid =
+                            nameKey.currentState!.validate();
                         final bool isContactValid =
                             contactKey.currentState!.validate();
                         final bool isDescriptionValid =
                             descriptionKey.currentState!.validate();
-                        final bool isDateValid = dateKey.currentState!.validate();
+                        final bool isDateValid =
+                            dateKey.currentState!.validate();
 
                         if (itemStatus == null) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("Please Select Lost or Found",
-                                  style: Theme.of(context).textTheme.labelSmall),
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall),
                               backgroundColor: Theme.of(context).cardColor));
                         }
 
                         if (picker == null || picker!.files.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("Please Upload Images",
-                                  style: Theme.of(context).textTheme.labelSmall),
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall),
                               backgroundColor: Theme.of(context).cardColor));
                         }
 
@@ -401,7 +421,6 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       },
                       // isLoading: userLoading,
                     )),
-              ),
               if (itemAdding)
                 Container(
                   height: height,

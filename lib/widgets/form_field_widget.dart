@@ -120,7 +120,8 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               hintText: widget.hintText,
               hintStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: Theme.of(context).colorScheme.scrim,
-                  overflow: TextOverflow.fade),
+                  overflow: TextOverflow.ellipsis),
+              // hintMaxLines: 2,
               fillColor: Theme.of(context).cardColor,
               filled: true,
               focusedBorder: OutlineInputBorder(
