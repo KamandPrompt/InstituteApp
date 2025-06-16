@@ -221,8 +221,8 @@ class _DashboardState extends State<Dashboard> {
           GridView.count(
             crossAxisCount: 3,
             physics: const NeverScrollableScrollPhysics(),
-            mainAxisSpacing: 5,
-            crossAxisSpacing: 5,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
             shrinkWrap: true,
             primary: false,
             children: [
@@ -241,6 +241,7 @@ class _DashboardState extends State<Dashboard> {
                       GoRouter.of(context).pushNamed(items[i]['path']);
                     }
                   },
+                  maxLines: 1,
                 ),
             ],
           ),

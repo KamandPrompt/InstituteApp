@@ -42,7 +42,8 @@ class FeedDB {
       String link,
       String host,
       String type,
-      String emailId) async {
+      String emailId,
+      DateTime createdAt) async {
     List<String> imagesList = await uploadImagesToFeeds(images);
     final itemValues = {
       '_id': ObjectId(),
@@ -52,7 +53,8 @@ class FeedDB {
       'link': link,
       'host': host,
       'type': type,
-      'emailId': emailId
+      'emailId': emailId,
+      'createdAt': createdAt
     };
     try {
       final id = await collection?.insertOne(itemValues);

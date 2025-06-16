@@ -75,6 +75,8 @@ class _BuySellPageState extends State<BuySellPage> {
                     ),
                   );
                 }
+                bnsItems
+                    .sort((first, second) => second.addDate.compareTo(first.addDate));
                 return ListView.separated(
                   physics: const ClampingScrollPhysics(),
                   primary: true,

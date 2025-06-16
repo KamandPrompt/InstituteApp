@@ -43,11 +43,6 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
   final FocusNode minPriceFocusNode = FocusNode();
   String? errorMinPriceValue;
   final GlobalKey<FormState> minPriceKey = GlobalKey();
-  //
-  final TextEditingController dateController = TextEditingController();
-  final FocusNode dateFocusNode = FocusNode();
-  String? errorDateValue;
-  final GlobalKey<FormState> dateKey = GlobalKey();
 
   //
   final TextEditingController descriptionController = TextEditingController();
@@ -94,8 +89,6 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
     nameFocusNode.dispose();
     contactController.dispose();
     contactFocusNode.dispose();
-    dateController.dispose();
-    dateFocusNode.dispose();
     descriptionController.dispose();
     descriptionFocusNode.dispose();
   }
@@ -110,7 +103,7 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
-        title: Text("Add Items", style: Theme.of(context).textTheme.bodyMedium),
+        title: Text("Add Item", style: Theme.of(context).textTheme.bodyMedium),
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: true,
@@ -227,7 +220,7 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                                 }
                                 return null;
                               },
-                              keyboardType: TextInputType.emailAddress,
+                              keyboardType: TextInputType.text,
                               errorText: errorNameValue,
                               prefixIcon: Icons.person,
                               showSuffixIcon: false,
@@ -277,39 +270,68 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                               maxLines: null,
                             ),
                             SizedBox(height: height * 0.015),
+                            // FormFieldWidget(
+                            //   focusNode: dateFocusNode,
+                            //   fieldKey: dateKey,
+                            //   controller: dateController,
+                            //   obscureText: false,
+                            //   validator: (value) {
+                            //     if (value!.isEmpty) {
+                            //       return "Date is required";
+                            //     }
+                            //     return null;
+                            //   },
+                            //   onTap: () async {
+                            //     DateTime date = DateTime.now();
+                            //     FocusScope.of(context)
+                            //         .requestFocus(FocusNode());
+
+                            //     date = (await showDatePicker(
+                            //       context: context,
+                            //       initialDate: DateTime.now(),
+                            //       firstDate: DateTime.now()
+                            //           .subtract(const Duration(days: 7)),
+                            //       lastDate: DateTime.now(),
+                            //     ))!;
+
+                            //     dateController.text =
+                            //         date.toString().substring(0, 10);
+                            //   },
+                            //   keyboardType: TextInputType.emailAddress,
+                            //   errorText: errorDateValue,
+                            //   prefixIcon: Icons.date_range_rounded,
+                            //   showSuffixIcon: false,
+                            //   hintText: "Enter Date",
+                            //   textInputAction: TextInputAction.done,
+                            // ),
+                            // SizedBox(height: height * 0.015),
                             FormFieldWidget(
-                              focusNode: dateFocusNode,
-                              fieldKey: dateKey,
-                              controller: dateController,
+                              focusNode: minPriceFocusNode,
+                              fieldKey: minPriceKey,
+                              controller: minPriceController,
                               obscureText: false,
                               validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Date is required";
+                                if (value == null || value.trim().isEmpty) {
+                                  return 'Minimum Price is required.';
+                                }
+                                final minPrice = double.tryParse(value);
+                                final maxPrice =
+                                    double.tryParse(maxPriceController.text);
+                                if (minPrice == null) {
+                                  return 'Enter a valid number for Min Price.';
+                                }
+                                if (maxPrice != null && minPrice >= maxPrice) {
+                                  return 'Min Price must be less than Max Price.';
                                 }
                                 return null;
                               },
-                              onTap: () async {
-                                DateTime date = DateTime.now();
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-
-                                date = (await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime.now()
-                                      .subtract(const Duration(days: 7)),
-                                  lastDate: DateTime.now(),
-                                ))!;
-
-                                dateController.text =
-                                    date.toString().substring(0, 10);
-                              },
-                              keyboardType: TextInputType.emailAddress,
-                              errorText: errorDateValue,
-                              prefixIcon: Icons.date_range_rounded,
+                              keyboardType: TextInputType.number,
+                              errorText: errorMinPriceValue,
+                              prefixIcon: Icons.currency_rupee_rounded,
                               showSuffixIcon: false,
-                              hintText: "Enter Date",
-                              textInputAction: TextInputAction.done,
+                              hintText: "Enter Min Price of Product",
+                              textInputAction: TextInputAction.next,
+                              maxLines: 1,
                             ),
                             SizedBox(height: height * 0.015),
                             FormFieldWidget(
@@ -321,6 +343,15 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                                 if (value == null || value.trim().isEmpty) {
                                   return 'Max Price is required.';
                                 }
+                                final maxPrice = double.tryParse(value);
+                                final minPrice =
+                                    double.tryParse(minPriceController.text);
+                                if (maxPrice == null) {
+                                  return 'Enter a valid number for Max Price.';
+                                }
+                                if (minPrice != null && maxPrice <= minPrice) {
+                                  return 'Max Price must be greater than Min Price.';
+                                }
                                 return null;
                               },
                               keyboardType: TextInputType.number,
@@ -328,26 +359,6 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                               prefixIcon: Icons.currency_rupee_rounded,
                               showSuffixIcon: false,
                               hintText: "Enter Max Price of Product",
-                              textInputAction: TextInputAction.next,
-                              maxLines: 1,
-                            ),
-                            SizedBox(height: height * 0.015),
-                            FormFieldWidget(
-                              focusNode: minPriceFocusNode,
-                              fieldKey: minPriceKey,
-                              controller: minPriceController,
-                              obscureText: false,
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'Minimum Price is required.';
-                                }
-                                return null;
-                              },
-                              keyboardType: TextInputType.number,
-                              errorText: errorMinPriceValue,
-                              prefixIcon: Icons.currency_rupee_rounded,
-                              showSuffixIcon: false,
-                              hintText: "Enter Min Price of Product",
                               textInputAction: TextInputAction.next,
                               maxLines: 1,
                             ),
@@ -368,7 +379,10 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                           contactKey.currentState!.validate();
                       final bool isDescriptionValid =
                           descriptionKey.currentState!.validate();
-                      final bool isDateValid = dateKey.currentState!.validate();
+                      final bool isMaxPriceValid =
+                          maxPriceKey.currentState!.validate();
+                      final bool isMinPriceValid =
+                          minPriceKey.currentState!.validate();
 
                       // if (itemStatus == null) {
                       //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -385,16 +399,17 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                       }
 
                       if (isNameValid &&
-                          isDateValid &&
                           isContactValid &&
                           isDescriptionValid &&
+                          isMaxPriceValid &&
+                          isMinPriceValid &&
                           picker != null) {
                         BlocProvider.of<BuySellBloc>(context)
                             .add(AddBuySellItemEvent(
                           productName: nameController.text,
                           phoneNo: contactController.text,
                           productDescription: descriptionController.text,
-                          addDate: DateTime.parse(dateController.text),
+                          addDate: DateTime.now(),
                           soldBy: user.email,
                           maxPrice: maxPriceController.text,
                           minPrice: minPriceController.text,

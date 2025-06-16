@@ -20,6 +20,7 @@ class AddFeedItemEvent extends FeedEvent {
   final String host;
   final String type;
   final String emailId;
+  final DateTime createdAt;
 
   const AddFeedItemEvent(
       {required this.title,
@@ -28,5 +29,6 @@ class AddFeedItemEvent extends FeedEvent {
       required this.link,
       required this.host,
       required this.type,
-      required this.emailId});
+      required this.emailId,
+      required this.createdAt});
 }

@@ -15,8 +15,9 @@ class AddFeedItem {
       String link,
       String host,
       String type,
-      String emailId) {
+      String emailId,
+      DateTime createdAt) {
     return repository.addFeedItem(
-        title, description, images, link, host, type, emailId);
+        title, description, images, link, host, type, emailId, createdAt);
   }
 }

@@ -75,6 +75,8 @@ class _LostFoundPageState extends State<LostFoundPage> {
                     ),
                   );
                 }
+                lnfItems
+                    .sort((first, second) => second.date.compareTo(first.date));
                 return ListView.separated(
                   physics: const ClampingScrollPhysics(),
                   primary: true,

@@ -96,10 +96,12 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
+    final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
-        title: Text("Add Feeds", style: Theme.of(context).textTheme.bodyMedium),
+        title: Text("Add Feed/Event/Achievement",
+            style: Theme.of(context).textTheme.bodyMedium),
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: true,
@@ -144,7 +146,7 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
             children: [
               SingleChildScrollView(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 physics: const ClampingScrollPhysics(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -155,18 +157,17 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       onTap: () async {
                         await pickImage();
                       },
-                      child: Container(
-                        width: width - 40,
+                      child: SizedBox(
+                        width: width - 20,
                         height: height * 0.3,
-                        decoration: BoxDecoration(
+                        child: Card(
                           color: Theme.of(context).cardColor,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.scrim,
-                              width: 1.5),
-                        ),
-                        child: Center(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              side: BorderSide(
+                                  color: Theme.of(context).colorScheme.scrim,
+                                  width: 1.5,
+                                  strokeAlign: BorderSide.strokeAlignOutside)),
                           child: ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(12)),
@@ -176,180 +177,190 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                                     color: Theme.of(context).colorScheme.scrim,
                                     size: aspectRatio * 150,
                                   )
-                                : SizedBox(
-                                    width: width - 40,
-                                    height: height * 0.3,
-                                    child: GridView.builder(
-                                        itemCount: picker!.files.length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2),
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return Image.file(
-                                            File(picker!.files[index].path!),
-                                            fit: BoxFit.cover,
-                                            alignment: Alignment.center,
-                                          );
-                                        }),
-                                  ),
+                                : GridView.builder(
+                                    itemCount: picker!.files.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Image.file(
+                                        File(picker!.files[index].path!),
+                                        fit: BoxFit.cover,
+                                        alignment: Alignment.center,
+                                      );
+                                    }),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(height: height * 0.02),
-                    FormFieldWidget(
-                      focusNode: emailIdFocusNode,
-                      fieldKey: emailIdKey,
-                      controller: emailIdController
-                        ..text = widget.user['email'],
-                      obscureText: false,
-                      validator: (value) => null,
-                      maxLines: 1,
-                      keyboardType: TextInputType.none,
-                      errorText: null,
-                      prefixIcon: Icons.email,
-                      showSuffixIcon: false,
-                      hintText: "Email ID",
-                      textInputAction: TextInputAction.none,
-                      readOnly: true,
-                    ),
-                    SizedBox(height: height * 0.02),
-                    FormFieldWidget(
-                      focusNode: titleFocusNode,
-                      fieldKey: titleKey,
-                      controller: titleController,
-                      obscureText: false,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Feed title is required.';
-                        }
-                        return null;
-                      },
-                      maxLines: 1,
-                      keyboardType: TextInputType.emailAddress,
-                      errorText: errorTitleValue,
-                      prefixIcon: Icons.feed,
-                      showSuffixIcon: false,
-                      hintText: "Event Title",
-                      textInputAction: TextInputAction.next,
-                    ),
-                    SizedBox(height: height * 0.02),
-                    FormFieldWidget(
-                      focusNode: hostFocusNode,
-                      fieldKey: hostKey,
-                      controller: hostController,
-                      obscureText: false,
-                      validator: (value) {
-                        return null;
-                      },
-                      maxLines: 1,
-                      keyboardType: TextInputType.emailAddress,
-                      errorText: errorHostValue,
-                      prefixIcon: Icons.person,
-                      showSuffixIcon: false,
-                      hintText: "Enter host (Club/School)",
-                      textInputAction: TextInputAction.next,
-                    ),
-                    SizedBox(height: height * 0.02),
-                    FormField<String>(builder: (FormFieldState<String> state) {
-                      return InputDecorator(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 15),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.scrim,
-                                  width: 1),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)),
-                              gapPadding: 24),
-                          fillColor: Theme.of(context).cardColor,
-                          filled: true,
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)),
-                              gapPadding: 24),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: feedStatus,
-                            isDense: true,
-                            hint: Text(
-                              "Type Feed/Event/Achievement",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.scrim),
-                            ),
-                            dropdownColor: Theme.of(context).cardColor,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                feedStatus = newValue ?? "Feed";
-                              });
-                            },
-                            items: types.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              );
-                            }).toList(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          FormFieldWidget(
+                            focusNode: emailIdFocusNode,
+                            fieldKey: emailIdKey,
+                            controller: emailIdController
+                              ..text = widget.user['email'],
+                            obscureText: false,
+                            validator: (value) => null,
+                            maxLines: 1,
+                            keyboardType: TextInputType.emailAddress,
+                            errorText: null,
+                            prefixIcon: Icons.email,
+                            showSuffixIcon: false,
+                            hintText: "Email ID",
+                            textInputAction: TextInputAction.next,
+                            readOnly: true,
                           ),
-                        ),
-                      );
-                    }),
-                    SizedBox(height: height * 0.02),
-                    FormFieldWidget(
-                      focusNode: descriptionFocusNode,
-                      fieldKey: descriptionKey,
-                      controller: descriptionController,
-                      obscureText: false,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Feed description is required.';
-                        }
-                        return null;
-                      },
-                      maxLines: null,
-                      keyboardType: TextInputType.multiline,
-                      errorText: errorDescriptionValue,
-                      prefixIcon: Icons.description_rounded,
-                      showSuffixIcon: false,
-                      hintText: "Enter feed description",
-                      textInputAction: TextInputAction.newline,
+                          SizedBox(height: height * 0.015),
+                          FormFieldWidget(
+                            focusNode: titleFocusNode,
+                            fieldKey: titleKey,
+                            controller: titleController,
+                            obscureText: false,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Feed title is required.';
+                              }
+                              return null;
+                            },
+                            maxLines: 1,
+                            keyboardType: TextInputType.text,
+                            errorText: errorTitleValue,
+                            prefixIcon: Icons.feed,
+                            showSuffixIcon: false,
+                            hintText: "Event Title",
+                            textInputAction: TextInputAction.next,
+                          ),
+                          SizedBox(height: height * 0.015),
+                          FormFieldWidget(
+                            focusNode: hostFocusNode,
+                            fieldKey: hostKey,
+                            controller: hostController,
+                            obscureText: false,
+                            validator: (value) {
+                              return null;
+                            },
+                            maxLines: 1,
+                            keyboardType: TextInputType.text,
+                            errorText: errorHostValue,
+                            prefixIcon: Icons.person,
+                            showSuffixIcon: false,
+                            hintText: "Enter host (Club/School)",
+                            textInputAction: TextInputAction.next,
+                          ),
+                          SizedBox(height: height * 0.015),
+                          FormField<String>(
+                              builder: (FormFieldState<String> state) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            Theme.of(context).colorScheme.scrim,
+                                        width: 1),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12)),
+                                    gapPadding: 24),
+                                fillColor: Theme.of(context).cardColor,
+                                filled: true,
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 2),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12)),
+                                    gapPadding: 24),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  value: feedStatus,
+                                  isDense: true,
+                                  hint: Text(
+                                    "Type Feed/Event/Achievement",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .scrim),
+                                  ),
+                                  dropdownColor: Theme.of(context).cardColor,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      feedStatus = newValue ?? "Feed";
+                                    });
+                                  },
+                                  items: types.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall,
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            );
+                          }),
+                          SizedBox(height: height * 0.015),
+                          FormFieldWidget(
+                            focusNode: descriptionFocusNode,
+                            fieldKey: descriptionKey,
+                            controller: descriptionController,
+                            obscureText: false,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Feed description is required.';
+                              }
+                              return null;
+                            },
+                            maxLines: null,
+                            keyboardType: TextInputType.multiline,
+                            errorText: errorDescriptionValue,
+                            prefixIcon: Icons.description_rounded,
+                            showSuffixIcon: false,
+                            hintText: "Enter feed description",
+                            textInputAction: TextInputAction.newline,
+                          ),
+                          SizedBox(height: height * 0.015),
+                          FormFieldWidget(
+                            focusNode: linkFocusNode,
+                            fieldKey: linkKey,
+                            controller: linkController,
+                            obscureText: false,
+                            validator: (value) {
+                              return null;
+                            },
+                            maxLines: 1,
+                            keyboardType: TextInputType.url,
+                            errorText: errorLinkValue,
+                            prefixIcon: Icons.link_rounded,
+                            showSuffixIcon: false,
+                            hintText: "Enter feed required link",
+                            textInputAction: TextInputAction.done,
+                          ),
+                          SizedBox(height: height * 0.08),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: height * 0.02),
-                    FormFieldWidget(
-                      focusNode: linkFocusNode,
-                      fieldKey: linkKey,
-                      controller: linkController,
-                      obscureText: false,
-                      validator: (value) {
-                        return null;
-                      },
-                      maxLines: 1,
-                      keyboardType: TextInputType.emailAddress,
-                      errorText: errorLinkValue,
-                      prefixIcon: Icons.link_rounded,
-                      showSuffixIcon: false,
-                      hintText: "Enter feed required link",
-                      textInputAction: TextInputAction.next,
-                    ),
-                    SizedBox(height: height * 0.08),
                   ],
                 ),
               ),
-              Visibility(
-                visible: MediaQuery.of(context).viewInsets.bottom == 0,
-                child: Positioned(
+              if (!isKeyboardVisible)
+                Positioned(
                     bottom: 20,
                     child: ScreenWidthButton(
                       text: "Add Feed",
@@ -383,11 +394,11 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                                   link: linkController.text,
                                   images: picker ?? FilePickerResult([]),
                                   type: feedStatus,
-                                  emailId: emailIdController.text));
+                                  emailId: emailIdController.text,
+                                  createdAt: DateTime.now()));
                         }
                       },
                     )),
-              ),
               if (itemAdding)
                 Container(
                   height: height,

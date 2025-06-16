@@ -30,7 +30,7 @@ class _CampusMapPageState extends State<CampusMapPage> {
             icon: Icon(Icons.threed_rotation_rounded,
                 color: Theme.of(context).colorScheme.onSurface),
             onPressed: () {
-              launchURL("https://manav-sepia.vercel.app/");
+              launchURL("https://maps.iitmandi.co.in/");
             },
           ),
         ],

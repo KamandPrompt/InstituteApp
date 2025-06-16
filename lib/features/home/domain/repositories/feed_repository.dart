@@ -10,5 +10,6 @@ abstract class FeedRepository {
       String link,
       String host,
       String type,
-      String emailId);
+      String emailId,
+      DateTime createdAt);
 }

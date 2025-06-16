@@ -21,7 +21,8 @@ class FeedRepositoryImpl implements FeedRepository {
             link: items[i].link,
             host: items[i].host,
             type: items[i].type,
-            emailId: items[i].emailId));
+            emailId: items[i].emailId,
+            createdAt: items[i].createdAt));
       }
       return allItems;
     } else {
@@ -37,9 +38,10 @@ class FeedRepositoryImpl implements FeedRepository {
       String link,
       String organiser,
       String type,
-      String emailId) async {
+      String emailId,
+      DateTime createdAt) async {
     final item = await feedDatabase.addFeeditem(
-        host, description, images, link, organiser, type, emailId);
+        host, description, images, link, organiser, type, emailId, createdAt);
     if (item != null) {
       return FeedItemEntity(
           id: item.id,
@@ -49,7 +51,8 @@ class FeedRepositoryImpl implements FeedRepository {
           link: item.link,
           host: item.host,
           type: item.type,
-          emailId: item.emailId);
+          emailId: item.emailId,
+          createdAt: item.createdAt);
     } else {
       return null;
     }

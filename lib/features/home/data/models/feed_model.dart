@@ -9,6 +9,7 @@ class FeedItem {
   final String host;
   final String type;
   final String emailId;
+  final DateTime createdAt;
 
   FeedItem(
       {required this.id,
@@ -18,7 +19,8 @@ class FeedItem {
       required this.link,
       required this.host,
       required this.type,
-      required this.emailId});
+      required this.emailId,
+      required this.createdAt});
 
   factory FeedItem.fromJson(Map<String, dynamic> json) {
     return FeedItem(
@@ -29,7 +31,8 @@ class FeedItem {
         link: json['link'],
         host: json['host'],
         type: json['type'],
-        emailId: json['emailId']);
+        emailId: json['emailId'],
+        createdAt: json['createdAt']);
   }
 
   Map<String, dynamic> toMap() {
@@ -41,7 +44,8 @@ class FeedItem {
       'link': link,
       'host': host,
       'type': type,
-      'emailId': emailId
+      'emailId': emailId,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 }
