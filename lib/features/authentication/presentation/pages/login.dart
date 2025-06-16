@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                           obscureText: false,
                           validator: (value) {
                             final bool emailPatternValid = RegExp(
-                                    r"^(?:[a-zA-Z0-9]+@iitmandi\.ac\.in|[a-zA-Z0-9]+@students\.iitmandi\.ac\.in)$")
+                                    r"^(?:[a-zA-Z0-9_]+@iitmandi\.ac\.in|[a-zA-Z0-9_]+@students\.iitmandi\.ac\.in)$")
                                 .hasMatch(value!);
                             if (!emailPatternValid) {
                               return "Please enter a valid IIT Mandi email address.";
