@@ -88,19 +88,22 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               errorText: widget.errorText,
               errorStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: Theme.of(context).colorScheme.onError, fontSize: 12),
-              contentPadding: const EdgeInsets.symmetric(vertical: 15),
+              contentPadding: EdgeInsets.symmetric(
+                  vertical: 15, horizontal: widget.prefixIcon != null ? 0 : 15),
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Theme.of(context).colorScheme.scrim, width: 1),
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                   gapPadding: 24),
-              prefixIcon: Icon(
-                widget.prefixIcon,
-                color: widget.focusNode.hasFocus
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).colorScheme.scrim,
-                size: 18,
-              ),
+              prefixIcon: widget.prefixIcon != null
+                  ? Icon(
+                      widget.prefixIcon,
+                      color: widget.focusNode.hasFocus
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).colorScheme.scrim,
+                      size: 18,
+                    )
+                  : null,
               suffixIcon: widget.showSuffixIcon
                   ? GestureDetector(
                       onTap: () {
@@ -116,7 +119,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
                         size: 18,
                       ),
                     )
-                  : const Icon(null),
+                  : null,
               hintText: widget.hintText,
               hintStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: Theme.of(context).colorScheme.scrim,

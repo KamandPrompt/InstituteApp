@@ -11,6 +11,7 @@ import 'package:vertex/features/authentication/presentation/pages/login.dart';
 import 'package:vertex/features/authentication/presentation/pages/otp_verification_page.dart';
 import 'package:vertex/features/authentication/presentation/pages/sign_up_page.dart';
 import 'package:vertex/features/authentication/presentation/pages/update_profile.dart';
+import 'package:vertex/features/home/domain/entities/post_entity.dart';
 import 'package:vertex/features/home/presentation/widgets/about.dart';
 import 'package:vertex/features/home/presentation/pages/job_portal.dart';
 import 'package:vertex/features/home/presentation/pages/home.dart';
@@ -31,7 +32,7 @@ import 'package:vertex/features/home/presentation/widgets/quick_links_page.dart'
 import 'package:vertex/features/home/presentation/widgets/settings_page.dart';
 import 'package:vertex/features/home/presentation/widgets/notifications_page.dart';
 import 'package:vertex/features/home/presentation/widgets/add_notification_page.dart';
-import 'package:vertex/features/home/presentation/widgets/feed_add_item_page.dart';
+import 'package:vertex/features/home/presentation/widgets/post_add_or_edit_item_page.dart';
 
 import 'package:vertex/widgets/splash_screen.dart';
 import 'package:vertex/widgets/test.dart';
@@ -166,15 +167,18 @@ class UhlLinkRouter {
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
-      // Feed
+      // Post
       GoRoute(
-          name: UhlLinkRoutesNames.feedAddItemPage,
-          path: '/feed_add_item/:user',
+          name: UhlLinkRoutesNames.postAddOrEditItemPage,
+          path: '/post_add_or_edit_item',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters = state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
-                child: FeedAddItemPage(
-                  user: jsonDecode(state.pathParameters['user']!),
+                child: PostAddOrEditItemPage(
+                  user: parameters['user'],
+                  postEditing: parameters['postEditing'] as bool,
+                  postDetails: parameters['postDetails'] as PostItemEntity?,
                 ));
           }),
       // Academics

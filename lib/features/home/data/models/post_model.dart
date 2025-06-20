@@ -1,4 +1,6 @@
-class FeedItemEntity {
+import 'package:mongo_dart/mongo_dart.dart';
+
+class PostItem {
   final String id;
   final String title;
   final String description;
@@ -8,8 +10,9 @@ class FeedItemEntity {
   final String type;
   final String emailId;
   final DateTime createdAt;
+  final DateTime updatedAt;
 
-  FeedItemEntity(
+  PostItem(
       {required this.id,
       required this.title,
       required this.description,
@@ -18,11 +21,13 @@ class FeedItemEntity {
       required this.host,
       required this.type,
       required this.emailId,
-      required this.createdAt});
+      required this.createdAt,
+      required this.updatedAt,
+      });
 
-  factory FeedItemEntity.fromJson(Map<String, dynamic> json) {
-    return FeedItemEntity(
-        id: json['id'],
+  factory PostItem.fromJson(Map<String, dynamic> json) {
+    return PostItem(
+        id: (json['_id'] as ObjectId).oid,
         title: json['title'],
         description: json['description'],
         images: List<String>.from(json['images']),
@@ -30,7 +35,8 @@ class FeedItemEntity {
         host: json['host'],
         type: json['type'],
         emailId: json['emailId'],
-        createdAt: DateTime.parse(json['createdAt']));
+        createdAt: json['createdAt'],
+        updatedAt: json['updatedAt']);
   }
 
   Map<String, dynamic> toMap() {
@@ -44,6 +50,7 @@ class FeedItemEntity {
       'type': type,
       'emailId': emailId,
       'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 }

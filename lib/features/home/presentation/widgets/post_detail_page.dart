@@ -4,7 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class FeedDetailPage extends StatefulWidget {
+class PostDetailPage extends StatefulWidget {
   final String type;
   final List<String> images;
   final String title;
@@ -13,7 +13,7 @@ class FeedDetailPage extends StatefulWidget {
   final String host;
   final DateTime createdAt;
 
-  const FeedDetailPage({
+  const PostDetailPage({
     super.key,
     required this.type,
     required this.images,
@@ -25,10 +25,10 @@ class FeedDetailPage extends StatefulWidget {
   });
 
   @override
-  State<FeedDetailPage> createState() => _FeedDetailPageState();
+  State<PostDetailPage> createState() => _PostDetailPageState();
 }
 
-class _FeedDetailPageState extends State<FeedDetailPage> {
+class _PostDetailPageState extends State<PostDetailPage> {
   int _currentCarouselIndex = 0;
 
   @override

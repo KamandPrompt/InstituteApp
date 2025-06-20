@@ -15,17 +15,19 @@ import 'package:vertex/features/home/domain/usecases/add_buy_sell_items.dart';
 import 'package:vertex/features/authentication/domain/usecases/update_profile.dart';
 import 'package:vertex/features/home/domain/usecases/add_lost_found_item.dart';
 import 'package:vertex/features/home/domain/usecases/add_notification.dart';
+import 'package:vertex/features/home/domain/usecases/add_or_edit_post_item.dart';
+import 'package:vertex/features/home/domain/usecases/delete_post_item.dart';
 import 'package:vertex/features/home/domain/usecases/get_buy_sell_items.dart';
 import 'package:vertex/features/home/domain/usecases/get_lost_found_items.dart';
 import 'package:vertex/features/home/domain/usecases/get_notification.dart';
 import 'package:vertex/features/home/presentation/bloc/buy_sell_bloc/bns_bloc.dart';
-import 'package:vertex/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
+import 'package:vertex/features/home/presentation/bloc/post_bloc/post_bloc.dart';
 import 'package:vertex/utils/theme.dart';
-import 'package:vertex/features/home/data/data_sources/feed_portal_data_sources.dart';
+import 'package:vertex/features/home/data/data_sources/post_portal_data_sources.dart';
 
 import 'package:vertex/features/home/data/data_sources/notification_data_sources.dart';
 import 'package:vertex/features/home/data/repository_implementations/notification_repository_impl.dart';
-import 'features/home/data/repository_implementations/feed_repository_impl.dart';
+import 'features/home/data/repository_implementations/post_repository_impl.dart';
 import 'package:vertex/features/home/presentation/bloc/notification_bloc/notification_bloc.dart';
 
 import 'features/authentication/data/repository_implementations/user_repository_impl.dart';
@@ -39,8 +41,7 @@ import 'features/home/data/repository_implementations/lost_found_repository_impl
 import 'features/home/domain/usecases/get_jobs.dart';
 import 'features/home/presentation/bloc/job_portal_bloc/job_bloc.dart';
 import 'features/home/presentation/bloc/lost_found_bloc/lnf_bloc.dart';
-import 'features/home/domain/usecases/add_feed_item.dart';
-import 'features/home/domain/usecases/get_feed_item.dart';
+import 'features/home/domain/usecases/get_post_item.dart';
 import 'package:vertex/utils/database_provider.dart';
 
 Future<void> main() async {
@@ -86,10 +87,10 @@ class UhlLink extends StatelessWidget {
         RepositoryProvider<AddLostFoundItem>(
             create: (_) =>
                 AddLostFoundItem(LostFoundRepositoryImpl(LostFoundDB()))),
-        RepositoryProvider<GetFeedItem>(
-            create: (_) => GetFeedItem(FeedRepositoryImpl(FeedDB()))),
-        RepositoryProvider<AddFeedItem>(
-            create: (_) => AddFeedItem(FeedRepositoryImpl(FeedDB()))),
+        RepositoryProvider<GetPostItem>(
+            create: (_) => GetPostItem(PostRepositoryImpl(PostDB()))),
+        RepositoryProvider<AddOrEditPostItem>(
+            create: (_) => AddOrEditPostItem(PostRepositoryImpl(PostDB()))),
         RepositoryProvider<GetBuySellItems>(
             create: (_) => GetBuySellItems(BuySellRepositoryImpl(BuySellDB()))),
         RepositoryProvider<AddBuySellItem>(
@@ -130,10 +131,13 @@ class UhlLink extends StatelessWidget {
                       GetBuySellItems(BuySellRepositoryImpl(BuySellDB())),
                   addBuySellItem:
                       AddBuySellItem(BuySellRepositoryImpl(BuySellDB())))),
-          BlocProvider<FeedBloc>(
-              create: (context) => FeedBloc(
-                  getFeedItems: GetFeedItem(FeedRepositoryImpl(FeedDB())),
-                  addFeedItem: AddFeedItem(FeedRepositoryImpl(FeedDB())))),
+          BlocProvider<PostBloc>(
+              create: (context) => PostBloc(
+                  getPostItems: GetPostItem(PostRepositoryImpl(PostDB())),
+                  addOrEditPostItem:
+                      AddOrEditPostItem(PostRepositoryImpl(PostDB())),
+                  deletePostItem:
+                      DeletePostItem(PostRepositoryImpl(PostDB())))),
           BlocProvider<NotificationBloc>(
               create: (context) => NotificationBloc(
                   getNotifications: GetNotifications(

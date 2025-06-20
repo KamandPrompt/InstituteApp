@@ -105,7 +105,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   widget.isGuest
                       ? SizedBox(
-                          width: double.infinity,
+                          width: MediaQuery.of(context).size.width * 0.65,
                           child: ElevatedButton(
                             onPressed: () {
                               GoRouter.of(context)

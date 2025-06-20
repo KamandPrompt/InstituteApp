@@ -26,8 +26,8 @@ class UhlLinkRoutesNames {
   static const String buySellPage = 'buy_sell_page';
   static const String buySellAddItemPage = 'buy_sell_add_item_page';
 
-  static const String feedAddItemPage = 'feed_add_item_page';
-  static const String feedDetailPage = 'feed_detail_page';
+  static const String postAddOrEditItemPage = 'post_add_or_edit_item_page';
+  static const String postDetailPage = 'post_detail_page';
   static const String events = 'events_page';
   // Academics
   static const String academicCalenderPage = 'academic_calender_page';

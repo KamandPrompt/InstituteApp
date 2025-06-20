@@ -84,7 +84,7 @@ Future<String?> uploadImageToNotifications(String image) async {
   return null;
 }
 
-Future<List<String>> uploadImagesToFeeds(FilePickerResult? images) async {
+Future<List<String>> uploadImagesToPosts(FilePickerResult? images) async {
   if (images == null || images.files.isEmpty) {
     return [];
   }
@@ -95,6 +95,10 @@ Future<List<String>> uploadImagesToFeeds(FilePickerResult? images) async {
 
   for (PlatformFile image in images.files) {
     try {
+      if (image.path!.contains('https://')) {
+        imageUrls.add(image.path!);
+        continue;
+      }
       File imageFile = File(image.path!);
       var uri =
           Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/raw/upload");
@@ -116,8 +120,6 @@ Future<List<String>> uploadImagesToFeeds(FilePickerResult? images) async {
         String imageUrl = jsonResponse["secure_url"];
         imageUrls.add(imageUrl);
         // log("Image uploaded successfully: $imageUrl");
-      } else {
-        // log("Image upload failed: ${response.statusCode}");
       }
     } catch (e) {
       log("Error uploading image: $e");

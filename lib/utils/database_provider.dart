@@ -3,8 +3,8 @@ import 'package:vertex/utils/functions.dart';
 import 'package:flutter/material.dart';
 import '../features/authentication/data/data_sources/user_data_sources.dart'
     show UhlUsersDB;
-import '../features/home/data/data_sources/feed_portal_data_sources.dart'
-    show FeedDB;
+import '../features/home/data/data_sources/post_portal_data_sources.dart'
+    show PostDB;
 import '../features/home/data/data_sources/notification_data_sources.dart'
     show NotificationsDB;
 import '../features/home/data/data_sources/buy_sell_data_sources.dart'
@@ -27,7 +27,7 @@ class DatabaseProvider with ChangeNotifier {
         LostFoundDB.connect(config['DB_CONNECTION_URL']!),
         BuySellDB.connect(config['DB_CONNECTION_URL']!),
         NotificationsDB.connect(config['DB_CONNECTION_URL']!),
-        FeedDB.connect(config['DB_CONNECTION_URL']!),
+        PostDB.connect(config['DB_CONNECTION_URL']!),
       ]);
       _isConnected = true;
       notifyListeners();

@@ -132,7 +132,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
       ),
       floatingActionButton: FutureBuilder(
-          future: isAdmin(widget.user!['email']),
+          future: isAdmin(widget.user?['email'] ?? ""),
           builder: (context, snapshot) {
             if (!widget.isGuest &&
                 widget.user != null &&
