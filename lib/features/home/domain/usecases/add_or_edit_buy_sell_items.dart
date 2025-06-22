@@ -9,7 +9,7 @@ class AddOrEditBuySellItem {
 
   Future<BuySellItemEntity?> execute(
       String? id,
-      String productName,
+      String name,
       String productDescription,
       FilePickerResult productImage,
       String soldBy,
@@ -18,7 +18,7 @@ class AddOrEditBuySellItem {
       DateTime createdAt,
       DateTime updatedAt,
       String phoneNo) {
-    return repository.addOrEditBuySellItem(id, productName, productDescription,
+    return repository.addOrEditBuySellItem(id, name, productDescription,
         productImage, soldBy, maxPrice, minPrice, createdAt, updatedAt, phoneNo);
   }
 }

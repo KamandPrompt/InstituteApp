@@ -89,7 +89,7 @@ class _BuySellAddOrEditItemPageState extends State<BuySellAddOrEditItemPage> {
   void initState() {
     super.initState();
     if (widget.isEditing && widget.bnsItem != null) {
-      nameController.text = widget.bnsItem!.productName;
+      nameController.text = widget.bnsItem!.name;
       contactController.text = widget.bnsItem!.phoneNo;
       maxPriceController.text = widget.bnsItem!.maxPrice.toString();
       minPriceController.text = widget.bnsItem!.minPrice.toString();
@@ -421,7 +421,7 @@ class _BuySellAddOrEditItemPageState extends State<BuySellAddOrEditItemPage> {
                         BlocProvider.of<BuySellBloc>(context)
                             .add(AddOrEditBuySellItemEvent(
                           id: widget.isEditing ? widget.bnsItem!.id : null,
-                          productName: nameController.text,
+                          name: nameController.text,
                           phoneNo: contactController.text,
                           productDescription: descriptionController.text,
                           createdAt: widget.isEditing

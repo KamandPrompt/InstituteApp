@@ -6,7 +6,7 @@ abstract class BuySellRepository {
 
   Future<BuySellItemEntity?> addOrEditBuySellItem(
       String? id,
-      String productName,
+      String name,
       String productDescription,
       FilePickerResult productImage,
       String soldBy,

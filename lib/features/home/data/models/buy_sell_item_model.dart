@@ -2,7 +2,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 class BuySellItem {
   final String id;
-  final String productName;
+  final String name;
   final String productDescription;
   final List<String> productImage;
   final String soldBy;
@@ -14,7 +14,7 @@ class BuySellItem {
 
   BuySellItem({
     required this.id,
-    required this.productName,
+    required this.name,
     required this.productDescription,
     required this.productImage,
     required this.soldBy,
@@ -28,7 +28,7 @@ class BuySellItem {
   factory BuySellItem.fromJson(Map<String, dynamic> json) {
     return BuySellItem(
       id: (json['_id'] as ObjectId).oid,
-      productName: json['productName'],
+      name: json['name'],
       productDescription: json['productDescription'],
       productImage: List<String>.from(json['productImage']),
       soldBy: json['soldBy'],
@@ -43,7 +43,7 @@ class BuySellItem {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'productName': productName,
+      'name': name,
       'productDescription': productDescription,
       'productImage': productImage,
       'soldBy': soldBy,

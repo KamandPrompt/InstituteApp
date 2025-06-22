@@ -35,7 +35,7 @@ class BuySellDB {
 
   Future<BuySellItem?> addOrEditItem(
     String? id,
-    String productName,
+    String name,
     String productDescription,
     FilePickerResult productImage,
     String soldBy,
@@ -52,7 +52,7 @@ class BuySellDB {
         final success = await collection?.updateOne(
           where.eq('_id', objId),
           ModifierBuilder()
-            ..set('productName', productName)
+            ..set('name', name)
             ..set('productDescription', productDescription)
             ..set('productImage', imagesList)
             ..set('soldBy', soldBy)
@@ -77,7 +77,7 @@ class BuySellDB {
     try {
       final itemValues = {
         '_id': ObjectId(),
-        'productName': productName,
+        'name': name,
         'productDescription': productDescription,
         'productImage': imagesList,
         'soldBy': soldBy,

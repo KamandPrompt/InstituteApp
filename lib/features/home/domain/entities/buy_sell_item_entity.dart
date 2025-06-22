@@ -1,6 +1,6 @@
 class BuySellItemEntity {
   final String id;
-  final String productName;
+  final String name;
   final String productDescription;
   final List<String> productImage;
   final String soldBy;
@@ -12,7 +12,7 @@ class BuySellItemEntity {
 
   BuySellItemEntity({
     required this.id,
-    required this.productName,
+    required this.name,
     required this.productDescription,
     required this.productImage,
     required this.soldBy,
@@ -26,7 +26,7 @@ class BuySellItemEntity {
   factory BuySellItemEntity.fromJson(Map<String, dynamic> json) {
     return BuySellItemEntity(
       id: json['id'],
-      productName: json['productName'],
+      name: json['name'],
       productDescription: json['productDescription'],
       productImage: List<String>.from(json['productImage']),
       soldBy: json['soldBy'],
@@ -41,7 +41,7 @@ class BuySellItemEntity {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'productName': productName,
+      'name': name,
       'productDescription': productDescription,
       'productImage': productImage,
       'soldBy': soldBy,

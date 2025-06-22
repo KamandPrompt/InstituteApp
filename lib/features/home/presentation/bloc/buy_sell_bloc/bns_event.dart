@@ -13,7 +13,7 @@ class GetBuySellItemsEvent extends BuySellEvent {
 
 class AddOrEditBuySellItemEvent extends BuySellEvent {
   final String? id;
-  final String productName;
+  final String name;
   final String productDescription;
   final FilePickerResult productImage;
   final String soldBy;
@@ -25,7 +25,7 @@ class AddOrEditBuySellItemEvent extends BuySellEvent {
 
   const AddOrEditBuySellItemEvent({
     required this.id,
-    required this.productName,
+    required this.name,
     required this.productDescription,
     required this.productImage,
     required this.soldBy,

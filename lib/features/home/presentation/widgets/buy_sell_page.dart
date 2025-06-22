@@ -193,7 +193,7 @@ class _BuySellPageState extends State<BuySellPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(bnsItems[index].productName,
+                                            Text(bnsItems[index].name,
                                                 textAlign: TextAlign.start,
                                                 softWrap: true,
                                                 overflow: TextOverflow.ellipsis,

@@ -15,7 +15,7 @@ class BuySellRepositoryImpl implements BuySellRepository {
       for (int i = 0; i < items.length; i++) {
         allItems.add(BuySellItemEntity(
           id: items[i].id,
-          productName: items[i].productName,
+          name: items[i].name,
           productDescription: items[i].productDescription,
           productImage: items[i].productImage,
           soldBy: items[i].soldBy,
@@ -35,7 +35,7 @@ class BuySellRepositoryImpl implements BuySellRepository {
   @override
   Future<BuySellItemEntity?> addOrEditBuySellItem(
     String? id,
-    String productName,
+    String name,
     String productDescription,
     FilePickerResult productImage,
     String soldBy,
@@ -47,7 +47,7 @@ class BuySellRepositoryImpl implements BuySellRepository {
   ) async {
     final item = await buySellDatabase.addOrEditItem(
       id,
-      productName,
+      name,
       productDescription,
       productImage,
       soldBy,
@@ -60,7 +60,7 @@ class BuySellRepositoryImpl implements BuySellRepository {
     if (item != null) {
       return BuySellItemEntity(
         id: item.id,
-        productName: item.productName,
+        name: item.name,
         productDescription: item.productDescription,
         productImage: item.productImage,
         soldBy: item.soldBy,

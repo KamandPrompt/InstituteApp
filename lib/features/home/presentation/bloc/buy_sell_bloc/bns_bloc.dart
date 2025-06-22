@@ -41,7 +41,7 @@ class BuySellBloc extends Bloc<BuySellEvent, BuySellState> {
     try {
       final item = await addOrEditBuySellItem.execute(
           event.id,
-          event.productName,
+          event.name,
           event.productDescription,
           event.productImage,
           event.soldBy,
