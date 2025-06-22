@@ -8,7 +8,8 @@ class BuySellItem {
   final String soldBy;
   final String maxPrice;
   final String minPrice;
-  final DateTime addDate;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   final String phoneNo;
 
   BuySellItem({
@@ -19,7 +20,8 @@ class BuySellItem {
     required this.soldBy,
     required this.maxPrice,
     required this.minPrice,
-    required this.addDate,
+    required this.createdAt,
+    required this.updatedAt,
     required this.phoneNo,
   });
 
@@ -32,7 +34,8 @@ class BuySellItem {
       soldBy: json['soldBy'],
       maxPrice: json['maxPrice'],
       minPrice: json['minPrice'],
-      addDate: json['addDate'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
       phoneNo: json['phoneNo'],
     );
   }
@@ -46,7 +49,8 @@ class BuySellItem {
       'soldBy': soldBy,
       'maxPrice': maxPrice,
       'minPrice': minPrice,
-      'addDate': addDate,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
       'phoneNo': phoneNo,
     };
   }

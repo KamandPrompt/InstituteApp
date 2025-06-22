@@ -6,7 +6,8 @@ class BuySellItemEntity {
   final String soldBy;
   final String maxPrice;
   final String minPrice;
-  final DateTime addDate;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   final String phoneNo;
 
   BuySellItemEntity({
@@ -17,7 +18,8 @@ class BuySellItemEntity {
     required this.soldBy,
     required this.maxPrice,
     required this.minPrice,
-    required this.addDate,
+    required this.createdAt,
+    required this.updatedAt,
     required this.phoneNo,
   });
 
@@ -30,7 +32,8 @@ class BuySellItemEntity {
       soldBy: json['soldBy'],
       maxPrice: json['maxPrice'],
       minPrice: json['minPrice'],
-      addDate: DateTime.parse(json['addDate']),
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
       phoneNo: json['phoneNo'],
     );
   }
@@ -44,7 +47,8 @@ class BuySellItemEntity {
       'soldBy': soldBy,
       'maxPrice': maxPrice,
       'minPrice': minPrice,
-      'addDate': addDate.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
       'phoneNo': phoneNo,
     };
   }

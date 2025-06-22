@@ -21,7 +21,8 @@ class BuySellRepositoryImpl implements BuySellRepository {
           soldBy: items[i].soldBy,
           maxPrice: items[i].maxPrice,
           minPrice: items[i].minPrice,
-          addDate: items[i].addDate,
+          createdAt: items[i].createdAt,
+          updatedAt: items[i].updatedAt,
           phoneNo: items[i].phoneNo,
         ));
       }
@@ -32,24 +33,28 @@ class BuySellRepositoryImpl implements BuySellRepository {
   }
 
   @override
-  Future<BuySellItemEntity?> addBuySellItem(
+  Future<BuySellItemEntity?> addOrEditBuySellItem(
+    String? id,
     String productName,
     String productDescription,
     FilePickerResult productImage,
     String soldBy,
     String maxPrice,
     String minPrice,
-    DateTime addDate,
+    DateTime createdAt,
+    DateTime updatedAt,
     String phoneNo,
   ) async {
-    final item = await buySellDatabase.postItem(
+    final item = await buySellDatabase.addOrEditItem(
+      id,
       productName,
       productDescription,
       productImage,
       soldBy,
       maxPrice,
       minPrice,
-      addDate,
+      createdAt,
+      updatedAt,
       phoneNo,
     );
     if (item != null) {
@@ -61,11 +66,17 @@ class BuySellRepositoryImpl implements BuySellRepository {
         soldBy: item.soldBy,
         maxPrice: item.maxPrice,
         minPrice: item.minPrice,
-        addDate: item.addDate,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
         phoneNo: item.phoneNo,
       );
     } else {
       return null;
     }
+  }
+
+    @override
+  Future<bool> deleteBuySellItem(String id) async {
+    return await buySellDatabase.deleteBuySellItem(id);
   }
 }

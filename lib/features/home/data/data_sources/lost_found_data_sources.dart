@@ -35,17 +35,52 @@ class LostFoundDB {
   }
 
   // Add Lost Found Item
-  Future<LostFoundItem?> addLostFoundItem(
+  Future<LostFoundItem?> addOrEditLostFoundItem(
+      String? id,
       String from,
       String lostOrFound,
       String name,
       String description,
       FilePickerResult images,
-      DateTime date,
+      DateTime createdAt,
+      DateTime updatedAt,
       String phoneNo) async {
-    try {
       List<String> imagesList = await uploadImagesToLNF(images);
-      // log(imagesList.toString());
+      if (id != null) {
+        try {
+          ObjectId objId = ObjectId.fromHexString(id);
+          final success = await collection?.updateOne(
+            where.eq('_id', objId),
+            ModifierBuilder()
+              ..set('from', from)
+              ..set('lostOrFound', lostOrFound)
+              ..set('name', name)
+              ..set('description', description)
+              ..set('images', imagesList)
+              ..set('createdAt', createdAt)
+              ..set('updatedAt', updatedAt)
+              ..set('phoneNo', phoneNo),
+          );
+          if (success != null && success.isSuccess) {
+            return LostFoundItem(
+                id: id,
+                from: from,
+                lostOrFound: lostOrFound,
+                name: name,
+                description: description,
+                images: imagesList,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                phoneNo: phoneNo);
+          } else {
+            return null;
+          }
+        } catch (e) {
+          log(e.toString());
+          return null;
+        }
+      }
+    try {
       final itemValues = {
         '_id': ObjectId(),
         'from': from,
@@ -53,7 +88,8 @@ class LostFoundDB {
         'name': name,
         'description': description,
         'images': imagesList,
-        'date': date,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
         'phoneNo': phoneNo
       };
       final id = await collection?.insertOne(itemValues);
@@ -65,6 +101,22 @@ class LostFoundDB {
     } catch (e) {
       log(e.toString());
       return null;
+    }
+  }
+
+  // Delete Lost Found Item
+  Future<bool> deleteLostFoundItem(String id) async {
+    try {
+      ObjectId objId = ObjectId.fromHexString(id);
+      final result = await collection?.remove(where.eq('_id', objId));
+      if (result != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      log(e.toString());
+      return false;
     }
   }
 

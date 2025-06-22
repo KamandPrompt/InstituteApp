@@ -11,11 +11,13 @@ import 'package:vertex/features/authentication/domain/usecases/signup_user.dart'
 import 'package:vertex/features/authentication/domain/usecases/update_password.dart';
 import 'package:vertex/features/home/data/data_sources/buy_sell_data_sources.dart';
 import 'package:vertex/features/home/data/repository_implementations/buy_sell_repository_impl.dart';
-import 'package:vertex/features/home/domain/usecases/add_buy_sell_items.dart';
+import 'package:vertex/features/home/domain/usecases/add_or_edit_buy_sell_items.dart';
 import 'package:vertex/features/authentication/domain/usecases/update_profile.dart';
-import 'package:vertex/features/home/domain/usecases/add_lost_found_item.dart';
+import 'package:vertex/features/home/domain/usecases/add_or_edit_lost_found_item.dart';
 import 'package:vertex/features/home/domain/usecases/add_notification.dart';
 import 'package:vertex/features/home/domain/usecases/add_or_edit_post_item.dart';
+import 'package:vertex/features/home/domain/usecases/delete_bns_item.dart';
+import 'package:vertex/features/home/domain/usecases/delete_lnf_item.dart';
 import 'package:vertex/features/home/domain/usecases/delete_post_item.dart';
 import 'package:vertex/features/home/domain/usecases/get_buy_sell_items.dart';
 import 'package:vertex/features/home/domain/usecases/get_lost_found_items.dart';
@@ -84,17 +86,26 @@ class UhlLink extends StatelessWidget {
         RepositoryProvider<GetLostFoundItems>(
             create: (_) =>
                 GetLostFoundItems(LostFoundRepositoryImpl(LostFoundDB()))),
-        RepositoryProvider<AddLostFoundItem>(
+        RepositoryProvider<AddOrEditLostFoundItem>(
             create: (_) =>
-                AddLostFoundItem(LostFoundRepositoryImpl(LostFoundDB()))),
+                AddOrEditLostFoundItem(LostFoundRepositoryImpl(LostFoundDB()))),
         RepositoryProvider<GetPostItem>(
             create: (_) => GetPostItem(PostRepositoryImpl(PostDB()))),
         RepositoryProvider<AddOrEditPostItem>(
             create: (_) => AddOrEditPostItem(PostRepositoryImpl(PostDB()))),
         RepositoryProvider<GetBuySellItems>(
             create: (_) => GetBuySellItems(BuySellRepositoryImpl(BuySellDB()))),
-        RepositoryProvider<AddBuySellItem>(
-            create: (_) => AddBuySellItem(BuySellRepositoryImpl(BuySellDB()))),
+        RepositoryProvider<AddOrEditBuySellItem>(
+            create: (_) =>
+                AddOrEditBuySellItem(BuySellRepositoryImpl(BuySellDB()))),
+        RepositoryProvider<DeleteBuySellItem>(
+            create: (_) =>
+                DeleteBuySellItem(BuySellRepositoryImpl(BuySellDB()))),
+        RepositoryProvider<DeleteLnFItem>(
+            create: (_) =>
+                DeleteLnFItem(LostFoundRepositoryImpl(LostFoundDB()))),
+        RepositoryProvider<DeletePostItem>(
+            create: (_) => DeletePostItem(PostRepositoryImpl(PostDB()))),
         RepositoryProvider<GetNotifications>(
             create: (_) => GetNotifications(
                 NotificationRepositoryImpl(NotificationsDB()))),
@@ -123,14 +134,18 @@ class UhlLink extends StatelessWidget {
               create: (context) => LnfBloc(
                   getLostFoundItems:
                       GetLostFoundItems(LostFoundRepositoryImpl(LostFoundDB())),
-                  addLostFoundItem: AddLostFoundItem(
-                      LostFoundRepositoryImpl(LostFoundDB())))),
+                  addOrEditLostFoundItem: AddOrEditLostFoundItem(
+                      LostFoundRepositoryImpl(LostFoundDB())),
+                  deleteLostFoundItem:
+                      DeleteLnFItem(LostFoundRepositoryImpl(LostFoundDB())))),
           BlocProvider<BuySellBloc>(
               create: (context) => BuySellBloc(
                   getBuySellItems:
                       GetBuySellItems(BuySellRepositoryImpl(BuySellDB())),
-                  addBuySellItem:
-                      AddBuySellItem(BuySellRepositoryImpl(BuySellDB())))),
+                  addOrEditBuySellItem:
+                      AddOrEditBuySellItem(BuySellRepositoryImpl(BuySellDB())),
+                  deleteBuySellItem:
+                      DeleteBuySellItem(BuySellRepositoryImpl(BuySellDB())))),
           BlocProvider<PostBloc>(
               create: (context) => PostBloc(
                   getPostItems: GetPostItem(PostRepositoryImpl(PostDB())),

@@ -23,16 +23,30 @@ class LnfItemsLoadingError extends LnfState {
   const LnfItemsLoadingError({required this.message});
 }
 
-class LnfAddingItem extends LnfState {}
+class LnfAddingOrEditingItem extends LnfState {}
 
-class LnfItemAdded extends LnfState {
+class LnfItemAddedOrEdited extends LnfState {
   final LostFoundItemEntity item;
 
-  const LnfItemAdded({required this.item});
+  const LnfItemAddedOrEdited({required this.item});
 }
 
-class LnfItemsAddingError extends LnfState {
+class LnfItemsAddingOrEditingError extends LnfState {
   final String message;
 
-  const LnfItemsAddingError({required this.message});
+  const LnfItemsAddingOrEditingError({required this.message});
+}
+
+class LostFoundItemDeleting extends LnfState {}
+
+class LostFoundItemDeletedSuccessfully extends LnfState {
+  final String id;
+
+  const LostFoundItemDeletedSuccessfully({required this.id});
+}
+
+class LostFoundItemDeleteError extends LnfState {
+  final String message;
+
+  const LostFoundItemDeleteError({required this.message});
 }

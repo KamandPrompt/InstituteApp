@@ -11,6 +11,8 @@ import 'package:vertex/features/authentication/presentation/pages/login.dart';
 import 'package:vertex/features/authentication/presentation/pages/otp_verification_page.dart';
 import 'package:vertex/features/authentication/presentation/pages/sign_up_page.dart';
 import 'package:vertex/features/authentication/presentation/pages/update_profile.dart';
+import 'package:vertex/features/home/domain/entities/buy_sell_item_entity.dart';
+import 'package:vertex/features/home/domain/entities/lost_found_item_entity.dart';
 import 'package:vertex/features/home/domain/entities/post_entity.dart';
 import 'package:vertex/features/home/presentation/widgets/about.dart';
 import 'package:vertex/features/home/presentation/pages/job_portal.dart';
@@ -18,13 +20,13 @@ import 'package:vertex/features/home/presentation/pages/home.dart';
 import 'package:vertex/features/home/presentation/widgets/PORs_page.dart';
 import 'package:vertex/features/home/presentation/widgets/academic_calendar_page.dart';
 import 'package:vertex/features/home/presentation/widgets/achievements_page.dart';
-import 'package:vertex/features/home/presentation/widgets/buy_sell_add_item_page.dart';
+import 'package:vertex/features/home/presentation/widgets/buy_sell_add_or_edit_item_page.dart';
 import 'package:vertex/features/home/presentation/widgets/buy_sell_page.dart';
 import 'package:vertex/features/home/presentation/widgets/cafeteria.dart';
 import 'package:vertex/features/home/presentation/widgets/campus_map_page.dart';
 import 'package:vertex/features/home/presentation/widgets/events_page.dart';
 import 'package:vertex/features/home/presentation/widgets/job_details_page.dart';
-import 'package:vertex/features/home/presentation/widgets/lost_found_add_item_page.dart';
+import 'package:vertex/features/home/presentation/widgets/lost_found_add_or_edit_item_page.dart';
 import 'package:vertex/features/home/presentation/widgets/lost_found_page.dart';
 import 'package:vertex/features/home/presentation/widgets/mess_menu_page.dart';
 import 'package:vertex/features/home/presentation/widgets/notification_details_page.dart';
@@ -122,13 +124,17 @@ class UhlLinkRouter {
                 ));
           }),
       GoRoute(
-          name: UhlLinkRoutesNames.lostFoundAddItemPage,
-          path: '/lost_found_add_item/:user',
+          name: UhlLinkRoutesNames.lostFoundAddOrEditItemPage,
+          path: '/lost_found_add_item',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
-                child: LostFoundAddItemPage(
-                  user: jsonDecode(state.pathParameters['user']!),
+                child: LostFoundAddOrEditItemPage(
+                  user: parameters['user'],
+                  isEditing: parameters['isEditing'] as bool,
+                  lnfItem: parameters['lnfItem'] as LostFoundItemEntity?,
                 ));
           }),
       // Events
@@ -158,13 +164,17 @@ class UhlLinkRouter {
                 ));
           }),
       GoRoute(
-          name: UhlLinkRoutesNames.buySellAddItemPage,
-          path: '/buy_sell_add_item/:user',
+          name: UhlLinkRoutesNames.buySellAddOrEditItemPage,
+          path: '/buy_sell_add_item',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
-                child: BuySellAddItemPage(
-                  user: jsonDecode(state.pathParameters['user']!),
+                child: BuySellAddOrEditItemPage(
+                  user: parameters['user'],
+                  isEditing: parameters['isEditing'] as bool,
+                  bnsItem: parameters['bnsItem'] as BuySellItemEntity?,
                 ));
           }),
       // Post
@@ -172,7 +182,8 @@ class UhlLinkRouter {
           name: UhlLinkRoutesNames.postAddOrEditItemPage,
           path: '/post_add_or_edit_item',
           pageBuilder: (context, state) {
-            Map<String, dynamic> parameters = state.extra as Map<String, dynamic>;
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
                 child: PostAddOrEditItemPage(

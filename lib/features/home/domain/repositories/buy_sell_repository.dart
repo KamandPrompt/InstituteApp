@@ -4,13 +4,17 @@ import 'package:file_picker/file_picker.dart';
 abstract class BuySellRepository {
   Future<List<BuySellItemEntity>> getBuySellItems();
 
-  Future<BuySellItemEntity?> addBuySellItem(
+  Future<BuySellItemEntity?> addOrEditBuySellItem(
+      String? id,
       String productName,
       String productDescription,
       FilePickerResult productImage,
       String soldBy,
       String maxPrice,
       String minPrice,
-      DateTime addDate,
+      DateTime createdAt,
+      DateTime updatedAt,
       String phoneNo);
+
+  Future<bool> deleteBuySellItem(String id);
 }

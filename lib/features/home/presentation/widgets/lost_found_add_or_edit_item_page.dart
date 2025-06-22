@@ -1,24 +1,30 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
+import 'package:vertex/features/home/domain/entities/lost_found_item_entity.dart';
 
 import '../../../../widgets/form_field_widget.dart';
 import '../../../../widgets/screen_width_button.dart';
 import '../bloc/lost_found_bloc/lnf_bloc.dart';
 
-class LostFoundAddItemPage extends StatefulWidget {
+class LostFoundAddOrEditItemPage extends StatefulWidget {
   final Map<String, dynamic> user;
-  const LostFoundAddItemPage({super.key, required this.user});
+  final bool isEditing;
+  final LostFoundItemEntity? lnfItem;
+  const LostFoundAddOrEditItemPage(
+      {super.key, required this.user, this.isEditing = false, this.lnfItem});
 
   @override
-  State<LostFoundAddItemPage> createState() => _LostFoundAddItemPageState();
+  State<LostFoundAddOrEditItemPage> createState() => _LostFoundAddOrEditItemPageState();
 }
 
-class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
+class _LostFoundAddOrEditItemPageState extends State<LostFoundAddOrEditItemPage> {
   bool imageSelected = false;
 
   //
@@ -78,6 +84,31 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
   List<String> lostOrFound = ["Lost", "Found"];
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.isEditing && widget.lnfItem != null) {
+      nameController.text = widget.lnfItem!.name;
+      contactController.text = widget.lnfItem!.phoneNo;
+      dateController.text = widget.lnfItem!.updatedAt.toString();
+      dateController.text =
+          DateFormat.yMMMd().format(widget.lnfItem!.updatedAt);
+      descriptionController.text = widget.lnfItem!.description;
+      itemStatus = widget.lnfItem!.lostOrFound;
+      if (widget.lnfItem!.images.isNotEmpty) {
+        picker = FilePickerResult([
+          for (String imageUrl in widget.lnfItem!.images)
+            PlatformFile(
+              name: 'image_${widget.lnfItem!.images.indexOf(imageUrl)}.jpg',
+              size: 0,
+              path: imageUrl,
+              bytes: null,
+            ),
+        ]);
+      }
+    }
+  }
+
+  @override
   void dispose() {
     super.dispose();
     nameController.dispose();
@@ -90,6 +121,28 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
     descriptionFocusNode.dispose();
   }
 
+  Widget _buildImageWidget(String path) {
+    if (path.startsWith('http')) {
+      return CachedNetworkImage(
+        imageUrl: path,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+        errorWidget: (context, url, error) => const Icon(
+          Icons.error_outline,
+          size: 40,
+        ),
+      );
+    } else {
+      return Image.file(
+        File(path),
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -100,31 +153,35 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
-        title: Text("Add Lost Item",
+        title: Text(widget.isEditing ? "Edit Item" : "Add Item",
             style: Theme.of(context).textTheme.bodyMedium),
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: true,
       body: BlocListener<LnfBloc, LnfState>(
         listener: (context, state) {
-          if (state is LnfAddingItem) {
+          if (state is LnfAddingOrEditingItem) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Adding Item...",
+                content: Text(
+                    widget.isEditing ? "Editing item..." : "Adding item...",
                     style: Theme.of(context).textTheme.labelSmall),
                 backgroundColor: Theme.of(context).cardColor));
             setState(() {
               itemAdding = true;
             });
-          } else if (state is LnfItemAdded) {
+          } else if (state is LnfItemAddedOrEdited) {
             setState(() {
               itemAdding = false;
             });
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Item Added Successfully",
+                content: Text(
+                    widget.isEditing
+                        ? "Item edited successfully"
+                        : "Item added successfully",
                     style: Theme.of(context).textTheme.labelSmall),
                 backgroundColor: Theme.of(context).cardColor));
             GoRouter.of(context).pop();
-          } else if (state is LnfItemsAddingError) {
+          } else if (state is LnfItemsAddingOrEditingError) {
             setState(() {
               itemAdding = false;
             });
@@ -189,11 +246,8 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                                             crossAxisCount: 2),
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return Image.file(
-                                        File(picker!.files[index].path!),
-                                        fit: BoxFit.cover,
-                                        alignment: Alignment.center,
-                                      );
+                                      return _buildImageWidget(
+                                          picker!.files[index].path!);
                                     }),
                           ),
                         ),
@@ -294,7 +348,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                               ))!;
 
                               dateController.text =
-                                  date.toString().substring(0, 10);
+                                  DateFormat.yMMMd().format(date);
                             },
                             keyboardType: TextInputType.emailAddress,
                             errorText: errorDateValue,
@@ -374,7 +428,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                 Positioned(
                     bottom: 20,
                     child: ScreenWidthButton(
-                      text: "Add Item",
+                      text: widget.isEditing ? "Update Item" : "Add Item",
                       buttonFunc: () {
                         final bool isNameValid =
                             nameKey.currentState!.validate();
@@ -408,18 +462,21 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                             itemStatus != null &&
                             picker != null) {
                           BlocProvider.of<LnfBloc>(context)
-                              .add(AddLostFoundItemEvent(
+                              .add(AddOrEditLostFoundItemEvent(
+                            id: widget.isEditing ? widget.lnfItem!.id : null,
                             name: nameController.text,
                             phoneNo: contactController.text,
                             description: descriptionController.text,
-                            date: DateTime.parse(dateController.text),
                             lostOrFound: itemStatus!,
                             from: user.email,
                             images: picker!,
+                            createdAt: widget.isEditing
+                                ? widget.lnfItem!.createdAt
+                                : DateTime.now(),
+                            updatedAt: DateTime.now(),
                           ));
                         }
                       },
-                      // isLoading: userLoading,
                     )),
               if (itemAdding)
                 Container(

@@ -5,7 +5,8 @@ class LostFoundItemEntity {
   final String name;
   final String description;
   final List<String> images;
-  final DateTime date;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   final String phoneNo;
 
   LostFoundItemEntity({
@@ -15,7 +16,8 @@ class LostFoundItemEntity {
     required this.name,
     required this.description,
     required this.images,
-    required this.date,
+    required this.createdAt,
+    required this.updatedAt,
     required this.phoneNo,
   });
 
@@ -27,7 +29,8 @@ class LostFoundItemEntity {
       name: json['name'],
       description: json['description'],
       images: List<String>.from(json['images']),
-      date: json['date'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
       phoneNo: json['phoneNo'],
     );
   }
@@ -40,7 +43,8 @@ class LostFoundItemEntity {
       'name': name,
       'description': description,
       'images': images,
-      'date': date,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
       'phoneNo': phoneNo,
     };
   }

@@ -1,24 +1,30 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
+import 'package:vertex/features/home/domain/entities/buy_sell_item_entity.dart';
 
 import '../../../../widgets/form_field_widget.dart';
 import '../../../../widgets/screen_width_button.dart';
 import '../bloc/buy_sell_bloc/bns_bloc.dart';
 
-class BuySellAddItemPage extends StatefulWidget {
+class BuySellAddOrEditItemPage extends StatefulWidget {
   final Map<String, dynamic> user;
-  const BuySellAddItemPage({super.key, required this.user});
+  final bool isEditing;
+  final BuySellItemEntity? bnsItem;
+  const BuySellAddOrEditItemPage(
+      {super.key, required this.user, this.isEditing = false, this.bnsItem});
 
   @override
-  State<BuySellAddItemPage> createState() => _BuySellAddItemPageState();
+  State<BuySellAddOrEditItemPage> createState() =>
+      _BuySellAddOrEditItemPageState();
 }
 
-class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
+class _BuySellAddOrEditItemPageState extends State<BuySellAddOrEditItemPage> {
   bool imageSelected = false;
 
   //
@@ -79,8 +85,29 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
 
   bool itemAdding = false;
 
-  // String? itemStatus;
-  // List<String> lostOrFound = ["Lost", "Found"];
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isEditing && widget.bnsItem != null) {
+      nameController.text = widget.bnsItem!.productName;
+      contactController.text = widget.bnsItem!.phoneNo;
+      maxPriceController.text = widget.bnsItem!.maxPrice.toString();
+      minPriceController.text = widget.bnsItem!.minPrice.toString();
+      descriptionController.text = widget.bnsItem!.productDescription;
+      if (widget.bnsItem!.productImage.isNotEmpty) {
+        picker = FilePickerResult([
+          for (String imageUrl in widget.bnsItem!.productImage)
+            PlatformFile(
+              name:
+                  'image_${widget.bnsItem!.productImage.indexOf(imageUrl)}.jpg',
+              size: 0,
+              path: imageUrl,
+              bytes: null,
+            ),
+        ]);
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -93,6 +120,28 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
     descriptionFocusNode.dispose();
   }
 
+  Widget _buildImageWidget(String path) {
+    if (path.startsWith('http')) {
+      return CachedNetworkImage(
+        imageUrl: path,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+        errorWidget: (context, url, error) => const Icon(
+          Icons.error_outline,
+          size: 40,
+        ),
+      );
+    } else {
+      return Image.file(
+        File(path),
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -103,30 +152,35 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
-        title: Text("Add Item", style: Theme.of(context).textTheme.bodyMedium),
+        title: Text(widget.isEditing ? "Edit Item" : "Add Item",
+            style: Theme.of(context).textTheme.bodyMedium),
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: true,
       body: BlocListener<BuySellBloc, BuySellState>(
         listener: (context, state) {
-          if (state is BuySellAddingItem) {
+          if (state is BuySellAddingOrEditingItem) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Adding Item...",
+                content: Text(
+                    widget.isEditing ? "Editing item..." : "Adding item...",
                     style: Theme.of(context).textTheme.labelSmall),
                 backgroundColor: Theme.of(context).cardColor));
             setState(() {
               itemAdding = true;
             });
-          } else if (state is BuySellItemAdded) {
+          } else if (state is BuySellItemAddedOrEdited) {
             setState(() {
               itemAdding = false;
             });
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Item Added Successfully",
+                content: Text(
+                    widget.isEditing
+                        ? "Item edited successfully"
+                        : "Item added successfully",
                     style: Theme.of(context).textTheme.labelSmall),
                 backgroundColor: Theme.of(context).cardColor));
             GoRouter.of(context).pop();
-          } else if (state is BuySellItemsAddingError) {
+          } else if (state is BuySellItemsAddingOrEditingError) {
             setState(() {
               itemAdding = false;
             });
@@ -176,13 +230,10 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(12)),
                             child: (picker == null || picker!.files.isEmpty)
-                                ? Center(
-                                    child: Icon(
-                                      Icons.image_rounded,
-                                      color:
-                                          Theme.of(context).colorScheme.scrim,
-                                      size: aspectRatio * 150,
-                                    ),
+                                ? Icon(
+                                    Icons.image_rounded,
+                                    color: Theme.of(context).colorScheme.scrim,
+                                    size: aspectRatio * 150,
                                   )
                                 : GridView.builder(
                                     itemCount: picker!.files.length,
@@ -191,11 +242,8 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                                             crossAxisCount: 2),
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return Image.file(
-                                        File(picker!.files[index].path!),
-                                        fit: BoxFit.cover,
-                                        alignment: Alignment.center,
-                                      );
+                                      return _buildImageWidget(
+                                          picker!.files[index].path!);
                                     }),
                           ),
                         ),
@@ -270,41 +318,6 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                               maxLines: null,
                             ),
                             SizedBox(height: height * 0.015),
-                            // FormFieldWidget(
-                            //   focusNode: dateFocusNode,
-                            //   fieldKey: dateKey,
-                            //   controller: dateController,
-                            //   obscureText: false,
-                            //   validator: (value) {
-                            //     if (value!.isEmpty) {
-                            //       return "Date is required";
-                            //     }
-                            //     return null;
-                            //   },
-                            //   onTap: () async {
-                            //     DateTime date = DateTime.now();
-                            //     FocusScope.of(context)
-                            //         .requestFocus(FocusNode());
-
-                            //     date = (await showDatePicker(
-                            //       context: context,
-                            //       initialDate: DateTime.now(),
-                            //       firstDate: DateTime.now()
-                            //           .subtract(const Duration(days: 7)),
-                            //       lastDate: DateTime.now(),
-                            //     ))!;
-
-                            //     dateController.text =
-                            //         date.toString().substring(0, 10);
-                            //   },
-                            //   keyboardType: TextInputType.emailAddress,
-                            //   errorText: errorDateValue,
-                            //   prefixIcon: Icons.date_range_rounded,
-                            //   showSuffixIcon: false,
-                            //   hintText: "Enter Date",
-                            //   textInputAction: TextInputAction.done,
-                            // ),
-                            // SizedBox(height: height * 0.015),
                             FormFieldWidget(
                               focusNode: minPriceFocusNode,
                               fieldKey: minPriceKey,
@@ -359,7 +372,7 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                               prefixIcon: Icons.currency_rupee_rounded,
                               showSuffixIcon: false,
                               hintText: "Enter Max Price of Product",
-                              textInputAction: TextInputAction.next,
+                              textInputAction: TextInputAction.done,
                               maxLines: 1,
                             ),
                             SizedBox(height: height * 0.08),
@@ -372,7 +385,7 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                 Positioned(
                   bottom: 20,
                   child: ScreenWidthButton(
-                    text: "Add Item",
+                    text: widget.isEditing ? "Update Item" : "Add Item",
                     buttonFunc: () {
                       final bool isNameValid = nameKey.currentState!.validate();
                       final bool isContactValid =
@@ -391,33 +404,37 @@ class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
                       //       backgroundColor: Theme.of(context).cardColor));
                       // }
 
-                      if (picker == null || picker!.files.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Please Upload Images",
-                                style: Theme.of(context).textTheme.labelSmall),
-                            backgroundColor: Theme.of(context).cardColor));
-                      }
+                      // if (picker == null || picker!.files.isEmpty) {
+                      //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      //       content: Text("Please Upload Images",
+                      //           style: Theme.of(context).textTheme.labelSmall),
+                      //       backgroundColor: Theme.of(context).cardColor));
+                      // }
 
                       if (isNameValid &&
-                          isContactValid &&
-                          isDescriptionValid &&
-                          isMaxPriceValid &&
-                          isMinPriceValid &&
-                          picker != null) {
+                              isContactValid &&
+                              isDescriptionValid &&
+                              isMaxPriceValid &&
+                              isMinPriceValid
+                          // && picker != null
+                          ) {
                         BlocProvider.of<BuySellBloc>(context)
-                            .add(AddBuySellItemEvent(
+                            .add(AddOrEditBuySellItemEvent(
+                          id: widget.isEditing ? widget.bnsItem!.id : null,
                           productName: nameController.text,
                           phoneNo: contactController.text,
                           productDescription: descriptionController.text,
-                          addDate: DateTime.now(),
+                          createdAt: widget.isEditing
+                              ? widget.bnsItem!.createdAt
+                              : DateTime.now(),
+                          updatedAt: DateTime.now(),
                           soldBy: user.email,
                           maxPrice: maxPriceController.text,
                           minPrice: minPriceController.text,
-                          productImage: picker!,
+                          productImage: picker ?? FilePickerResult([]),
                         ));
                       }
                     },
-                    // isLoading: userLoading,
                   ),
                 ),
               if (itemAdding)

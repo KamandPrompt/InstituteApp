@@ -3,20 +3,22 @@ import 'package:file_picker/file_picker.dart';
 import '../entities/lost_found_item_entity.dart';
 import '../repositories/lost_found_repository.dart';
 
-class AddLostFoundItem {
+class AddOrEditLostFoundItem {
   final LostFoundRepository repository;
 
-  AddLostFoundItem(this.repository);
+  AddOrEditLostFoundItem(this.repository);
 
   Future<LostFoundItemEntity?> execute(
+      String? id,
       String from,
       String lostOrFound,
       String name,
       String description,
       FilePickerResult images,
-      DateTime date,
+      DateTime createdAt,
+      DateTime updatedAt,
       String phoneNo) {
-    return repository.addLostFoundItem(
-        from, lostOrFound, name, description, images, date, phoneNo);
+    return repository.addOrEditLostFoundItem(id, from, lostOrFound, name,
+        description, images, createdAt, updatedAt, phoneNo);
   }
 }

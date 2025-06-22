@@ -11,36 +11,34 @@ class GetBuySellItemsEvent extends BuySellEvent {
   const GetBuySellItemsEvent();
 }
 
-class AddBuySellItemEvent extends BuySellEvent {
+class AddOrEditBuySellItemEvent extends BuySellEvent {
+  final String? id;
   final String productName;
   final String productDescription;
   final FilePickerResult productImage;
   final String soldBy;
   final String maxPrice;
   final String minPrice;
-  final DateTime addDate;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   final String phoneNo;
 
-  const AddBuySellItemEvent({
+  const AddOrEditBuySellItemEvent({
+    required this.id,
     required this.productName,
     required this.productDescription,
     required this.productImage,
     required this.soldBy,
     required this.maxPrice,
     required this.minPrice,
-    required this.addDate,
+    required this.createdAt,
+    required this.updatedAt,
     required this.phoneNo,
   });
+}
 
-  @override
-  List<Object> get props => [
-        productName,
-        productDescription,
-        productImage,
-        soldBy,
-        maxPrice,
-        minPrice,
-        addDate,
-        phoneNo,
-      ];
+class DeleteBuySellItemEvent extends BuySellEvent {
+  final String id;
+
+  const DeleteBuySellItemEvent({required this.id});
 }

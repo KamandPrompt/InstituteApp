@@ -23,16 +23,30 @@ class BuySellItemsLoadingError extends BuySellState {
   const BuySellItemsLoadingError({required this.message});
 }
 
-class BuySellAddingItem extends BuySellState {}
+class BuySellAddingOrEditingItem extends BuySellState {}
 
-class BuySellItemAdded extends BuySellState {
+class BuySellItemAddedOrEdited extends BuySellState {
   final BuySellItemEntity item;
 
-  const BuySellItemAdded({required this.item});
+  const BuySellItemAddedOrEdited({required this.item});
 }
 
-class BuySellItemsAddingError extends BuySellState {
+class BuySellItemsAddingOrEditingError extends BuySellState {
   final String message;
 
-  const BuySellItemsAddingError({required this.message});
+  const BuySellItemsAddingOrEditingError({required this.message});
+}
+
+class BuySellItemDeleting extends BuySellState {}
+
+class BuySellItemDeletedSuccessfully extends BuySellState {
+  final String id;
+
+  const BuySellItemDeletedSuccessfully({required this.id});
+}
+
+class BuySellItemDeleteError extends BuySellState {
+  final String message;
+
+  const BuySellItemDeleteError({required this.message});
 }

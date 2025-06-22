@@ -22,9 +22,9 @@ class UhlLinkRoutesNames {
   static const String cafeteria = 'cafeteria_page';
   static const String quickLinksPage = 'quick_links_page';
   static const String lostFoundPage = 'lost_found_Page';
-  static const String lostFoundAddItemPage = 'lost_found_add_item_page';
+  static const String lostFoundAddOrEditItemPage = 'lost_found_add_or_edit_item_page';
   static const String buySellPage = 'buy_sell_page';
-  static const String buySellAddItemPage = 'buy_sell_add_item_page';
+  static const String buySellAddOrEditItemPage = 'buy_sell_add_or_edit_item_page';
 
   static const String postAddOrEditItemPage = 'post_add_or_edit_item_page';
   static const String postDetailPage = 'post_detail_page';

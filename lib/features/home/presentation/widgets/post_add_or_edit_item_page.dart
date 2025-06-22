@@ -205,6 +205,7 @@ class _PostAddOrEditItemPageState extends State<PostAddOrEditItemPage> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 physics: const ClampingScrollPhysics(),
+                primary: true,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -417,7 +418,7 @@ class _PostAddOrEditItemPageState extends State<PostAddOrEditItemPage> {
                 Positioned(
                     bottom: 20,
                     child: ScreenWidthButton(
-                      text: widget.postEditing ? "Edit Post" : "Add Post",
+                      text: widget.postEditing ? "Update Post" : "Add Post",
                       buttonFunc: () {
                         final bool isTitleValid =
                             titleKey.currentState!.validate();
@@ -442,7 +443,9 @@ class _PostAddOrEditItemPageState extends State<PostAddOrEditItemPage> {
                             isDescriptionValid) {
                           BlocProvider.of<PostBloc>(context).add(
                               AddorEditPostItemEvent(
-                                  id: widget.postDetails?.id,
+                                  id: widget.postEditing
+                                      ? widget.postDetails!.id
+                                      : null,
                                   host: hostController.text,
                                   title: titleController.text,
                                   description: descriptionController.text,

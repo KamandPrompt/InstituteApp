@@ -17,11 +17,15 @@ Future<List<String>> uploadImagesToLNF(FilePickerResult? images) async {
 
   for (PlatformFile image in images.files) {
     try {
+      if (image.path!.contains('https://')) {
+        imageUrls.add(image.path!);
+        continue;
+      }
       File imageFile = File(image.path!);
       var uri =
           Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/raw/upload");
 
-      var request = http.MultipartRequest("POST", uri); 
+      var request = http.MultipartRequest("POST", uri);
       request.fields["upload_preset"] = "lost_and_found";
       request.fields["resource_type"] = "raw"; // Change from "raw" to "image"
 
@@ -75,8 +79,6 @@ Future<String?> uploadImageToNotifications(String image) async {
       String imageUrl = jsonResponse["secure_url"];
       // log("Image uploaded successfully: $imageUrl");
       return imageUrl;
-    } else {
-      // log("Image upload failed: ${response.statusCode}");
     }
   } catch (e) {
     log("Error uploading image: $e");
@@ -140,6 +142,10 @@ Future<List<String>> uploadImagesToBNS(FilePickerResult? images) async {
 
   for (PlatformFile image in images.files) {
     try {
+      if (image.path!.contains('https://')) {
+        imageUrls.add(image.path!);
+        continue;
+      }
       File imageFile = File(image.path!);
       var uri =
           Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/raw/upload");
@@ -161,8 +167,6 @@ Future<List<String>> uploadImagesToBNS(FilePickerResult? images) async {
         String imageUrl = jsonResponse["secure_url"];
         imageUrls.add(imageUrl);
         // log("Image uploaded successfully: $imageUrl");
-      } else {
-        // log("Image upload failed: ${response.statusCode}");
       }
     } catch (e) {
       log("Error uploading image: $e");

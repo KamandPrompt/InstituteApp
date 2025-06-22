@@ -20,7 +20,8 @@ class LostFoundRepositoryImpl implements LostFoundRepository {
             name: items[i].name,
             description: items[i].description,
             images: items[i].images,
-            date: items[i].date,
+            createdAt: items[i].createdAt,
+            updatedAt: items[i].updatedAt,
             phoneNo: items[i].phoneNo));
       }
       return allItems;
@@ -30,21 +31,37 @@ class LostFoundRepositoryImpl implements LostFoundRepository {
   }
 
   @override
-  Future<LostFoundItemEntity?> addLostFoundItem(String from, String lostOrFound, String name, String description, FilePickerResult images, DateTime date, String phoneNo) async {
-    final item = await lostFoundDatabase.addLostFoundItem(from, lostOrFound, name, description, images, date, phoneNo);
+  Future<LostFoundItemEntity?> addOrEditLostFoundItem(
+      String? id,
+      String from,
+      String lostOrFound,
+      String name,
+      String description,
+      FilePickerResult images,
+      DateTime createdAt,
+      DateTime updatedAt,
+      String phoneNo) async {
+    final item = await lostFoundDatabase.addOrEditLostFoundItem(id, from,
+        lostOrFound, name, description, images, createdAt, updatedAt, phoneNo);
     if (item != null) {
       return LostFoundItemEntity(
-        id: item.id,
-        from: item.from,
-        lostOrFound: item.lostOrFound,
-        name: item.name,
-        description: item.description,
-        images: item.images,
-        date: item.date,
-        phoneNo: item.phoneNo
-      );
+          id: item.id,
+          from: item.from,
+          lostOrFound: item.lostOrFound,
+          name: item.name,
+          description: item.description,
+          images: item.images,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+          phoneNo: item.phoneNo);
     } else {
       return null;
     }
+  }
+
+  @override
+  Future<bool> deleteLostFoundItem(String id) async {
+    final result = await lostFoundDatabase.deleteLostFoundItem(id);
+    return result;
   }
 }
