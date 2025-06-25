@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +12,7 @@ import '../../../../widgets/screen_width_button.dart';
 import '../bloc/user_bloc.dart';
 
 class OtpVerificationPage extends StatefulWidget {
-  final Map<String, dynamic> user;
+  final UserEntity user;
   final int otp;
   const OtpVerificationPage({super.key, required this.user, required this.otp});
 
@@ -60,7 +59,6 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    UserEntity user = UserEntity.fromJson(widget.user);
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state is OTPSending) {
@@ -91,10 +89,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
             creatingUser = false;
           });
           GoRouter.of(context).goNamed(UhlLinkRoutesNames.home,
-              pathParameters: {
-                'isGuest': jsonEncode(false),
-                'user': jsonEncode(state.user.toMap())
-              });
+              extra: {'isGuest': false, 'user': state.user});
         } else if (state is UserCreatingError) {
           setState(() {
             creatingUser = false;
@@ -122,9 +117,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
         resizeToAvoidBottomInset: false,
         body: SizedBox(
             height: MediaQuery.of(context).size.height,
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
+            child: Stack(alignment: Alignment.topCenter, children: [
               SingleChildScrollView(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -196,10 +189,10 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                             onTap: () {
                               BlocProvider.of<AuthenticationBloc>(context).add(
                                   SendOTPEvent(
-                                      name: user.name,
-                                      email: user.email,
-                                      password: user.password,
-                                      image: user.image,
+                                      name: widget.user.name,
+                                      email: widget.user.email,
+                                      password: widget.user.password,
+                                      image: widget.user.image,
                                       otp: widget.otp));
                             },
                             child: Text("Resend Code",
@@ -252,10 +245,10 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                       if (otpValidator) {
                         BlocProvider.of<AuthenticationBloc>(context).add(
                             SignUpEvent(
-                                name: user.name,
-                                email: user.email,
-                                password: user.password,
-                                image: user.image ?? ""));
+                                name: widget.user.name,
+                                email: widget.user.email,
+                                password: widget.user.password,
+                                image: widget.user.image ?? ""));
                       }
                     }),
               ),

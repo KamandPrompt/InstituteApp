@@ -7,11 +7,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 import 'package:vertex/features/home/presentation/widgets/dashboard_card.dart';
 
 class Dashboard extends StatefulWidget {
   final bool isGuest;
-  final Map<String, dynamic>? user;
+  final UserEntity? user;
 
   const Dashboard({super.key, required this.isGuest, required this.user});
 
@@ -102,58 +103,58 @@ class _DashboardState extends State<Dashboard> {
         "title": 'Lost/Found',
         "icon": Icons.card_travel,
         'path': UhlLinkRoutesNames.lostFoundPage,
-        'pathParameters': {
-          "isGuest": jsonEncode(widget.isGuest),
-          "user": jsonEncode(widget.user ?? {}), // Handle null user
+        'extra': {
+          "isGuest": widget.isGuest,
+          "user": widget.user, // Handle null user
         }
       },
       {
         "title": 'Buy/Sell',
         "icon": Icons.shopping_cart_outlined,
         "path": UhlLinkRoutesNames.buySellPage,
-        'pathParameters': {
-          "isGuest": jsonEncode(widget.isGuest),
-          "user": jsonEncode(widget.user)
+        'extra': {
+          "isGuest": widget.isGuest,
+          "user": widget.user,
         }
       },
       {
         "title": 'Maps',
         "icon": Icons.map_outlined,
         "path": UhlLinkRoutesNames.campusMapPage,
-        'pathParameters': {}
+        'extra': {}
       },
       {
         "title": 'Calendar',
         "icon": Icons.calendar_today_outlined,
         "path": UhlLinkRoutesNames.academicCalenderPage,
-        'pathParameters': {}
+        'extra': {}
       },
       {
         "title": 'Events',
         "icon": Icons.menu,
         "path": UhlLinkRoutesNames.events,
-        'pathParameters': {
-          "isGuest": jsonEncode(widget.isGuest),
-          "user": jsonEncode(widget.user ?? {}), // Handle null user
+        'extra': {
+          "isGuest": widget.isGuest,
+          "user": widget.user, // Handle null user
         }
       },
       {
         "title": 'Mess Menu',
         "icon": Icons.restaurant,
         "path": UhlLinkRoutesNames.messMenuPage,
-        'pathParameters': {}
+        'extra': {}
       },
       {
         "title": 'Cafeteria',
         "icon": Icons.local_cafe,
         "path": UhlLinkRoutesNames.cafeteria,
-        'pathParameters': {}
+        'extra': {}
       },
       {
         "title": 'Quick Links',
         "icon": Icons.link_rounded,
         "path": UhlLinkRoutesNames.quickLinksPage,
-        'pathParameters': {},
+        'extra': {},
       }
     ];
     final screenSize = MediaQuery.of(context).size;
@@ -231,11 +232,11 @@ class _DashboardState extends State<Dashboard> {
                   title: items[i]['title'],
                   icon: items[i]['icon'],
                   onTap: () {
-                    if (items[i]['pathParameters'] != null &&
-                        items[i]['pathParameters'].isNotEmpty) {
+                    if (items[i]['extra'] != null &&
+                        items[i]['extra'].isNotEmpty) {
                       GoRouter.of(context).pushNamed(
                         items[i]['path'],
-                        pathParameters: items[i]['pathParameters'],
+                        extra: items[i]['extra'],
                       );
                     } else {
                       GoRouter.of(context).pushNamed(items[i]['path']);

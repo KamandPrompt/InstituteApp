@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 import '../../../../widgets/form_field_widget.dart';
 import '../../../../widgets/screen_width_button.dart';
 import '../bloc/notification_bloc/notification_bloc.dart';
@@ -10,7 +11,7 @@ import '../bloc/notification_bloc/notification_event.dart';
 import '../bloc/notification_bloc/notification_state.dart';
 
 class AddNotificationPage extends StatefulWidget {
-  final Map<String, dynamic> user;
+  final UserEntity user;
   const AddNotificationPage({super.key, required this.user});
 
   @override

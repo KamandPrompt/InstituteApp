@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 import 'package:vertex/features/home/presentation/pages/academics.dart';
 import 'package:vertex/features/home/presentation/pages/dashboard.dart';
 import 'package:vertex/features/home/presentation/pages/feeds.dart';
@@ -12,7 +11,7 @@ import '../../../../config/routes/routes_consts.dart';
 
 class HomePage extends StatefulWidget {
   final bool isGuest;
-  final Map<String, dynamic>? user;
+  final UserEntity? user;
   const HomePage({super.key, required this.isGuest, this.user});
 
   @override
@@ -50,9 +49,9 @@ class _HomePageState extends State<HomePage> {
                 color: Theme.of(context).colorScheme.onSurface),
             onPressed: () {
               GoRouter.of(context).pushNamed(UhlLinkRoutesNames.notifications,
-                  pathParameters: {
-                    'isGuest': jsonEncode(widget.isGuest),
-                    'user': jsonEncode(widget.user)
+                  extra: {
+                    'isGuest': widget.isGuest,
+                    'user': widget.user,
                   });
             },
           ),

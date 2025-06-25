@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 import 'package:vertex/features/home/domain/entities/post_entity.dart';
 import 'package:vertex/features/home/presentation/bloc/post_bloc/post_bloc.dart';
 import 'package:vertex/features/home/presentation/widgets/post_detail_page.dart';
@@ -12,7 +13,7 @@ import 'package:vertex/utils/env_utils.dart';
 
 class FeedPage extends StatefulWidget {
   final bool isGuest;
-  final Map<String, dynamic>? user;
+  final UserEntity? user;
   const FeedPage({super.key, required this.isGuest, required this.user});
 
   @override
@@ -83,7 +84,7 @@ class _FeedPageState extends State<FeedPage> {
           },
         ),
         FutureBuilder(
-            future: isAdmin(widget.user?['email'] ?? ""),
+            future: isAdmin(widget.user?.email ?? ""),
             builder: (context, snapshot) {
               return (!widget.isGuest &&
                       widget.user != null &&
@@ -283,7 +284,7 @@ class _FeedPageState extends State<FeedPage> {
                   );
                   return;
                 }
-                bool canEditDelete = await isAdmin(widget.user!['email']);
+                bool canEditDelete = await isAdmin(widget.user?.email ?? "");
                 if (canEditDelete == false) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

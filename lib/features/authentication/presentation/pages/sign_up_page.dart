@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -105,9 +104,9 @@ class _SignUpPageState extends State<SignUpPage> {
               textColor: Theme.of(context).colorScheme.onSurface);
 
           GoRouter.of(context).pushNamed(UhlLinkRoutesNames.otpVerify,
-              pathParameters: {
-                'user': jsonEncode(state.user.toMap()),
-                'otp': jsonEncode(state.otp)
+              extra: {
+                'user': state.user,
+                'otp': state.otp
               });
         } else if (state is OTPSendingError) {
           Fluttertoast.showToast(

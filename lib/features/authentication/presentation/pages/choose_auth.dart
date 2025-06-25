@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vertex/config/routes/routes_consts.dart';
@@ -29,8 +27,17 @@ class _ChooseAuthPageState extends State<ChooseAuthPage> {
                 width: MediaQuery.of(context).size.aspectRatio * 400,
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              Text("Vertex", style: Theme.of(context).textTheme.titleLarge!.copyWith(letterSpacing: 2.5)),
-              Text("IIT Mandi", textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium!.copyWith(letterSpacing: 1.5)),
+              Text("Vertex",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(letterSpacing: 2.5)),
+              Text("IIT Mandi",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(letterSpacing: 1.5)),
               const Expanded(child: SizedBox()),
               ScreenWidthButton(
                 text: "Sign Up via IIT Mandi E-Mail",
@@ -54,10 +61,7 @@ class _ChooseAuthPageState extends State<ChooseAuthPage> {
                 text: "Continue as a Guest",
                 buttonFunc: () {
                   GoRouter.of(context).goNamed(UhlLinkRoutesNames.home,
-                      pathParameters: {
-                        'isGuest': jsonEncode(true),
-                        'user': jsonEncode(null)
-                      });
+                      extra: {'isGuest': true, 'user': null});
                 },
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.01),

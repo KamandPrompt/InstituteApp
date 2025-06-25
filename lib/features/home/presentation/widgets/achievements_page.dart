@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 import 'package:vertex/features/home/domain/entities/post_entity.dart';
 import 'package:vertex/features/home/presentation/bloc/post_bloc/post_bloc.dart';
 import 'package:vertex/features/home/presentation/widgets/post_detail_page.dart';
@@ -12,7 +13,7 @@ import 'package:vertex/utils/env_utils.dart';
 
 class AchievementsPage extends StatefulWidget {
   final bool isGuest;
-  final Map<String, dynamic> user;
+  final UserEntity? user;
 
   const AchievementsPage(
       {super.key, required this.isGuest, required this.user});
@@ -101,7 +102,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
               },
             ),
             FutureBuilder(
-                future: isAdmin(widget.user['email'] ?? ""),
+                future: isAdmin(widget.user?.email ?? ""),
                 builder: (context, snapshot) {
                   double aspectRatio = MediaQuery.of(context).size.aspectRatio;
                   return (!widget.isGuest &&
@@ -310,7 +311,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
                   );
                   return;
                 }
-                bool canEditDelete = await isAdmin(widget.user['email']);
+                bool canEditDelete = await isAdmin(widget.user?.email ?? "");
                 if (canEditDelete == false) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

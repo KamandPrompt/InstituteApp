@@ -1,8 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 import 'package:vertex/features/home/presentation/bloc/notification_bloc/notification_bloc.dart';
 import 'package:vertex/features/home/presentation/bloc/notification_bloc/notification_event.dart';
 import 'package:vertex/features/home/presentation/bloc/notification_bloc/notification_state.dart';
@@ -10,7 +10,7 @@ import 'package:vertex/utils/env_utils.dart';
 
 class NotificationsPage extends StatefulWidget {
   final bool isGuest;
-  final Map<String, dynamic>? user;
+  final UserEntity? user;
 
   const NotificationsPage(
       {super.key, required this.isGuest, required this.user});
@@ -64,9 +64,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       onTap: () {
                         GoRouter.of(context).pushNamed(
                             UhlLinkRoutesNames.notificationDetails,
-                            pathParameters: {
-                              "notification": jsonEncode(notification.toMap())
-                            });
+                            extra: {"notification": notification.toMap()});
                       },
                       child: Card(
                         color: Theme.of(context).cardColor,
@@ -132,7 +130,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
       ),
       floatingActionButton: FutureBuilder(
-          future: isAdmin(widget.user?['email'] ?? ""),
+          future: isAdmin(widget.user?.email ?? ""),
           builder: (context, snapshot) {
             if (!widget.isGuest &&
                 widget.user != null &&
@@ -142,7 +140,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 onPressed: () {
                   GoRouter.of(context).pushNamed(
                     UhlLinkRoutesNames.addNotification,
-                    pathParameters: {"user": jsonEncode(widget.user)},
+                    extra: {"user": widget.user},
                   );
                 },
                 backgroundColor: Theme.of(context).colorScheme.primary,

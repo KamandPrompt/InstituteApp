@@ -1,13 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 import '../../../../config/routes/routes_consts.dart';
 import '../widgets/card.dart';
 
 class Academics extends StatefulWidget {
   final bool isGuest;
-  final Map<String, dynamic>? user;
+  final UserEntity? user;
 
   const Academics({super.key, required this.isGuest, required this.user});
 
@@ -22,14 +21,14 @@ class _AcademicsState extends State<Academics> {
       "icon": Icons.calendar_month_rounded,
       "route": UhlLinkRoutesNames.academicCalenderPage,
       "guest": true,
-      "requiresParams": false, // Added to indicate no path parameters needed
+      "requiresParams": false, // Added to indicate no parameters needed
     },
     {
       "text": "Achievements",
       "icon": Icons.verified_rounded,
       "route": UhlLinkRoutesNames.achievementsPage,
       "guest": true,
-      "requiresParams": true, // Added to indicate path parameters are needed
+      "requiresParams": true, // Added to indicate parameters are needed
     },
   ];
 
@@ -52,9 +51,9 @@ class _AcademicsState extends State<Academics> {
                 if (item["requiresParams"] == true) {
                   GoRouter.of(context).pushNamed(
                     item['route'],
-                    pathParameters: {
-                      'isGuest': jsonEncode(widget.isGuest),
-                      'user': jsonEncode(widget.user ?? {}),
+                    extra: {
+                      'isGuest': widget.isGuest,
+                      'user': widget.user,
                     },
                   );
                 } else {

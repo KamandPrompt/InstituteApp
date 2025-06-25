@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
-class AboutPage extends StatefulWidget {
-  const AboutPage({super.key});
+class AboutPage extends StatelessWidget {
+  AboutPage({super.key});
 
-  @override
-  State<AboutPage> createState() => _AboutPageState();
-}
-
-class _AboutPageState extends State<AboutPage> {
   final leads = [
     {
       "Abhijeet Jha":
@@ -41,7 +36,7 @@ class _AboutPageState extends State<AboutPage> {
   final developers = [
     {
       "Gaurav Kushwaha":
-      "https://github.com/Gaurav-Kushwaha-1225/Gaurav-Kushwaha-1225/raw/main/IMG20231002114533.jpg"
+          "https://github.com/Gaurav-Kushwaha-1225/Gaurav-Kushwaha-1225/raw/main/IMG20231002114533.jpg"
     },
     {
       "Shubh Sahu":

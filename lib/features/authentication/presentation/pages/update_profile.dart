@@ -13,7 +13,7 @@ import '../../../../widgets/screen_width_button.dart';
 import '../bloc/user_bloc.dart';
 
 class UpdateProfilePage extends StatefulWidget {
-  final Map<String, dynamic> user;
+  final UserEntity user;
 
   const UpdateProfilePage({super.key, required this.user});
 
@@ -36,7 +36,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
 
   @override
   void initState() {
-    nameTextEditingController.text = widget.user["name"];
+    nameTextEditingController.text = widget.user.name;
     // passwordTextEditingController.text = widget.user["password"];
     super.initState();
   }
@@ -79,7 +79,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    UserEntity user = UserEntity.fromJson(widget.user);
     final height = MediaQuery.of(context).size.height;
     // final width = MediaQuery.of(context).size.width;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
@@ -147,7 +146,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                               child: ClipRRect(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(height * 0.1)),
-                            child: (user.image == "" &&
+                            child: (widget.user.image == "" &&
                                     (picker == null || picker!.files.isEmpty))
                                 ? Icon(
                                     Icons.image_rounded,
@@ -157,11 +156,11 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                 : SizedBox(
                                     width: height * 0.2,
                                     height: height * 0.2,
-                                    child: (user.image != "" &&
+                                    child: (widget.user.image != "" &&
                                             (picker == null ||
                                                 picker!.files.isEmpty))
                                         ? CachedNetworkImage(
-                                            imageUrl: user.image ?? "",
+                                            imageUrl: widget.user.image ?? "",
                                             fit: BoxFit.cover,
                                             alignment: Alignment.center,
                                             progressIndicatorBuilder: (context,
@@ -263,10 +262,10 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                     if (nameValidator && passwordValidator) {
                       BlocProvider.of<AuthenticationBloc>(context).add(
                           ProfileUpdateEvent(
-                              email: user.email,
+                              email: widget.user.email,
                               newName: nameTextEditingController.text,
                               newPassword: passwordTextEditingController.text,
-                              newImage: picker?.files.first.path ?? user.image));
+                              newImage: picker?.files.first.path ?? widget.user.image));
                     }
                   },
                 ),

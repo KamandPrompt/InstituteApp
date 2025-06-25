@@ -13,7 +13,7 @@ import '../../../../widgets/screen_width_button.dart';
 import '../bloc/buy_sell_bloc/bns_bloc.dart';
 
 class BuySellAddOrEditItemPage extends StatefulWidget {
-  final Map<String, dynamic> user;
+  final UserEntity user;
   final bool isEditing;
   final BuySellItemEntity? bnsItem;
   const BuySellAddOrEditItemPage(
@@ -148,7 +148,7 @@ class _BuySellAddOrEditItemPageState extends State<BuySellAddOrEditItemPage> {
     final width = MediaQuery.of(context).size.width;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
     final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
-    UserEntity user = UserEntity.fromJson(widget.user);
+    UserEntity user = widget.user;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,

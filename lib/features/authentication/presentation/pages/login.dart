@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -55,9 +53,9 @@ class _LoginPageState extends State<LoginPage> {
         } else if (state is UserLoaded) {
           userLoading = false;
           GoRouter.of(context).goNamed(UhlLinkRoutesNames.home,
-              pathParameters: {
-                'isGuest': jsonEncode(false),
-                'user': jsonEncode(state.user.toMap())
+              extra: {
+                'isGuest': false,
+                'user': state.user
               });
         } else if (state is UserError) {
           Fluttertoast.showToast(
@@ -152,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (!emailPatternValid) {
                               return "Please enter a valid IIT Mandi email address.";
                             } else if (!_isEmailValid) {
-                              return "Invalid IIT Mandi email address.";
+                              return "This email is not registered. Please sign up first.";
                             }
                             return null;
                           },

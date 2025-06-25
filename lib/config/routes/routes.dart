@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 import 'package:vertex/features/authentication/presentation/pages/choose_auth.dart';
 import 'package:vertex/features/authentication/presentation/pages/login.dart';
 import 'package:vertex/features/authentication/presentation/pages/otp_verification_page.dart';
@@ -71,24 +72,28 @@ class UhlLinkRouter {
           }),
       GoRoute(
           name: UhlLinkRoutesNames.otpVerify,
-          path: '/otpVerify/:user/:otp',
+          path: '/otpVerify',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
                 child: OtpVerificationPage(
-                    user: jsonDecode(state.pathParameters['user']!),
-                    otp: jsonDecode(state.pathParameters['otp']!)));
+                    user: parameters['user'] as UserEntity,
+                    otp: parameters['otp'] as int));
           }),
       //
       GoRoute(
           name: UhlLinkRoutesNames.home,
-          path: '/home/:isGuest/:user',
+          path: '/home',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
                 child: HomePage(
-                  isGuest: jsonDecode(state.pathParameters['isGuest']!),
-                  user: jsonDecode(state.pathParameters['user']!),
+                  isGuest: parameters['isGuest'] as bool,
+                  user: parameters['user'] as UserEntity?,
                 ));
           }),
       // Explore
@@ -114,13 +119,15 @@ class UhlLinkRouter {
           }),
       GoRoute(
           name: UhlLinkRoutesNames.lostFoundPage,
-          path: '/lost_found/:isGuest/:user',
+          path: '/lost_found',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
                 child: LostFoundPage(
-                  isGuest: jsonDecode(state.pathParameters['isGuest']!),
-                  user: jsonDecode(state.pathParameters['user']!),
+                  isGuest: parameters['isGuest'] as bool,
+                  user: parameters['user'] as UserEntity?,
                 ));
           }),
       GoRoute(
@@ -132,7 +139,7 @@ class UhlLinkRouter {
             return MaterialPage(
                 key: state.pageKey,
                 child: LostFoundAddOrEditItemPage(
-                  user: parameters['user'],
+                  user: parameters['user'] as UserEntity,
                   isEditing: parameters['isEditing'] as bool,
                   lnfItem: parameters['lnfItem'] as LostFoundItemEntity?,
                 ));
@@ -140,13 +147,14 @@ class UhlLinkRouter {
       // Events
       GoRoute(
         name: UhlLinkRoutesNames.events,
-        path: '/events/:isGuest/:user',
+        path: '/events',
         pageBuilder: (context, state) {
+          Map<String, dynamic> parameters = state.extra as Map<String, dynamic>;
           return MaterialPage(
             key: state.pageKey,
             child: EventsPage(
-              isGuest: jsonDecode(state.pathParameters['isGuest']!),
-              user: jsonDecode(state.pathParameters['user']!),
+              isGuest: parameters['isGuest'] as bool,
+              user: parameters['user'] as UserEntity?,
             ),
           );
         },
@@ -154,13 +162,15 @@ class UhlLinkRouter {
       // Buy & Sell
       GoRoute(
           name: UhlLinkRoutesNames.buySellPage,
-          path: '/buy_sell/:isGuest/:user',
+          path: '/buy_sell',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
                 child: BuySellPage(
-                  isGuest: jsonDecode(state.pathParameters['isGuest']!),
-                  user: jsonDecode(state.pathParameters['user']!),
+                  isGuest: parameters['isGuest'] as bool,
+                  user: parameters['user'] as UserEntity?,
                 ));
           }),
       GoRoute(
@@ -172,7 +182,7 @@ class UhlLinkRouter {
             return MaterialPage(
                 key: state.pageKey,
                 child: BuySellAddOrEditItemPage(
-                  user: parameters['user'],
+                  user: parameters['user'] as UserEntity,
                   isEditing: parameters['isEditing'] as bool,
                   bnsItem: parameters['bnsItem'] as BuySellItemEntity?,
                 ));
@@ -187,7 +197,7 @@ class UhlLinkRouter {
             return MaterialPage(
                 key: state.pageKey,
                 child: PostAddOrEditItemPage(
-                  user: parameters['user'],
+                  user: parameters['user'] as UserEntity,
                   postEditing: parameters['postEditing'] as bool,
                   postDetails: parameters['postDetails'] as PostItemEntity?,
                 ));
@@ -202,24 +212,27 @@ class UhlLinkRouter {
           }),
       GoRoute(
           name: UhlLinkRoutesNames.jobPortalPage,
-          path: '/job_portal/:isGuest',
+          path: '/job_portal',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
                 child: JobPortalPage(
-                  isGuest: jsonDecode(state.pathParameters['isGuest']!),
+                  isGuest: parameters['isGuest'] as bool,
                 ));
           }),
       // achievements
       GoRoute(
         name: UhlLinkRoutesNames.achievementsPage,
-        path: '/achievements/:isGuest/:user',
+        path: '/achievements',
         pageBuilder: (context, state) {
+          Map<String, dynamic> parameters = state.extra as Map<String, dynamic>;
           return MaterialPage(
             key: state.pageKey,
             child: AchievementsPage(
-              isGuest: jsonDecode(state.pathParameters['isGuest']!),
-              user: jsonDecode(state.pathParameters['user']!),
+              isGuest: parameters['isGuest'] as bool,
+              user: parameters['user'] as UserEntity?,
             ),
           );
         },
@@ -227,12 +240,14 @@ class UhlLinkRouter {
       // Profile
       GoRoute(
           name: UhlLinkRoutesNames.updateProfile,
-          path: '/updatePassword/:user',
+          path: '/updatePassword',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
-                child: UpdateProfilePage(
-                    user: jsonDecode(state.pathParameters['user']!)));
+                child:
+                    UpdateProfilePage(user: parameters['user'] as UserEntity));
           }),
       GoRoute(
           name: UhlLinkRoutesNames.porsPage,
@@ -242,12 +257,15 @@ class UhlLinkRouter {
           }),
       GoRoute(
           name: UhlLinkRoutesNames.settingsPage,
-          path: '/settings/:user',
+          path: '/settings',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
                 child: SettingsPage(
-                    user: jsonDecode(state.pathParameters['user']!)));
+                  user: parameters['user'] as UserEntity?,
+                ));
           }),
       GoRoute(
           name: UhlLinkRoutesNames.aboutPage,
@@ -257,43 +275,49 @@ class UhlLinkRouter {
           }),
       GoRoute(
           name: UhlLinkRoutesNames.jobDetailsPage,
-          path: '/job_details/:job',
+          path: '/job_details',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
-                child: JobDetailsPage(
-                    job: jsonDecode(state.pathParameters["job"]!)));
+                child: JobDetailsPage(job: parameters["job"]));
           }),
       GoRoute(
           name: UhlLinkRoutesNames.notifications,
-          path: '/notifications/:isGuest/:user',
+          path: '/notifications',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
                 child: NotificationsPage(
-                  isGuest: jsonDecode(state.pathParameters["isGuest"]!),
-                  user: jsonDecode(state.pathParameters['user']!),
+                  isGuest: parameters["isGuest"] as bool,
+                  user: parameters['user'] as UserEntity?,
                 ));
           }),
       GoRoute(
           name: UhlLinkRoutesNames.notificationDetails,
-          path: '/notification_details/:notification',
+          path: '/notification_details',
           pageBuilder: (context, state) {
+            Map<String, dynamic> parameters =
+                state.extra as Map<String, dynamic>;
             return MaterialPage(
                 key: state.pageKey,
                 child: NotificationDetailsPage(
                   notificationMap:
-                      jsonDecode(state.pathParameters['notification']!),
+                      parameters['notification'] as Map<String, dynamic>,
                 ));
           }),
       GoRoute(
         name: UhlLinkRoutesNames.addNotification,
-        path: '/add_notification/:user',
+        path: '/add_notification',
         pageBuilder: (context, state) {
+          Map<String, dynamic> parameters = state.extra as Map<String, dynamic>;
           return MaterialPage(
             key: state.pageKey,
             child: AddNotificationPage(
-              user: jsonDecode(state.pathParameters['user']!),
+              user: parameters['user'] as UserEntity,
             ),
           );
         },

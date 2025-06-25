@@ -1,17 +1,16 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 import 'package:vertex/features/home/presentation/widgets/card.dart';
 
 import '../../../../utils/theme.dart';
 
 class SettingsPage extends StatefulWidget {
-  final Map<String, dynamic>? user;
+  final UserEntity? user;
   const SettingsPage({super.key, this.user});
 
   @override
@@ -41,7 +40,8 @@ class _SettingsPageState extends State<SettingsPage> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                   side: BorderSide(
-                    color: Theme.of(context).colorScheme.onSurface.withAlpha(100),
+                    color:
+                        Theme.of(context).colorScheme.onSurface.withAlpha(100),
                     width: 1.5,
                   )),
               clipBehavior: Clip.hardEdge,
@@ -80,14 +80,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-            if (widget.user != null && widget.user!.isNotEmpty)
+            if (widget.user != null)
               CardWidget(
                   text: "Update Profile",
                   icon: CupertinoIcons.profile_circled,
                   onTap: () {
                     GoRouter.of(context).pushNamed(
                         UhlLinkRoutesNames.updateProfile,
-                        pathParameters: {"user": jsonEncode(widget.user)});
+                        extra: {"user": widget.user});
                   }),
             CardWidget(
                 text: "About Vertex",
@@ -95,53 +95,56 @@ class _SettingsPageState extends State<SettingsPage> {
                 onTap: () {
                   GoRouter.of(context).pushNamed(UhlLinkRoutesNames.aboutPage);
                 }),
-            CardWidget(
-                text: "Sign Out",
-                icon: Icons.logout_rounded,
-                onTap: () async {
-                  await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text("Sign Out",
-                            style: Theme.of(context).textTheme.bodyMedium),
-                        content: Text(
-                            "Are you sure you want to sign out of Vertex?",
-                            style: Theme.of(context).textTheme.labelSmall),
-                        backgroundColor: Theme.of(context).cardColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        actionsPadding:
-                            const EdgeInsets.only(right: 10, bottom: 10),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text("Cancel",
-                                style: Theme.of(context).textTheme.labelSmall),
+            if (widget.user != null)
+              CardWidget(
+                  text: "Sign Out",
+                  icon: Icons.logout_rounded,
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Sign Out",
+                              style: Theme.of(context).textTheme.bodyMedium),
+                          content: Text(
+                              "Are you sure you want to sign out of Vertex?",
+                              style: Theme.of(context).textTheme.labelSmall),
+                          backgroundColor: Theme.of(context).cardColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          TextButton(
-                            onPressed: () async {
-                              final storage = const FlutterSecureStorage();
-                              await storage.delete(key: "user");
-                              GoRouter.of(context)
-                                  .goNamed(UhlLinkRoutesNames.chooseAuth);
-                            },
-                            child: Text("Sign Out",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.onError,
-                                      fontWeight: FontWeight.w700,
-                                    )),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }),
+                          actionsPadding:
+                              const EdgeInsets.only(right: 10, bottom: 10),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text("Cancel",
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                final storage = const FlutterSecureStorage();
+                                await storage.delete(key: "user");
+                                GoRouter.of(context)
+                                    .goNamed(UhlLinkRoutesNames.chooseAuth);
+                              },
+                              child: Text("Sign Out",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onError,
+                                        fontWeight: FontWeight.w700,
+                                      )),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }),
           ],
         ),
       ),

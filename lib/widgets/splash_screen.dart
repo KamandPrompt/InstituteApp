@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 
 import '../utils/functions.dart';
 
@@ -35,8 +36,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
       // Navigate based on the token presence
       if (token != null) {
-        GoRouter.of(context).goNamed(UhlLinkRoutesNames.home,
-            pathParameters: {'isGuest': jsonEncode(false), 'user': token});
+        GoRouter.of(context).goNamed(UhlLinkRoutesNames.home, extra: {
+          'isGuest': false,
+          'user': UserEntity.fromJson(jsonDecode(token))
+        });
       } else {
         GoRouter.of(context).goNamed(UhlLinkRoutesNames.chooseAuth);
       }

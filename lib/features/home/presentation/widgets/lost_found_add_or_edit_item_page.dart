@@ -14,7 +14,7 @@ import '../../../../widgets/screen_width_button.dart';
 import '../bloc/lost_found_bloc/lnf_bloc.dart';
 
 class LostFoundAddOrEditItemPage extends StatefulWidget {
-  final Map<String, dynamic> user;
+  final UserEntity user;
   final bool isEditing;
   final LostFoundItemEntity? lnfItem;
   const LostFoundAddOrEditItemPage(
@@ -148,7 +148,7 @@ class _LostFoundAddOrEditItemPageState extends State<LostFoundAddOrEditItemPage>
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
-    UserEntity user = UserEntity.fromJson(widget.user);
+    UserEntity user = widget.user;
     final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
     return Scaffold(
       appBar: AppBar(

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -59,7 +58,7 @@ class _JobPortalPageState extends State<JobPortalPage> {
                     onViewDetails: () {
                       GoRouter.of(context).pushNamed(
                           UhlLinkRoutesNames.jobDetailsPage,
-                          pathParameters: {"job": jsonEncode(job.toMap())});
+                          extra: {"job": job.toMap()});
                     },
                   );
                 },

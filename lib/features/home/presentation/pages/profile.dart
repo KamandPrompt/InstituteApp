@@ -1,15 +1,14 @@
-import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vertex/config/routes/routes_consts.dart';
+import 'package:vertex/features/authentication/domain/entities/user_entity.dart';
 import '../widgets/card.dart';
 
 class Profile extends StatefulWidget {
   final bool isGuest;
-  final Map<String, dynamic>? user;
+  final UserEntity? user;
   const Profile({super.key, required this.isGuest, this.user});
 
   @override
@@ -24,14 +23,14 @@ class _ProfileState extends State<Profile> {
       //   "text": "Achievements/PORs",
       //   "icon": Icons.emoji_events_rounded,
       //   "route": UhlLinkRoutesNames.porsPage,
-      //   'pathParameters': {},
+      //   'extra': {},
       //   "guest": false
       // },
       {
         "text": "Settings",
         "icon": Icons.settings,
         "route": UhlLinkRoutesNames.settingsPage,
-        'pathParameters': {"user": jsonEncode(widget.user)},
+        'extra': {"user": widget.user},
         "guest": true
       },
     ];
@@ -67,7 +66,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(aspectRatio * 90),
-                    child: (widget.isGuest || widget.user!['image'] == "")
+                    child: (widget.isGuest || widget.user!.image == "")
                         ? Icon(Icons.person,
                             size: 30,
                             color: Theme.of(context)
@@ -75,7 +74,7 @@ class _ProfileState extends State<Profile> {
                                 .onSurface
                                 .withAlpha(150))
                         : CachedNetworkImage(
-                            imageUrl: widget.user!['image'],
+                            imageUrl: widget.user!.image ?? "",
                             fit: BoxFit.cover,
                             progressIndicatorBuilder:
                                 (context, string, loadingProgress) {
@@ -100,7 +99,7 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.isGuest ? "Not Logged in" : widget.user!['name'],
+                    widget.isGuest ? "Not Logged in" : widget.user!.name,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   widget.isGuest
@@ -124,13 +123,12 @@ class _ProfileState extends State<Profile> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
-                                  .copyWith(
-                                      color: Colors.white, fontSize: 17),
+                                  .copyWith(color: Colors.white, fontSize: 17),
                             ),
                           ),
                         )
                       : Text(
-                          widget.user!['email'],
+                          widget.user!.email,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
@@ -147,17 +145,12 @@ class _ProfileState extends State<Profile> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 3, horizontal: 8),
                           decoration: BoxDecoration(
-                            color:
-                                Theme.of(context).primaryColor.withAlpha(50),
+                            color: Theme.of(context).primaryColor.withAlpha(50),
                             borderRadius: BorderRadius.circular(5.0),
                           ),
-                          margin:  const EdgeInsets.only(
-                            top: 8
-                          ),
+                          margin: const EdgeInsets.only(top: 8),
                           child: Text(
-                            widget.user!['email']
-                                    .toString()
-                                    .contains('students')
+                            widget.user!.email.toString().contains('students')
                                 ? "Student"
                                 : "Faculty",
                             overflow: TextOverflow.ellipsis,
@@ -191,15 +184,15 @@ class _ProfileState extends State<Profile> {
                   const storage = FlutterSecureStorage();
                   storage.delete(key: 'user');
                   storage.delete(key: 'isGuest');
-                  GoRouter.of(context).goNamed(item['route'], pathParameters: {
-                    for (var entry in item['pathParameters'].entries)
+                  GoRouter.of(context).goNamed(item['route'], extra: {
+                    for (var entry in item['extra'].entries)
                       entry.key: entry.value.toString()
                   });
                 } else {
                   GoRouter.of(context)
-                      .pushNamed(item['route'], pathParameters: {
-                    for (var entry in item['pathParameters'].entries)
-                      entry.key: entry.value.toString()
+                      .pushNamed(item['route'], extra: {
+                    for (var entry in item['extra'].entries)
+                      entry.key.toString(): entry.value
                   });
                 }
               },
